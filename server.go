@@ -5,6 +5,7 @@ package main
 import (
 	"errors"
 	"flag"
+	"fmt"
 	"html/template"
 	"io/ioutil"
 	"log"
@@ -107,14 +108,14 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		err = ioutil.WriteFile("final-port.txt", []byte(l.Addr().String()), 0644)
-		if err != nil {
-			log.Fatal(err)
-		}
+
+		fmt.Printf("http://localhost:%s", []byte(l.Addr().String()))
 		s := &http.Server{}
 		s.Serve(l)
-		return
-	}
 
-	http.ListenAndServe(":8080", nil)
+		return
+	} else {
+		fmt.Printf("http://localhost:%s", "8080")
+		http.ListenAndServe(":8080", nil)
+	}
 }
