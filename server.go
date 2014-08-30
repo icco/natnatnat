@@ -3,10 +3,18 @@
 package main
 
 import (
+	"errors"
+	"flag"
 	"html/template"
 	"io/ioutil"
+	"log"
+	"net"
 	"net/http"
 	"regexp"
+)
+
+var (
+	addr = flag.Bool("addr", false, "find open address and print to final-port.txt")
 )
 
 type Page struct {
