@@ -17,26 +17,46 @@ import (
 )
 
 var (
-	addr = flag.Bool("addr", false, "find open address and print to final-port.txt")
+	addr = flag.Bool("addr", false, "find open address")
 )
 
 type Page struct {
 	Title string
-	Body  []byte
+	Body  string
 }
 
-var templates = template.Must(template.ParseFiles("edit.html", "view.html"))
+var funcMap = template.FuncMap{
+	// The name "title" is what the function will be called in the template text.
+	"mrkdwn": markdown,
+}
 var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$")
 
+func markdown(text string) string {
+	return string(blackfriday.MarkdownCommon([]byte(text)))
+}
+
 func (p *Page) save() error {
-	filename := p.Title + ".txt"
-	return ioutil.WriteFile(filename, p.Body, 0600)
+	filename := p.Title + ".md"
+	return ioutil.WriteFile(filename, []byte(p.Body), 0600)
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
-	err := templates.ExecuteTemplate(w, tmpl+".html", p)
+	f, err := ioutil.ReadFile(tmpl + ".html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	t, err := template.New(tmpl + ".html").Funcs(funcMap).Parse(string(f))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	err = t.Execute(w, p)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 }
 
@@ -50,13 +70,12 @@ func getTitle(w http.ResponseWriter, r *http.Request) (string, error) {
 }
 
 func loadPage(title string) (*Page, error) {
-	filename := title + ".txt"
+	filename := title + ".md"
 	text, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
-	body := blackfriday.MarkdownCommon(text)
-	return &Page{Title: title, Body: body}, nil
+	return &Page{Title: title, Body: string(text)}, nil
 }
 
 func makeHandler(fn func(http.ResponseWriter, *http.Request, string)) http.HandlerFunc {
@@ -91,7 +110,7 @@ func editHandler(w http.ResponseWriter, r *http.Request, title string) {
 
 func saveHandler(w http.ResponseWriter, r *http.Request, title string) {
 	body := r.FormValue("body")
-	p := &Page{Title: title, Body: []byte(body)}
+	p := &Page{Title: title, Body: body}
 	err := p.save()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -112,13 +131,13 @@ func main() {
 			log.Fatal(err)
 		}
 
-		fmt.Printf("http://localhost:%s", []byte(l.Addr().String()))
+		fmt.Printf("http://localhost:%s\n", []byte(l.Addr().String()))
 		s := &http.Server{}
 		s.Serve(l)
 
 		return
 	} else {
-		fmt.Printf("http://localhost:%s", "8080")
+		fmt.Printf("http://localhost:%s\n", "8080")
 		http.ListenAndServe(":8080", nil)
 	}
 }
