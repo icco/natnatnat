@@ -25,14 +25,11 @@ type Page struct {
 	Body  string
 }
 
-var funcMap = template.FuncMap{
-	// The name "title" is what the function will be called in the template text.
-	"mrkdwn": markdown,
-}
 var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$")
 
-func markdown(text string) string {
-	return string(blackfriday.MarkdownCommon([]byte(text)))
+func markdown(args ...interface{}) string {
+	s := blackfriday.MarkdownCommon([]byte(fmt.Sprintf("%s", args...)))
+	return string(s)
 }
 
 func (p *Page) save() error {
@@ -41,19 +38,9 @@ func (p *Page) save() error {
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
-	f, err := ioutil.ReadFile(tmpl + ".html")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	t := template.Must(template.New(tmpl + ".html").Funcs(template.FuncMap{"mrkdwn": markdown}).ParseFiles(tmpl + ".html"))
 
-	t, err := template.New(tmpl + ".html").Funcs(funcMap).Parse(string(f))
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
-
-	err = t.Execute(w, p)
+	err := t.ExecuteTemplate(w, tmpl+".html", p)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
