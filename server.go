@@ -12,6 +12,8 @@ import (
 	"net"
 	"net/http"
 	"regexp"
+
+	"github.com/russross/blackfriday"
 )
 
 var (
@@ -49,10 +51,11 @@ func getTitle(w http.ResponseWriter, r *http.Request) (string, error) {
 
 func loadPage(title string) (*Page, error) {
 	filename := title + ".txt"
-	body, err := ioutil.ReadFile(filename)
+	text, err := ioutil.ReadFile(filename)
 	if err != nil {
 		return nil, err
 	}
+	body := blackfriday.MarkdownCommon(text)
 	return &Page{Title: title, Body: body}, nil
 }
 
