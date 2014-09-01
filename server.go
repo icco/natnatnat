@@ -27,9 +27,9 @@ type Page struct {
 
 var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$")
 
-func markdown(args ...interface{}) string {
+func markdown(args ...interface{}) template.HTML {
 	s := blackfriday.MarkdownCommon([]byte(fmt.Sprintf("%s", args...)))
-	return string(s)
+	return template.HTML(s)
 }
 
 func (p *Page) save() error {
