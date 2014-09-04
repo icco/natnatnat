@@ -39,9 +39,13 @@ func (p *Page) save() error {
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
 	tName := templateName(tmpl)
-	t := template.Must(template.New(tName).Funcs(template.FuncMap{"mrkdwn": markdown}).ParseFiles(tName))
+	t, err := template.New(tName).Funcs(template.FuncMap{"mrkdwn": markdown}).ParseGlob("views/*.html")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 
-	err := t.ExecuteTemplate(w, tmpl+".html", p)
+	err = t.ExecuteTemplate(w, tName, p)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
