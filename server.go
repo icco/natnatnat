@@ -38,22 +38,23 @@ func (p *Page) save() error {
 }
 
 func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
-	tName := templateName(tmpl)
-	t, err := template.New(tName).Funcs(template.FuncMap{"mrkdwn": markdown}).ParseGlob("views/*.html")
+	tLayout, err := template.New("layout").Funcs(template.FuncMap{"mrkdwn": markdown}).ParseFiles("views/layout.html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	err = t.ExecuteTemplate(w, tName, p)
+	tView, err := tLayout.ParseFiles("views/" + tmpl + ".html")
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-}
 
-func templateName(tmpl string) string {
-	return "views/" + tmpl + ".html"
+	err = tView.Execute(w, p)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }
 
 func getTitle(w http.ResponseWriter, r *http.Request) (string, error) {
