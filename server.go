@@ -40,7 +40,7 @@ func (p *Page) save() error {
 }
 
 // renderTemplate is a wrapper around template.ExecuteTemplate.
-func renderTemplate(w http.ResponseWriter, name string, data map[string]interface{}) error {
+func renderTemplate(w http.ResponseWriter, name string, data *Page) error {
 	// Ensure the template exists in the map.
 	tmpl, ok := templates[name]
 	if !ok {
@@ -137,7 +137,7 @@ func main() {
 	// Generate our templates map from our layouts/ and includes/ directories
 	for _, layout := range layouts {
 		files := append(includes, layout)
-		templates[filepath.Base(layout)] = template.Must(template.ParseFiles(files...))
+		templates[filepath.Base(layout)] = template.Must(template.New(filepath.Base(layout)).Funcs(template.FuncMap{"mrkdwn": markdown}).ParseFiles(files...))
 	}
 
 	if *addr {
