@@ -11,6 +11,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"path/filepath"
 	"regexp"
 
 	"github.com/russross/blackfriday"
@@ -26,6 +27,7 @@ type Page struct {
 }
 
 var validPath = regexp.MustCompile("^/(edit|save|view)/([a-zA-Z0-9]+)$")
+var templates map[string]*template.Template
 
 func markdown(args ...interface{}) template.HTML {
 	s := blackfriday.MarkdownCommon([]byte(fmt.Sprintf("%s", args...)))
@@ -37,24 +39,18 @@ func (p *Page) save() error {
 	return ioutil.WriteFile(filename, []byte(p.Body), 0600)
 }
 
-func renderTemplate(w http.ResponseWriter, tmpl string, p *Page) {
-	tLayout, err := template.New("layout").Funcs(template.FuncMap{"mrkdwn": markdown}).ParseFiles("views/layout.html")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
+// renderTemplate is a wrapper around template.ExecuteTemplate.
+func renderTemplate(w http.ResponseWriter, name string, data map[string]interface{}) error {
+	// Ensure the template exists in the map.
+	tmpl, ok := templates[name]
+	if !ok {
+		return fmt.Errorf("The template %s does not exist.", name)
 	}
 
-	tView, err := tLayout.ParseFiles("views/" + tmpl + ".html")
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	w.Header().Set("Content-Type", "text/html; charset=utf-8")
+	tmpl.ExecuteTemplate(w, "base", data)
 
-	err = tView.Execute(w, p)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-		return
-	}
+	return nil
 }
 
 func getTitle(w http.ResponseWriter, r *http.Request) (string, error) {
@@ -121,6 +117,28 @@ func main() {
 	http.HandleFunc("/view/", makeHandler(viewHandler))
 	http.HandleFunc("/edit/", makeHandler(editHandler))
 	http.HandleFunc("/save/", makeHandler(saveHandler))
+
+	if templates == nil {
+		templates = make(map[string]*template.Template)
+	}
+
+	templatesDir := "views/"
+
+	layouts, err := filepath.Glob(templatesDir + "layouts/*.tmpl")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	includes, err := filepath.Glob(templatesDir + "includes/*.tmpl")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Generate our templates map from our layouts/ and includes/ directories
+	for _, layout := range layouts {
+		files := append(includes, layout)
+		templates[filepath.Base(layout)] = template.Must(template.ParseFiles(files...))
+	}
 
 	if *addr {
 		l, err := net.Listen("tcp", "127.0.0.1:0")
