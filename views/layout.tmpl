@@ -1,9 +1,14 @@
+{{ define "base" }}
 <!doctype html>
 <html>
   <head>
-    <title>Nat Welch</title>
+    <title>{{ template "title" . }}</title>
   </head>
   <body>
-    {{template "content" .}}
+    {{ template "content" . }}
+    {{ template "scripts" . }}
   </body>
 </html>
+{{ end }}
+
+{{ define "scripts" }}{{ end }}
