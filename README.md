@@ -26,3 +26,4 @@ This site will be hosted at <http://writing.natwelch.com>.
 ## TODO
 
  * http://docs.travis-ci.com/user/languages/go/
+ * https://developers.google.com/appengine/docs/go/gettingstarted/helloworld
