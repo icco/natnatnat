@@ -1,5 +1,7 @@
 # natnatnat
 
+[![Build Status](https://travis-ci.org/icco/natnatnat.svg?branch=master)](https://travis-ci.org/icco/natnatnat)
+
 The next iteration in Nat's content management system. Previous versions include:
 
  * [tumble.io](http://github.com/icco/tumble)
