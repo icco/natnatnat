@@ -3,6 +3,7 @@ package main
 import (
 	"appengine"
 	"appengine/user"
+	"fmt"
 	"github.com/pilu/traffic"
 )
 
@@ -10,9 +11,9 @@ type NewPostPageData struct {
 	Message string
 }
 
-func PostHandler(w traffic.ResponseWriter, r *traffic.Request) {
+func NewPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	w.Header().Set("Content-type", "text/html; charset=utf-8")
-	c := appengine.NewContext(r)
+	c := appengine.NewContext(r.Request)
 	u := user.Current(c)
 	if u == nil {
 		url, _ := user.LoginURL(c, "/")
@@ -20,6 +21,6 @@ func PostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 	url, _ := user.LogoutURL(c, "/")
-	responseData := &NewPostPageData{u}
+	responseData := &NewPostPageData{url}
 	w.Render("new_post", responseData)
 }
