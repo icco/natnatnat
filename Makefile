@@ -13,14 +13,8 @@ all: natnatnat
 clean:
 	rm natnatnat
 
-natnatnat: *.go
-	go build
-
-run: natnatnat
-	./natnatnat
+run: *.go
+	gcloud preview app run . --project=natwelch-writing
 
 deploy:
 	gcloud preview app deploy . --project=natwelch-writing
-
-run_gae:
-	gcloud preview app run . --project=natwelch-writing
