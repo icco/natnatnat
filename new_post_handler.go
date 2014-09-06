@@ -20,7 +20,6 @@ func PostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 	url, _ := user.LogoutURL(c, "/")
-	fmt.Fprintf(w, `Welcome, %s! (<a href="%s">sign out</a>)`, u, url)
-	responseData := &ResponseData{r.Param("id")}
-	w.Render("index", responseData)
+	responseData := &NewPostPageData{u}
+	w.Render("new_post", responseData)
 }
