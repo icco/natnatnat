@@ -22,3 +22,7 @@ So this system focuses around one gigantic database table for storing all entrie
 The current thought is that tags will filter out what is shown on each domain. So when you visit [tumble.io](http://tumble.io), you'll actually just be getting a view of the RSS feed for the links tag. [pseudoweb.net](http://pseudoweb.net) will be a view of the longform tag.
 
 This site will be hosted at <http://writing.natwelch.com>.
+
+## TODO
+
+ * http://docs.travis-ci.com/user/languages/go/
