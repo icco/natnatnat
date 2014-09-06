@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/pilu/traffic"
+	"net/http"
 )
 
 var router *traffic.Router
@@ -12,9 +13,8 @@ func init() {
 	router.Get("/", RootHandler)
 	router.Get("/post/new/?", NewPostHandler)
 	router.Get("/post/:id/?", PostHandler)
+	http.Handle("/", router)
 }
 
 // Entry point for go server.
-func main() {
-	router.Run()
-}
+func main() {}
