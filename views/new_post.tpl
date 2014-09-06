@@ -1,1 +1,1 @@
-Welcome, {.Message}! (<a href="%s">sign out</a>)
+Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)

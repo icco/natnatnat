@@ -8,7 +8,8 @@ import (
 )
 
 type NewPostPageData struct {
-	Message string
+	LogoutUrl string
+	User      string
 }
 
 func NewPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -21,6 +22,6 @@ func NewPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 	url, _ := user.LogoutURL(c, "/")
-	responseData := &NewPostPageData{url}
+	responseData := &NewPostPageData{url, u.String()}
 	w.Render("new_post", responseData)
 }
