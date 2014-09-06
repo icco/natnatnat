@@ -22,6 +22,6 @@ func NewPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 	url, _ := user.LogoutURL(c, "/")
-	responseData := &NewPostPageData{url, u.String()}
+	responseData := &NewPostPageData{LogoutUrl: url, User: u.String()}
 	w.Render("new_post", responseData)
 }
