@@ -10,6 +10,7 @@ var router *traffic.Router
 func init() {
 	router = traffic.New()
 	router.Get("/", RootHandler)
+	router.Get("/post/new/?", NewPostHandler)
 	router.Get("/post/:id/?", PostHandler)
 }
 
