@@ -27,3 +27,4 @@ This site will be hosted at <http://writing.natwelch.com>.
 
  * http://docs.travis-ci.com/user/languages/go/
  * https://developers.google.com/appengine/docs/go/gettingstarted/helloworld
+ * http://dev.mikamai.com/post/68453619468/building-web-apps-with-traffic-the-go-micro-framework
