@@ -21,3 +21,6 @@ run: natnatnat
 
 deploy:
 	gcloud preview app deploy . --project=natwelch-writing
+
+run_gae:
+	gcloud preview app run . --project=natwelch-writing
