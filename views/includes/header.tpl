@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Traffic example</title>
-</head>
-<body>
-  <h1>Header (views/includes/header.tpl)</h1>
-
+  <head>
+    <title>Nat? Nat. Nat!</title>
+  </head>
+  <body>
+    <h1>Nat? Nat. Nat! {{.Title}}</h1>
