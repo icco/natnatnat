@@ -1,15 +1,14 @@
 package main
 
 import (
-  "github.com/pilu/traffic"
+	"github.com/pilu/traffic"
 )
 
 type ResponseData struct {
-  Message string
+	Message string
 }
 
 func RootHandler(w traffic.ResponseWriter, r *traffic.Request) {
-  responseData := &ResponseData{ "Hello World" }
-  w.Render("index", responseData)
+	responseData := &ResponseData{"Hello World"}
+	w.Render("index", responseData)
 }
-
