@@ -14,3 +14,7 @@ clean:
 
 natnatnat: *.go
 	go build
+
+.PHONY: run
+run: natnatnat
+	./natnatnat
