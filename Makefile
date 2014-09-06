@@ -8,10 +8,7 @@ GOFMT=gofmt -w
 
 .PHONY: run deploy
 
-all: natnatnat
-
-clean:
-	rm natnatnat
+all: run
 
 run: *.go
 	gcloud preview app run . --project=natwelch-writing
