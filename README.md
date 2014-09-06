@@ -5,6 +5,12 @@ The next iteration in Nat's content management system. Previous versions include
  * [tumble.io](http://github.com/icco/tumble)
  * [pseudoweb.net](http://github.com/icco/pseudoweb)
 
+## Install
+
+ 0. `curl https://sdk.cloud.google.com | bash`
+ 1. `gcloud components update app`
+ 2. `make run`
+
 ## Design
 
 This site will be hosted at <http://writing.natwelch.com>. For now, it will use Google App Engine to auth me as an Admin and allow me to post new content. The eventual goal will be to switch to indie auth.
@@ -38,3 +44,6 @@ The current thought is that tags will filter out what is shown on each domain. S
  * http://docs.travis-ci.com/user/languages/go/
  * https://developers.google.com/appengine/docs/go/gettingstarted/helloworld
  * http://dev.mikamai.com/post/68453619468/building-web-apps-with-traffic-the-go-micro-framework
+ * https://developers.google.com/appengine/docs/domain
+ * https://developers.google.com/appengine/docs/go/users/reference
+
