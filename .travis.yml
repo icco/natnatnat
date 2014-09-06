@@ -8,8 +8,8 @@ install:
  - unzip -q go_appengine_sdk_linux_amd64-1.9.10.zip
  - ./go_appengine/goapp env
  - ./go_appengine/goapp get ...
- - mkdir $GOPATH/src/resize
- - curl https://appengine-go.googlecode.com/hg/example/moustachio/resize/resize.go > $GOPATH/src/resize/resize.go
+ - env `./go_appengine/goapp env` mkdir $GOPATH/src/resize
+ - env `./go_appengine/goapp env` curl https://appengine-go.googlecode.com/hg/example/moustachio/resize/resize.go > $GOPATH/src/resize/resize.go
 
 # run build
 script:
