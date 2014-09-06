@@ -3,6 +3,7 @@ package main
 import (
 	"appengine"
 	"appengine/user"
+	"code.google.com/p/xsrftoken"
 	"github.com/pilu/traffic"
 	"net/http"
 )

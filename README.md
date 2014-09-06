@@ -7,9 +7,12 @@ The next iteration in Nat's content management system. Previous versions include
 
 ## Install
 
- 0. `curl https://sdk.cloud.google.com | bash`
- 1. `gcloud components update app`
- 2. `make run`
+ 0. Install Go
+ 1. `go get code.google.com/p/xsrftoken`
+ 2. `go get github.com/pilu/traffic`
+ 3. `curl https://sdk.cloud.google.com | bash`
+ 4. `gcloud components update app`
+ 5. `make run`
 
 ## Design
 
