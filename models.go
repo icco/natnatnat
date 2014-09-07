@@ -8,7 +8,7 @@ import (
 )
 
 type Entry struct {
-	Id       uint64
+	Id       int64
 	Title    string // optional
 	Content  string // Markdown
 	Datetime time.Time
@@ -34,7 +34,7 @@ func NewEntry(title string, content string, datetime time.Time, tags []string) *
 	return e
 }
 
-func MaxId(c appengine.Context) (uint64, error) {
+func MaxId(c appengine.Context) (int64, error) {
 	entry := new(Entry)
 	q := datastore.NewQuery("Entry").Order("-Id").Limit(1)
 	_, err := q.Run(c).Next(&entry)

@@ -56,15 +56,19 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	if xsrftoken.Valid(xsrf, string(secret), u.String(), "/post/new") {
 		c.Infof("Valid Token!")
 	} else {
+		c.Infof("Invalid Token...")
 		w.WriteHeader(403)
 		return
 	}
 
 	e := NewEntry(title, content, time.Now(), []string{})
-	e.save(c)
+	err := e.save(c)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
 
 	new_route := fmt.Sprintf("/post/%d", e.Id)
-
 	http.Redirect(w, r.Request, new_route, 302)
 	return
 }
