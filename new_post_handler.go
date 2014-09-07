@@ -11,6 +11,7 @@ import (
 type NewPostPageData struct {
 	LogoutUrl string
 	User      string
+	Xsrf      string
 }
 
 func NewPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -24,11 +25,13 @@ func NewPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		c.Infof("Logged in as: %s", u.String())
 	}
 	url, _ := user.LogoutURL(c, "/")
+
 	// key is a secret key for your application. userID is a unique identifier
 	// for the user. actionID is the action the user is taking (e.g. POSTing to a
 	// particular path).
-	SetSessionVar(r.Request, w, "xsrf", xsrftoken.Generate(string(secret), u.String(), "/post/new"))
-	responseData := &NewPostPageData{LogoutUrl: url, User: u.String()}
+	token := xsrftoken.Generate(string(secret), u.String(), "/post/new")
+	SetSessionVar(r.Request, w, "xsrf", token)
+	responseData := &NewPostPageData{LogoutUrl: url, User: u.String(), Xsrf: token}
 	w.Render("new_post", responseData)
 }
 
@@ -42,7 +45,10 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	} else {
 		c.Infof("Logged in as: %s", u.String())
 	}
-	c.Infof("Got POST params: title: %+v, text: %+v", r.Request.FormValue("title"), r.Request.FormValue("text"))
+	c.Infof("Got POST params: title: %+v, text: %+v, xsrf: %v", r.Request.FormValue("title"), r.Request.FormValue("text"), r.Request.FormValue("xsrf"))
+	if xsrftoken.Valid(r.Request.FormValue("xsrf"), string(secret), u.String(), "/post/new") {
+		c.Infof("Valid Token!")
+	}
 	http.Redirect(w, r.Request, "/", 302)
 	return
 }
