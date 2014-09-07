@@ -10,7 +10,10 @@ GOFMT=gofmt -w
 
 all: run
 
-run: *.go
+css:
+	scss --trace -t compact public/css/style.scss public/css/style.css
+
+run: css *.go
 	gcloud preview app run . --project=natwelch-writing
 
 deploy:
