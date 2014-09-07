@@ -33,7 +33,7 @@ func NewPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	// for the user. actionID is the action the user is taking (e.g. POSTing to a
 	// particular path).
 	token := xsrftoken.Generate(string(secret), u.String(), "/post/new")
-	SetSessionVar(r.Request, w, "xsrf", token)
+	// SetSessionVar(r.Request, w, "xsrf", token)
 	responseData := &NewPostPageData{LogoutUrl: url, User: u.String(), Xsrf: token}
 	w.Render("new_post", responseData)
 }
@@ -69,12 +69,6 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 
-	_, lookup_err := GetEntry(c, e.Id)
-	i := 0
-	for lookup_err != nil && i > 1000 {
-		_, lookup_err = GetEntry(c, e.Id)
-		i += 1
-	}
 	new_route := fmt.Sprintf("/post/%d", e.Id)
 	http.Redirect(w, r.Request, new_route, 302)
 	return

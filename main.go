@@ -23,7 +23,7 @@ func GetSessionStore(c appengine.Context) *sessions.CookieStore {
 
 	// Unrelated action of writing Version to datastore. We do this so we can
 	// look at the datastore in the AppEngine Console.
-	WriteVersionKey(c)
+	//WriteVersionKey(c)
 
 	default_secret := "blah blah blah, session secret for development."
 	key := datastore.NewKey(c, "Flag", "SESSION_SECRET", 0, nil)
