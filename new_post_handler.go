@@ -24,6 +24,10 @@ func NewPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		c.Infof("Logged in as: %s", u.String())
 	}
 	url, _ := user.LogoutURL(c, "/")
+	// key is a secret key for your application. userID is a unique identifier
+	// for the user. actionID is the action the user is taking (e.g. POSTing to a
+	// particular path).
+	SetSessionVar(r.Request, w, "xsrf", xsrftoken.Generate(string(secret), u.String(), "/post/new"))
 	responseData := &NewPostPageData{LogoutUrl: url, User: u.String()}
 	w.Render("new_post", responseData)
 }
