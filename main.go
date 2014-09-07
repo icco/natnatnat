@@ -66,6 +66,10 @@ func GetSessionVar(r *http.Request, key string) (string, error) {
 	}
 }
 
+func HstsMiddleware(w traffic.ResponseWriter, r *traffic.Request) {
+	w.Header().Add("Strict-Transport-Security", "max-age=15768000")
+}
+
 // init is one of those magic functions that runs once on project create.
 func init() {
 	router = traffic.New()
@@ -73,6 +77,7 @@ func init() {
 	router.Get("/post/new/?", NewPostGetHandler)
 	router.Post("/post/new/?", NewPostPostHandler)
 	router.Get("/post/:id/?", PostHandler)
+	router.AddBeforeFilter(HstsMiddleware)
 	http.Handle("/", router)
 }
 
