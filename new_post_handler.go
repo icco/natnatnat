@@ -48,7 +48,11 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c.Infof("Got POST params: title: %+v, text: %+v, xsrf: %v", r.Request.FormValue("title"), r.Request.FormValue("text"), r.Request.FormValue("xsrf"))
 	if xsrftoken.Valid(r.Request.FormValue("xsrf"), string(secret), u.String(), "/post/new") {
 		c.Infof("Valid Token!")
+	} else {
+		w.WriteHeader(403)
+		return
 	}
+
 	http.Redirect(w, r.Request, "/", 302)
 	return
 }

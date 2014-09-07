@@ -14,3 +14,7 @@ type Entry struct {
 	tags     []string
 	// TODO(icco): Define a meta field that is a json hash of extra data
 }
+
+func WriteEntry(title string, content string, datetime time.Time, tags []string) {
+
+}
