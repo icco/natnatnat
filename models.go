@@ -34,15 +34,25 @@ func NewEntry(title string, content string, datetime time.Time, tags []string) *
 	return e
 }
 
+func GetEntry(c appengine.Context, id int64) (*Entry, error) {
+	var entry Entry
+	q := datastore.NewQuery("Entry").Filter("Id =", id)
+	_, err := q.Run(c).Next(&entry)
+	if err != nil {
+		c.Warningf("Error getting entry %d", id)
+		return nil, err
+	}
+	return &entry, nil
+}
+
 func MaxId(c appengine.Context) (int64, error) {
-	entry := new(Entry)
+	var entry Entry
 	q := datastore.NewQuery("Entry").Order("-Id").Limit(1)
 	_, err := q.Run(c).Next(&entry)
 	if err != nil {
-		return 0, nil
-	} else {
-		return entry.Id, nil
+		return 0, err
 	}
+	return entry.Id, nil
 }
 
 func (e *Entry) hasId() bool {
