@@ -4,8 +4,10 @@ import (
 	"appengine"
 	"appengine/user"
 	"code.google.com/p/xsrftoken"
+	"fmt"
 	"github.com/pilu/traffic"
 	"net/http"
+	"time"
 )
 
 type NewPostPageData struct {
@@ -45,14 +47,24 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	} else {
 		c.Infof("Logged in as: %s", u.String())
 	}
-	c.Infof("Got POST params: title: %+v, text: %+v, xsrf: %v", r.Request.FormValue("title"), r.Request.FormValue("text"), r.Request.FormValue("xsrf"))
-	if xsrftoken.Valid(r.Request.FormValue("xsrf"), string(secret), u.String(), "/post/new") {
+
+	title := r.Request.FormValue("title")
+	content := r.Request.FormValue("text")
+	xsrf := r.Request.FormValue("xsrf")
+
+	c.Infof("Got POST params: title: %+v, text: %+v, xsrf: %v", title, content, xsrf)
+	if xsrftoken.Valid(xsrf, string(secret), u.String(), "/post/new") {
 		c.Infof("Valid Token!")
 	} else {
 		w.WriteHeader(403)
 		return
 	}
 
-	http.Redirect(w, r.Request, "/", 302)
+	e := NewEntry(title, content, time.Now(), []string{})
+	e.save(c)
+
+	new_route := fmt.Sprintf("/post/%d", e.Id)
+
+	http.Redirect(w, r.Request, new_route, 302)
 	return
 }
