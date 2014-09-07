@@ -73,5 +73,10 @@ func (e *Entry) save(c appengine.Context) error {
 	}
 
 	_, err := datastore.Put(c, k, e)
+	if err == nil {
+		c.Infof("Wrote %+v", e)
+	} else {
+		c.Warningf("Error writing entry: %v", e)
+	}
 	return err
 }
