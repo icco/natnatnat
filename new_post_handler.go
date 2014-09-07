@@ -4,6 +4,7 @@ import (
 	"appengine"
 	"appengine/user"
 	"code.google.com/p/xsrftoken"
+	"errors"
 	"fmt"
 	"github.com/pilu/traffic"
 	"net/http"
@@ -57,7 +58,7 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		c.Infof("Valid Token!")
 	} else {
 		c.Infof("Invalid Token...")
-		w.WriteHeader(403)
+		http.Error(w, errors.New("Invalid Token").Error(), 403)
 		return
 	}
 
@@ -68,6 +69,12 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 
+	_, lookup_err := GetEntry(c, e.Id)
+	i := 0
+	for lookup_err != nil && i > 1000 {
+		_, lookup_err = GetEntry(c, e.Id)
+		i += 1
+	}
 	new_route := fmt.Sprintf("/post/%d", e.Id)
 	http.Redirect(w, r.Request, new_route, 302)
 	return
