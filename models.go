@@ -55,6 +55,13 @@ func MaxId(c appengine.Context) (int64, error) {
 	return entry.Id, nil
 }
 
+func AllPosts(c appengine.Context) (*[]Entry, error) {
+	q := datastore.NewQuery("Entry").Order("-Datetime")
+	entries := new([]Entry)
+	_, err := q.GetAll(c, entries)
+	return entries, err
+}
+
 func (e *Entry) hasId() bool {
 	return (e.Id <= 0)
 }

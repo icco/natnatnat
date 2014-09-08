@@ -122,6 +122,10 @@ html {
   }
 }
 
+img.logo {
+  width: 100px;
+}
+
 /* #PAGE */
 .site__header {
   padding-bottom: 1.4444rem;
@@ -131,6 +135,18 @@ html {
 
 .site__title {
   margin-bottom: 0;
+}
+
+.header {
+  ul {
+    list-style: none;
+  }
+}
+
+.front-page {
+  border-left: 1px #808080 solid;
+  margin: 20px 5px;
+  padding: 10px;
 }
 
 .wrap {
