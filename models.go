@@ -10,7 +10,7 @@ import (
 type Entry struct {
 	Id       int64
 	Title    string // optional
-	Content  []byte // Markdown
+	Content  string `datastore:",noindex"` // Markdown
 	Datetime time.Time
 	Created  time.Time
 	Modified time.Time
@@ -23,7 +23,7 @@ func NewEntry(title string, content string, datetime time.Time, tags []string) *
 
 	// User supplied content
 	e.Title = title
-	e.Content = []byte(content)
+	e.Content = content
 	e.Datetime = datetime
 	e.Tags = tags
 
