@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"github.com/pilu/traffic"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -52,6 +53,7 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	title := r.Request.FormValue("title")
 	content := r.Request.FormValue("text")
 	xsrf := r.Request.FormValue("xsrf")
+	tags := strings.Split(r.Request.FormValue("tags"), ",")
 
 	c.Infof("Got POST params: title: %+v, text: %+v, xsrf: %v", title, content, xsrf)
 	if xsrftoken.Valid(xsrf, string(secret), u.String(), "/post/new") {
@@ -62,7 +64,7 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 
-	e := NewEntry(title, content, time.Now(), []string{})
+	e := NewEntry(title, content, time.Now(), tags)
 	err := e.save(c)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
