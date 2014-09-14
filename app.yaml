@@ -2,11 +2,6 @@ runtime: go
 api_version: go1
 version: 1-0-1
 handlers:
-- url: /img/.*\.svg
-  static_dir: public/img
-  mime_type: image/svg+xml
-  http_headers:
-    mime-type: image/svg+xml
 - url: .*
   script: natnatnat
   secure: always

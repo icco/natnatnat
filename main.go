@@ -79,7 +79,7 @@ func init() {
 	router.Get("/post/:id/?", PostHandler)
 
 	router.AddBeforeFilter(HstsMiddleware)
-	router.Use(traffic.NewStaticMiddleware(traffic.PublicPath()))
+	router.Use(NewStaticMiddleware(traffic.PublicPath()))
 
 	http.Handle("/", router)
 }
