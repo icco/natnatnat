@@ -8,11 +8,11 @@
     <div class="wrap">
       <div class="grid">
         <div class="grid__col grid_col--1-of-5 header">
-          <img src="/img/natwelchlogo.svg" class="logo">
+          <img src="/img/natwelchlogo.png" class="logo">
           <ul>
-            <li>About</li>
-            <li>Archives</li>
-            <li>Stats</li>
+            <li><a href="/about">About</a></li>
+            <li><a href="/archives">Archives</a></li>
+            <li><a href="/stats">Stats</a></li>
           </ul>
         </div>
 
