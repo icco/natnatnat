@@ -1,14 +1,18 @@
-package traffic
+package main
 
 import (
+	"github.com/pilu/traffic"
+	"log"
+	"mime"
 	"net/http"
+	"path/filepath"
 )
 
 type StaticMiddleware struct {
 	publicPath string
 }
 
-func (middleware *StaticMiddleware) ServeHTTP(w ResponseWriter, r *Request, next NextMiddlewareFunc) {
+func (middleware *StaticMiddleware) ServeHTTP(w traffic.ResponseWriter, r *traffic.Request, next traffic.NextMiddlewareFunc) {
 	callNext := func() {
 		if nextMiddleware := next(); nextMiddleware != nil {
 			nextMiddleware.ServeHTTP(w, r, next)
@@ -26,7 +30,10 @@ func (middleware *StaticMiddleware) ServeHTTP(w ResponseWriter, r *Request, next
 	defer file.Close()
 
 	if info, err := file.Stat(); err == nil && !info.IsDir() {
-		w.Header().Del("Content-Type")
+		ctype := mime.TypeByExtension(filepath.Ext(path))
+		log.Printf("content-type according to go: %s", ctype)
+		w.Header().Set("Content-Type", ctype)
+		log.Printf("Static file headers: %s", w.Header())
 		http.ServeContent(w, r.Request, path, info.ModTime(), file)
 		return
 	}
