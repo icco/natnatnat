@@ -13,6 +13,10 @@
             <li><a href="/about">About</a></li>
             <li><a href="/archives">Archives</a></li>
             <li><a href="/stats">Stats</a></li>
+
+            {{if .IsAdmin}}
+              <div><a href="/post/new">New Post</a></div>
+            {{end}}
           </ul>
         </div>
 

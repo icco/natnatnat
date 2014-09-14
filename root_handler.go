@@ -7,7 +7,8 @@ import (
 )
 
 type RootData struct {
-	Posts interface{}
+	Posts   interface{}
+	IsAdmin bool
 }
 
 func RootHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -17,6 +18,6 @@ func RootHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	data := &RootData{entries}
+	data := &RootData{Posts: entries, IsAdmin: IsAdmin(c)}
 	w.Render("index", data)
 }

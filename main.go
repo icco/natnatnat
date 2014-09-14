@@ -3,6 +3,7 @@ package main
 import (
 	"appengine"
 	"appengine/datastore"
+	"appengine/user"
 	"errors"
 	"github.com/gorilla/sessions"
 	"github.com/pilu/traffic"
@@ -68,6 +69,10 @@ func GetSessionVar(r *http.Request, key string) (string, error) {
 
 func HstsMiddleware(w traffic.ResponseWriter, r *traffic.Request) {
 	w.Header().Add("Strict-Transport-Security", "max-age=15768000")
+}
+
+func IsAdmin(c appengine.Context) bool {
+	return c != nil && user.IsAdmin(c)
 }
 
 // init is one of those magic functions that runs once on project create.
