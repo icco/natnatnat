@@ -72,6 +72,10 @@ func HstsMiddleware(w traffic.ResponseWriter, r *traffic.Request) {
 
 // init is one of those magic functions that runs once on project create.
 func init() {
+	if !appengine.IsDevAppServer() {
+		traffic.SetVar("env", "production")
+	}
+
 	router = traffic.New()
 	router.Get("/", RootHandler)
 	router.Get("/post/new/?", NewPostGetHandler)
