@@ -9,6 +9,6 @@
   Content: {{ .Entry.Content }}
 </p>
 <p>
-  Datetime: {{ .Entry.Datetime }}
+  Datetime: {{ .Entry.Datetime|fmttime}}
 </p>
 {{ template "includes/footer" }}

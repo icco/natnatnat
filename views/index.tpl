@@ -5,7 +5,7 @@
     {{ if $entry.Title }}
       <h2>{{ $entry.Title }}</h2>
     {{ end }}
-    {{ $entry.Content }} <a href="/post/{{$entry.Id}}">{{$entry.Datetime}}</a>
+    {{ $entry.Content }} <a href="/post/{{$entry.Id}}">{{$entry.Datetime|fmttime}}</a>
   </div>
 {{ end }}
 {{ template "includes/footer" }}

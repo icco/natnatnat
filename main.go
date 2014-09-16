@@ -8,6 +8,7 @@ import (
 	"github.com/gorilla/sessions"
 	"github.com/pilu/traffic"
 	"net/http"
+	"time"
 )
 
 var router *traffic.Router
@@ -75,11 +76,18 @@ func IsAdmin(c appengine.Context) bool {
 	return c != nil && user.IsAdmin(c)
 }
 
+func fmtTime(t time.Time) string {
+	const layout = "03:04 on Jan 2, 2006"
+	return t.Format(layout)
+}
+
 // init is one of those magic functions that runs once on project create.
 func init() {
 	if !appengine.IsDevAppServer() {
 		traffic.SetVar("env", "production")
 	}
+
+	traffic.TemplateFunc("fmttime", fmtTime)
 
 	router = traffic.New()
 	router.Get("/", RootHandler)
