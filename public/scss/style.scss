@@ -122,8 +122,15 @@ html {
   }
 }
 
-img.logo {
-  width: 100px;
+.leftnav {
+  img.logo {
+    width: 80px;
+  }
+
+  li {
+    list-style: none;
+    margin-left: 10px;
+  }
 }
 
 /* #PAGE */

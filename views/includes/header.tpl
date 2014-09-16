@@ -7,8 +7,8 @@
   <body>
     <div class="wrap">
       <div class="grid">
-        <div class="grid__col grid_col--1-of-5 header">
-          <a href="/"><img src="/img/natwelchlogo.png" class="logo"></a>
+        <div class="grid__col grid_col--1-of-5 leftnav">
+          <a href="/"><img src="/img/natwelchlogo2.png" class="logo"></a>
           <ul>
             <li><a href="/about">About</a></li>
             <li><a href="/archives">Archives</a></li>
