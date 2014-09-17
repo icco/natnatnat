@@ -5,8 +5,11 @@ import (
 	"appengine/datastore"
 	"appengine/user"
 	"errors"
+	"fmt"
 	"github.com/gorilla/sessions"
 	"github.com/pilu/traffic"
+	"github.com/russross/blackfriday"
+	"html/template"
 	"net/http"
 	"time"
 )
@@ -81,6 +84,11 @@ func fmtTime(t time.Time) string {
 	return t.Format(layout)
 }
 
+func markdown(args ...interface{}) template.HTML {
+	s := blackfriday.MarkdownCommon([]byte(fmt.Sprintf("%s", args...)))
+	return template.HTML(s)
+}
+
 // init is one of those magic functions that runs once on project create.
 func init() {
 	if !appengine.IsDevAppServer() {
@@ -88,6 +96,7 @@ func init() {
 	}
 
 	traffic.TemplateFunc("fmttime", fmtTime)
+	traffic.TemplateFunc("mrkdwn", markdown)
 
 	router = traffic.New()
 	router.Get("/", RootHandler)
