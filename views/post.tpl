@@ -1,14 +1,12 @@
 {{ template "includes/header" }}
-<p>
-  Id: {{ .Entry.Id }}
-</p>
-<p>
-  Title: {{ .Entry.Title }}
-</p>
-<p>
-  Content: {{ .Entry.Content }}
-</p>
-<p>
-  Datetime: {{ .Entry.Datetime|fmttime}}
-</p>
+
+<div class="post">
+  <h1>{{.Entry.Title}}</h1>
+  <div class="markdown">{{.Entry.Content}}</div>
+
+  <div class="meta">
+    <a href="/post/{{.Entry.Id}}">{{.Entry.Datetime|fmttime}}</a>
+  </div>
+</div>
+
 {{ template "includes/footer" }}
