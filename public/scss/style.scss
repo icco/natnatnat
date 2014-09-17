@@ -102,8 +102,9 @@ a:hover {
 html {
   font: 112.5%/1.444444444 "Runda", "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  background-color: white;
-  color: #47525d;
+  // color: #47525d;
+  background: #FEFCF6;
+  color: #211800;
 }
 
 @media (max-width: 700px) {
@@ -112,13 +113,16 @@ html {
   }
 }
 
+body {
+}
+
 .leftnav {
   text-align: right;
-  background: #F0F8FF;
-  padding: 3px 10px 100px;
+  background: rgba(211, 211, 211, 0.1);
+  padding: 3px 10px 50px;
 
   ul {
-    margin: 0;
+    margin: 20px 0 0 0;
     padding: 0;
   }
 
