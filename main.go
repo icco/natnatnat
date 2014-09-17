@@ -14,7 +14,6 @@ import (
 	"time"
 )
 
-var router *traffic.Router
 var store *sessions.CookieStore
 var secret []byte
 
@@ -85,7 +84,8 @@ func fmtTime(t time.Time) string {
 }
 
 func markdown(args ...interface{}) template.HTML {
-	s := blackfriday.MarkdownCommon([]byte(fmt.Sprintf("%s", args...)))
+	inc := []byte(fmt.Sprintf("%s", args...))
+	s := blackfriday.MarkdownCommon(inc)
 	return template.HTML(s)
 }
 
@@ -98,7 +98,7 @@ func init() {
 	traffic.TemplateFunc("fmttime", fmtTime)
 	traffic.TemplateFunc("mrkdwn", markdown)
 
-	router = traffic.New()
+	router := traffic.New()
 	router.Get("/", RootHandler)
 	router.Get("/post/new/?", NewPostGetHandler)
 	router.Post("/post/new/?", NewPostPostHandler)
