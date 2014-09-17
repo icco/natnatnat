@@ -47,6 +47,13 @@ h2, .beta {
   widows: 3;
 }
 
+.front-page {
+  h2 {
+    margin-top: 0;
+    padding-top: 0;
+  }
+}
+
 h3, .gamma {
   padding-top: 0.7222rem;
   margin-bottom: 0.7222rem;
@@ -76,7 +83,7 @@ pre {
 }
 
 a {
-  text-decoration: underline;
+  text-decoration: none;
   color: inherit;
 }
 
@@ -123,13 +130,17 @@ html {
 }
 
 .leftnav {
+  text-align: right;
+  background: #F0F8FF;
+  padding: 3px 10px 100px;
+
   img.logo {
     width: 80px;
   }
 
   li {
     list-style: none;
-    margin-left: 10px;
+    margin-right: 10px;
   }
 }
 
