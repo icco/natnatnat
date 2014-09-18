@@ -28,15 +28,20 @@ func NewPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	} else {
 		c.Infof("Logged in as: %s", u.String())
 	}
-	url, _ := user.LogoutURL(c, "/")
 
-	// key is a secret key for your application. userID is a unique identifier
-	// for the user. actionID is the action the user is taking (e.g. POSTing to a
-	// particular path).
-	token := xsrftoken.Generate(string(secret), u.String(), "/post/new")
-	// SetSessionVar(r.Request, w, "xsrf", token)
-	responseData := &NewPostPageData{LogoutUrl: url, User: u.String(), Xsrf: token}
-	w.Render("new_post", responseData)
+	if u != nil && !user.IsAdmin(c) {
+		http.Error(w, errors.New("Not a valid user.").Error(), 403)
+		return
+	} else {
+		url, _ := user.LogoutURL(c, "/")
+		// ey is a secret key for your application. userID is a unique identifier
+		// for the user. actionID is the action the user is taking (e.g. POSTing to a
+		// particular path).
+		token := xsrftoken.Generate(string(secret), u.String(), "/post/new")
+		// SetSessionVar(r.Request, w, "xsrf", token)
+		responseData := &NewPostPageData{LogoutUrl: url, User: u.String(), Xsrf: token}
+		w.Render("new_post", responseData)
+	}
 }
 
 func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -50,28 +55,33 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		c.Infof("Logged in as: %s", u.String())
 	}
 
-	title := r.Request.FormValue("title")
-	content := r.Request.FormValue("text")
-	xsrf := r.Request.FormValue("xsrf")
-	tags := strings.Split(r.Request.FormValue("tags"), ",")
-
-	c.Infof("Got POST params: title: %+v, text: %+v, xsrf: %v", title, content, xsrf)
-	if xsrftoken.Valid(xsrf, string(secret), u.String(), "/post/new") {
-		c.Infof("Valid Token!")
+	if u != nil && !user.IsAdmin(c) {
+		http.Error(w, errors.New("Not a valid user.").Error(), 403)
+		return
 	} else {
-		c.Infof("Invalid Token...")
-		http.Error(w, errors.New("Invalid Token").Error(), 403)
+		title := r.Request.FormValue("title")
+		content := r.Request.FormValue("text")
+		xsrf := r.Request.FormValue("xsrf")
+		tags := strings.Split(r.Request.FormValue("tags"), ",")
+
+		c.Infof("Got POST params: title: %+v, text: %+v, xsrf: %v", title, content, xsrf)
+		if xsrftoken.Valid(xsrf, string(secret), u.String(), "/post/new") {
+			c.Infof("Valid Token!")
+		} else {
+			c.Infof("Invalid Token...")
+			http.Error(w, errors.New("Invalid Token").Error(), 403)
+			return
+		}
+
+		e := NewEntry(title, content, time.Now(), tags)
+		err := e.save(c)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+
+		new_route := fmt.Sprintf("/post/%d", e.Id)
+		http.Redirect(w, r.Request, new_route, 302)
 		return
 	}
-
-	e := NewEntry(title, content, time.Now(), tags)
-	err := e.save(c)
-	if err != nil {
-		http.Error(w, err.Error(), 500)
-		return
-	}
-
-	new_route := fmt.Sprintf("/post/%d", e.Id)
-	http.Redirect(w, r.Request, new_route, 302)
-	return
 }
