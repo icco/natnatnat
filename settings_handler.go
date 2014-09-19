@@ -12,17 +12,17 @@ import (
 	"time"
 )
 
-type NewPostPageData struct {
+type SettingsPageData struct {
 	LogoutUrl string
 	User      string
 	Xsrf      string
 }
 
-func NewPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
+func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	u := user.Current(c)
 	if u == nil {
-		url, _ := user.LoginURL(c, "/post/new")
+		url, _ := user.LoginURL(c, "/settings")
 		http.Redirect(w, r.Request, url, 302)
 		return
 	} else {
@@ -33,21 +33,27 @@ func NewPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, errors.New("Not a valid user.").Error(), 403)
 		return
 	} else {
+		err := WriteVersionKey(c)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+
 		url, _ := user.LogoutURL(c, "/")
-		// ey is a secret key for your application. userID is a unique identifier
+		// key is a secret key for your application. userID is a unique identifier
 		// for the user. actionID is the action the user is taking (e.g. POSTing to a
 		// particular path).
-		token := xsrftoken.Generate(string(secret), u.String(), "/post/new")
-		responseData := &NewPostPageData{LogoutUrl: url, User: u.String(), Xsrf: token}
-		w.Render("new_post", responseData)
+		token := xsrftoken.Generate(string(secret), u.String(), "/settings")
+		responseData := &SettingsPageData{LogoutUrl: url, User: u.String(), Xsrf: token}
+		w.Render("settings", responseData)
 	}
 }
 
-func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
+func SettingsPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	u := user.Current(c)
 	if u == nil {
-		url, _ := user.LoginURL(c, "/post/new")
+		url, _ := user.LoginURL(c, "settings")
 		http.Redirect(w, r.Request, url, 302)
 		return
 	} else {
@@ -58,13 +64,11 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, errors.New("Not a valid user.").Error(), 403)
 		return
 	} else {
-		title := r.Request.FormValue("title")
-		content := r.Request.FormValue("text")
+		session_key := r.Request.FormValue("session_key")
+		twitter_key := r.Request.FormValue("twitter_key")
 		xsrf := r.Request.FormValue("xsrf")
-		tags := strings.Split(r.Request.FormValue("tags"), ",")
 
-		c.Infof("Got POST params: title: %+v, text: %+v, xsrf: %v", title, content, xsrf)
-		if xsrftoken.Valid(xsrf, string(secret), u.String(), "/post/new") {
+		if xsrftoken.Valid(xsrf, string(secret), u.String(), "/settings") {
 			c.Infof("Valid Token!")
 		} else {
 			c.Infof("Invalid Token...")
@@ -72,15 +76,13 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			return
 		}
 
-		e := NewEntry(title, content, time.Now(), tags)
-		err := e.save(c)
+		err := WriteVersionKey(c)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
 		}
 
-		new_route := fmt.Sprintf("/post/%d", e.Id)
-		http.Redirect(w, r.Request, new_route, 302)
+		http.Redirect(w, r.Request, "/", 302)
 		return
 	}
 }

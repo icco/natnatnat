@@ -7,6 +7,22 @@ import (
 	"time"
 )
 
+type Flag struct {
+	Name  string
+	Value string
+}
+
+func SetFlag(c appengine.Context, flag string, value string) error {
+	k = datastore.NewKey(c, "Flag", flag, 0, nil)
+	_, err := datastore.Put(c, k, e)
+	if err == nil {
+		c.Infof("Wrote %+v", e)
+	} else {
+		c.Warningf("Error writing entry: %v", e)
+	}
+	return err
+}
+
 type Entry struct {
 	Id       int64
 	Title    string // optional
