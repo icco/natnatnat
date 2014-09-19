@@ -47,6 +47,8 @@ func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 }
 
 func SettingsPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	var err error
+
 	c := appengine.NewContext(r.Request)
 	u := user.Current(c)
 	if u == nil {
@@ -73,13 +75,13 @@ func SettingsPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			return
 		}
 
-		err := SetFlag(c, "SESSION_KEY", session_key)
+		err = SetFlag(c, "SESSION_KEY", session_key)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
 		}
 
-		err := SetFlag(c, "TWITTER_KEY", twitter_key)
+		err = SetFlag(c, "TWITTER_KEY", twitter_key)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return

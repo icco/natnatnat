@@ -49,9 +49,14 @@ func init() {
 
 	router := traffic.New()
 	router.Get("/", RootHandler)
+
 	router.Get("/post/new/?", NewPostGetHandler)
 	router.Post("/post/new/?", NewPostPostHandler)
+
 	router.Get("/post/:id/?", PostHandler)
+
+	router.Get("/settings", SettingsGetHandler)
+	router.Post("/settings", SettingsPostHandler)
 
 	router.AddBeforeFilter(HstsMiddleware)
 	router.Use(NewStaticMiddleware(traffic.PublicPath()))
