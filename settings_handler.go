@@ -15,6 +15,7 @@ type SettingsPageData struct {
 	Xsrf      string
 	Twitter   string
 	Session   string
+	Version   string
 }
 
 func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -45,6 +46,7 @@ func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		token := xsrftoken.Generate(string(secret), u.String(), "/settings")
 		twt, _ := GetFlag(c, "TWITTER_KEY")
 		ses, _ := GetFlag(c, "SESSION_KEY")
+		ver, _ := GetFlag(c, "VERSION")
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
@@ -54,6 +56,7 @@ func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			Session:   ses,
 			Twitter:   twt,
 			User:      u.String(),
+			Version:   ver,
 			Xsrf:      token,
 		}
 		w.Render("settings", responseData)
