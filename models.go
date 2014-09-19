@@ -27,6 +27,17 @@ func SetFlag(c appengine.Context, flag string, value string) error {
 	return err
 }
 
+func GetFlag(c appengine.Context, flag string) (string, error) {
+	var retrieved Flag
+	k := datastore.NewKey(c, "Flag", flag, 0, nil)
+	err := datastore.Get(c, k, &retrieved)
+	if err != nil {
+		return "", err
+	}
+
+	return retrieved.Value, nil
+}
+
 type Entry struct {
 	Id       int64
 	Title    string // optional

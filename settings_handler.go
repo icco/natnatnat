@@ -13,6 +13,8 @@ type SettingsPageData struct {
 	LogoutUrl string
 	User      string
 	Xsrf      string
+	Twitter   string
+	Session   string
 }
 
 func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -41,7 +43,19 @@ func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		// for the user. actionID is the action the user is taking (e.g. POSTing to a
 		// particular path).
 		token := xsrftoken.Generate(string(secret), u.String(), "/settings")
-		responseData := &SettingsPageData{LogoutUrl: url, User: u.String(), Xsrf: token}
+		twt, _ := GetFlag(c, "TWITTER_KEY")
+		ses, _ := GetFlag(c, "SESSION_KEY")
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+		responseData := &SettingsPageData{
+			LogoutUrl: url,
+			Session:   ses,
+			Twitter:   twt,
+			User:      u.String(),
+			Xsrf:      token,
+		}
 		w.Render("settings", responseData)
 	}
 }
