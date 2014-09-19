@@ -13,11 +13,11 @@ type Flag struct {
 }
 
 func SetFlag(c appengine.Context, flag string, value string) error {
-	e := new(Entry)
-	e.Flag = flag
+	e := new(Flag)
+	e.Name = flag
 	e.Value = value
 
-	k = datastore.NewKey(c, "Flag", flag, 0, nil)
+	k := datastore.NewKey(c, "Flag", flag, 0, nil)
 	_, err := datastore.Put(c, k, e)
 	if err == nil {
 		c.Infof("Wrote %+v", e)

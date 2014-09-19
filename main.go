@@ -2,9 +2,7 @@ package main
 
 import (
 	"appengine"
-	"appengine/datastore"
 	"appengine/user"
-	"errors"
 	"fmt"
 	"github.com/gorilla/sessions"
 	"github.com/pilu/traffic"

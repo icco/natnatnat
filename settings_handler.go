@@ -5,11 +5,8 @@ import (
 	"appengine/user"
 	"code.google.com/p/xsrftoken"
 	"errors"
-	"fmt"
 	"github.com/pilu/traffic"
 	"net/http"
-	"strings"
-	"time"
 )
 
 type SettingsPageData struct {
@@ -76,7 +73,13 @@ func SettingsPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			return
 		}
 
-		err := WriteVersionKey(c)
+		err := SetFlag(c, "SESSION_KEY", session_key)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+
+		err := SetFlag(c, "TWITTER_KEY", twitter_key)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
