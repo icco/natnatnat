@@ -2,6 +2,7 @@ package main
 
 import (
 	"appengine"
+	"errors"
 	"github.com/pilu/traffic"
 	"net/http"
 	"strconv"

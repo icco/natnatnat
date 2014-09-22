@@ -100,11 +100,6 @@ func (e *Entry) hasId() bool {
 }
 
 func (e *Entry) save(c appengine.Context) error {
-	// Before save checks
-	if e.Public == nil {
-		e.Public = true
-	}
-
 	var k *datastore.Key
 	if e.hasId() {
 		id, _ := MaxId(c)
