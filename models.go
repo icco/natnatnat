@@ -46,10 +46,11 @@ type Entry struct {
 	Created  time.Time
 	Modified time.Time
 	Tags     []string
+	Public   bool
 	// TODO(icco): Define a meta field that is a json hash of extra data
 }
 
-func NewEntry(title string, content string, datetime time.Time, tags []string) *Entry {
+func NewEntry(title string, content string, datetime time.Time, public bool, tags []string) *Entry {
 	e := new(Entry)
 
 	// User supplied content
@@ -57,6 +58,7 @@ func NewEntry(title string, content string, datetime time.Time, tags []string) *
 	e.Content = content
 	e.Datetime = datetime
 	e.Tags = tags
+	e.Public = public
 
 	// Computer generated content
 	e.Created = time.Now()
@@ -98,6 +100,11 @@ func (e *Entry) hasId() bool {
 }
 
 func (e *Entry) save(c appengine.Context) error {
+	// Before save checks
+	if e.Public == nil {
+		e.Public = true
+	}
+
 	var k *datastore.Key
 	if e.hasId() {
 		id, _ := MaxId(c)

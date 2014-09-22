@@ -23,6 +23,13 @@ func PostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	responseData := &ResponseData{entry}
-	w.Render("post", responseData)
+
+	if !entry.Public {
+		http.Error(w, errors.New("Post is not public").Error(), 403)
+		return
+	} else {
+		responseData := &ResponseData{entry}
+		w.Render("post", responseData)
+		return
+	}
 }

@@ -63,6 +63,9 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		xsrf := r.Request.FormValue("xsrf")
 		tags := strings.Split(r.Request.FormValue("tags"), ",")
 
+		// TODO(icco): Add as HTML option
+		public := true
+
 		c.Infof("Got POST params: title: %+v, text: %+v, xsrf: %v", title, content, xsrf)
 		if xsrftoken.Valid(xsrf, string(secret), u.String(), "/post/new") {
 			c.Infof("Valid Token!")
@@ -72,7 +75,7 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			return
 		}
 
-		e := NewEntry(title, content, time.Now(), tags)
+		e := NewEntry(title, content, time.Now(), public, tags)
 		err := e.save(c)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
