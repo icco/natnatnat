@@ -2,6 +2,7 @@
 <html>
   <head>
     <title>Nat? Nat. Nat! {{.Title}}</title>
+    <link rel="stylesheet" href="/css/pure-min.0.5.0.css" />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
