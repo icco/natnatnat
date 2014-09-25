@@ -160,3 +160,14 @@ body {
   margin: 0 auto;
   padding: 1.4444rem;
 }
+
+.pure-form {
+  textarea {
+    resize: vertical;
+  }
+
+  label[for="option-one"] {
+    float: right;
+  }
+}
+
