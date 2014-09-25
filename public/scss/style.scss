@@ -1,6 +1,5 @@
 /* #IMPORT */
-@import '_normalize.scss';
-@import '_grid.scss';
+// Nothing
 
 // Colors
 $border_color: #808080;
@@ -161,3 +160,14 @@ body {
   margin: 0 auto;
   padding: 1.4444rem;
 }
+
+.pure-form {
+  textarea {
+    resize: vertical;
+  }
+
+  label[for="option-one"] {
+    float: right;
+  }
+}
+
