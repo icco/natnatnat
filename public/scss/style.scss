@@ -147,6 +147,10 @@ body {
     padding-top: 10px;
     text-align: right;
   }
+
+  p:first-of-type {
+    margin-top: 0;
+  }
 }
 
 .front-page {
@@ -170,4 +174,3 @@ body {
     float: right;
   }
 }
-
