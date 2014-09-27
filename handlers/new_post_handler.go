@@ -6,6 +6,7 @@ import (
 	"code.google.com/p/xsrftoken"
 	"errors"
 	"fmt"
+	"github.com/icco/natnatnat"
 	"github.com/pilu/traffic"
 	"net/http"
 	"strings"
@@ -76,7 +77,7 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			return
 		}
 
-		e := NewEntry(title, content, time.Now(), public, tags)
+		e := natnatnat.NewEntry(title, content, time.Now(), public, tags)
 		err := e.save(c)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
