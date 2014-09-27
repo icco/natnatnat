@@ -3,8 +3,6 @@ package models
 import (
 	"appengine"
 	"appengine/datastore"
-	"fmt"
-	"time"
 )
 
 type Flag struct {
