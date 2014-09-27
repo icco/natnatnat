@@ -18,7 +18,8 @@
               <li><a href="/stats">Stats</a></li>
 
               {{if .IsAdmin}}
-                <div><a href="/post/new">New Post</a></div>
+              <li><a href="/post/new">New Post</a></li>
+              <li><a href="/settings">Settings</a></li>
               {{end}}
             </ul>
           </div>

@@ -13,6 +13,7 @@ import (
 )
 
 type NewPostPageData struct {
+	IsAdmin   bool
 	LogoutUrl string
 	User      string
 	Xsrf      string
@@ -38,7 +39,7 @@ func NewPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		// for the user. actionID is the action the user is taking (e.g. POSTing to a
 		// particular path).
 		token := xsrftoken.Generate(string(secret), u.String(), "/post/new")
-		responseData := &NewPostPageData{LogoutUrl: url, User: u.String(), Xsrf: token}
+		responseData := &NewPostPageData{LogoutUrl: url, User: u.String(), Xsrf: token, IsAdmin: IsAdmin(c)}
 		w.Render("new_post", responseData)
 	}
 }

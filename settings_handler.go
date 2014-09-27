@@ -10,6 +10,7 @@ import (
 )
 
 type SettingsPageData struct {
+	IsAdmin                  bool
 	LogoutUrl                string
 	Random                   string
 	Session                  string
@@ -68,6 +69,7 @@ func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			User:                     u.String(),
 			Version:                  ver,
 			Xsrf:                     token,
+			IsAdmin:                  IsAdmin(c),
 		}
 		w.Render("settings", responseData)
 	}
