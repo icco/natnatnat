@@ -10,12 +10,15 @@ import (
 )
 
 type SettingsPageData struct {
-	LogoutUrl string
-	User      string
-	Xsrf      string
-	Twitter   string
-	Session   string
-	Version   string
+	LogoutUrl                string
+	Session                  string
+	TwitterAccessToken       string
+	TwitterAccessTokenSecret string
+	TwitterKey               string
+	TwitterSecret            string
+	User                     string
+	Version                  string
+	Xsrf                     string
 }
 
 func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -40,11 +43,13 @@ func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		}
 
 		url, _ := user.LogoutURL(c, "/")
-		// key is a secret key for your application. userID is a unique identifier
-		// for the user. actionID is the action the user is taking (e.g. POSTing to a
-		// particular path).
 		token := xsrftoken.Generate(string(secret), u.String(), "/settings")
-		twt, _ := GetFlag(c, "TWITTER_KEY")
+
+		twt_sec, _ := GetFlag(c, "TWITTER_SECRET")
+		twt_key, _ := GetFlag(c, "TWITTER_KEY")
+		twt_atok, _ := GetFlat(c, "TWITTER_ACCESS_TOKEN")
+		twt_asec, _ := GetFlat(c, "TWITTER_ACCESS_SECRET")
+
 		ses, _ := GetFlag(c, "SESSION_KEY")
 		ver, _ := GetFlag(c, "VERSION")
 		if err != nil {
@@ -52,12 +57,15 @@ func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			return
 		}
 		responseData := &SettingsPageData{
-			LogoutUrl: url,
-			Session:   ses,
-			Twitter:   twt,
-			User:      u.String(),
-			Version:   ver,
-			Xsrf:      token,
+			LogoutUrl:                url,
+			Session:                  ses,
+			TwitterAccessToken:       twt_atok,
+			TwitterAccessTokenSecret: twt_asec,
+			TwitterKey:               twt_key,
+			TwitterSecret:            twt_sec,
+			User:                     u.String(),
+			Version:                  ver,
+			Xsrf:                     token,
 		}
 		w.Render("settings", responseData)
 	}
@@ -80,8 +88,6 @@ func SettingsPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, errors.New("Not a valid user.").Error(), 403)
 		return
 	} else {
-		session_key := r.Request.FormValue("session_key")
-		twitter_key := r.Request.FormValue("twitter_key")
 		xsrf := r.Request.FormValue("xsrf")
 
 		if xsrftoken.Valid(xsrf, string(secret), u.String(), "/settings") {
@@ -92,13 +98,36 @@ func SettingsPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			return
 		}
 
+		session_key := r.Request.FormValue("session_key")
 		err = SetFlag(c, "SESSION_KEY", session_key)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
 		}
 
+		twitter_key := r.Request.FormValue("twitter_key")
 		err = SetFlag(c, "TWITTER_KEY", twitter_key)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+
+		twitter_sec := r.Request.FormValue("twitter_sec")
+		err = SetFlag(c, "TWITTER_SECRET", twitter_sec)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+
+		twitter_atok := r.Request.FormValue("twitter_atok")
+		err = SetFlag(c, "TWITTER_ACCESS_TOKEN", twitter_atok)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+
+		twitter_asec := r.Request.FormValue("twitter_asec")
+		err = SetFlag(c, "TWITTER_ACCESS_SECRET", twitter_asec)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
