@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"appengine"
+	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 	"net/http"
 )
@@ -13,7 +14,7 @@ type RootData struct {
 
 func RootHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	entries, err := AllPosts(c)
+	entries, err := models.AllPosts(c)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return

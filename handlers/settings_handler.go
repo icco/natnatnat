@@ -5,6 +5,7 @@ import (
 	"appengine/user"
 	"code.google.com/p/xsrftoken"
 	"errors"
+	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 	"net/http"
 )
@@ -47,13 +48,13 @@ func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		url, _ := user.LogoutURL(c, "/")
 		token := xsrftoken.Generate(string(secret), u.String(), "/settings")
 
-		twt_sec, _ := GetFlag(c, "TWITTER_SECRET")
-		twt_key, _ := GetFlag(c, "TWITTER_KEY")
-		twt_atok, _ := GetFlag(c, "TWITTER_ACCESS_TOKEN")
-		twt_asec, _ := GetFlag(c, "TWITTER_ACCESS_SECRET")
+		twt_sec, _ := models.GetFlag(c, "TWITTER_SECRET")
+		twt_key, _ := models.GetFlag(c, "TWITTER_KEY")
+		twt_atok, _ := models.GetFlag(c, "TWITTER_ACCESS_TOKEN")
+		twt_asec, _ := models.GetFlag(c, "TWITTER_ACCESS_SECRET")
 
-		ses, _ := GetFlag(c, "SESSION_KEY")
-		ver, _ := GetFlag(c, "VERSION")
+		ses, _ := models.GetFlag(c, "SESSION_KEY")
+		ver, _ := models.GetFlag(c, "VERSION")
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
@@ -103,35 +104,35 @@ func SettingsPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		}
 
 		session_key := r.Request.FormValue("session_key")
-		err = SetFlag(c, "SESSION_KEY", session_key)
+		err = models.SetFlag(c, "SESSION_KEY", session_key)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
 		}
 
 		twitter_key := r.Request.FormValue("twitter_key")
-		err = SetFlag(c, "TWITTER_KEY", twitter_key)
+		err = models.SetFlag(c, "TWITTER_KEY", twitter_key)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
 		}
 
 		twitter_sec := r.Request.FormValue("twitter_sec")
-		err = SetFlag(c, "TWITTER_SECRET", twitter_sec)
+		err = models.SetFlag(c, "TWITTER_SECRET", twitter_sec)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
 		}
 
 		twitter_atok := r.Request.FormValue("twitter_atok")
-		err = SetFlag(c, "TWITTER_ACCESS_TOKEN", twitter_atok)
+		err = models.SetFlag(c, "TWITTER_ACCESS_TOKEN", twitter_atok)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
 		}
 
 		twitter_asec := r.Request.FormValue("twitter_asec")
-		err = SetFlag(c, "TWITTER_ACCESS_SECRET", twitter_asec)
+		err = models.SetFlag(c, "TWITTER_ACCESS_SECRET", twitter_asec)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
