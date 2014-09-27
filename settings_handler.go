@@ -11,6 +11,7 @@ import (
 
 type SettingsPageData struct {
 	LogoutUrl                string
+	Random                   string
 	Session                  string
 	TwitterAccessToken       string
 	TwitterAccessTokenSecret string
@@ -47,8 +48,8 @@ func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 		twt_sec, _ := GetFlag(c, "TWITTER_SECRET")
 		twt_key, _ := GetFlag(c, "TWITTER_KEY")
-		twt_atok, _ := GetFlat(c, "TWITTER_ACCESS_TOKEN")
-		twt_asec, _ := GetFlat(c, "TWITTER_ACCESS_SECRET")
+		twt_atok, _ := GetFlag(c, "TWITTER_ACCESS_TOKEN")
+		twt_asec, _ := GetFlag(c, "TWITTER_ACCESS_SECRET")
 
 		ses, _ := GetFlag(c, "SESSION_KEY")
 		ver, _ := GetFlag(c, "VERSION")
@@ -58,6 +59,7 @@ func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		}
 		responseData := &SettingsPageData{
 			LogoutUrl:                url,
+			Random:                   RandomString(64),
 			Session:                  ses,
 			TwitterAccessToken:       twt_atok,
 			TwitterAccessTokenSecret: twt_asec,

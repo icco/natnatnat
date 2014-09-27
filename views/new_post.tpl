@@ -21,12 +21,12 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
         <input id="option-one" type="checkbox" value="" name="private">
         Private?
       </label>
-  </div>
-
-  <div class="pure-g">
-    <div class="pure-u-1-4">
-      <input type="submit" class="pure-button pure-button-primary" />
     </div>
+
+    <div class="pure-g">
+      <div class="pure-u-1-4">
+        <input type="submit" class="pure-button pure-button-primary" />
+      </div>
     </div>
   </div>
 </form>

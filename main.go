@@ -3,17 +3,30 @@ package main
 import (
 	"appengine"
 	"appengine/user"
+	"bytes"
 	"fmt"
 	"github.com/gorilla/sessions"
 	"github.com/pilu/traffic"
 	"github.com/russross/blackfriday"
 	"html/template"
+	"math/rand"
 	"net/http"
 	"time"
 )
 
 var store *sessions.CookieStore
 var secret []byte
+
+func RandomString(length int) string {
+	buffer := bytes.NewBufferString("")
+
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for _, v := range r.Perm(length) {
+		buffer.WriteString(fmt.Sprintf("%X", v))
+	}
+
+	return buffer.String()
+}
 
 func WriteVersionKey(c appengine.Context) error {
 	return SetFlag(c, "VERSION", "1.0.1")

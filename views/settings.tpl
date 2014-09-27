@@ -1,54 +1,48 @@
 {{ template "includes/header" }}
-Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
-
-	Session
-	TwitterAccessToken
-	TwitterAccessTokenSecret
-	TwitterKey
-	TwitterSecret
-	User
-	Version
-	Xsrf
+<p>Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)</p>
 
 
-<form class="pure-form pure-form-aligned">
+<form class="pure-form pure-form-aligned" method="post" action="/settings">
+
   <fieldset>
     <input type="hidden" value="{{.Xsrf}}" name="xsrf" />
 
     <div class="pure-control-group">
-      <label for="name">Session</label>
-      <input id="name" type="text" placeholder="Session" value="{{.Session}}">
+      <label for="session">Session</label>
+      <input id="session" name="session_key" type="text" placeholder="Session" value="{{.Session}}">
     </div>
 
     <div class="pure-control-group">
-      <label for="name">TwitterAccessToken</label>
-      <input id="name" type="text" placeholder="TwitterAccessToken" value="{{.TwitterAccessToken}}">
+      <label for="twitter_key">Twitter Key</label>
+      <input id="twitter_key" name="twitter_key" type="text" placeholder="Twitter Key" value="{{.TwitterKey}}">
     </div>
 
     <div class="pure-control-group">
-      <label for="name">TwitterAccessTokenSecret</label>
-      <input id="name" type="text" placeholder="TwitterAccessTokenSecret" value="{{.TwitterAccessTokenSecret}}">
+      <label for="twitter_sec">Twitter Secret</label>
+      <input id="twitter_sec" name="twitter_sec" type="text" placeholder="Twitter Secret" value="{{.TwitterSecret}}">
     </div>
 
     <div class="pure-control-group">
-      <label for="name">TwitterKey</label>
-      <input id="name" type="text" placeholder="TwitterKey" value="{{.TwitterKey}}">
+      <label for="twitter_atok">Twitter Access Token</label>
+      <input id="twitter_atok" name="twitter_atok" type="text" placeholder="Twitter Access Token" value="{{.TwitterAccessToken}}">
     </div>
 
     <div class="pure-control-group">
-      <label for="name">TwitterSecret</label>
-      <input id="name" type="text" placeholder="TwitterSecret" value="{{.TwitterSecret}}">
+      <label for="twitter_asec">Twitter Access Token Secret</label>
+      <input id="twitter_asec" name="twitter_asec" type="text" placeholder="Twitter Access Token Secret" value="{{.TwitterAccessTokenSecret}}">
     </div>
 
     <div class="pure-control-group">
-      <label for="name">Version</label>
-      <input id="name" type="text" placeholder="Version" value="{{.Version}}" disabled>
+      <label for="version">Version</label>
+      <input id="version" name="version" type="text" placeholder="Version" value="{{.Version}}" disabled>
     </div>
 
     <div class="pure-controls">
       <button type="submit" class="pure-button pure-button-primary">Submit</button>
     </div>
   </fieldset>
+
+  <p>A random string for you: <br/><textarea class="pure-input-1" style="min-height: 50px;">{{.Random}}</textarea></p>
 </form>
 
 {{ template "includes/footer" }}
