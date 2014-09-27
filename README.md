@@ -7,6 +7,8 @@ The next iteration in Nat's content management system. Previous versions include
  * [tumble.io](http://github.com/icco/tumble)
  * [pseudoweb.net](http://github.com/icco/pseudoweb)
 
+Docs: [godoc.org/github.com/icco/natnatnat](https://godoc.org/github.com/icco/natnatnat)
+
 ## Install
 
  0. Install Go
