@@ -3,14 +3,14 @@ package handlers
 import (
 	"appengine"
 	"errors"
-	"github.com/icco/natnatnat"
+	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 	"net/http"
 	"strconv"
 )
 
 type ResponseData struct {
-	Entry *natnatnat.Entry
+	Entry *models.Entry
 }
 
 func PostHandler(w traffic.ResponseWriter, r *traffic.Request) {
