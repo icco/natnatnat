@@ -64,13 +64,13 @@ func init() {
 	router := traffic.New()
 	router.Get("/", handlers.RootHandler)
 
-	router.Get("/post/new/?", NewPostGetHandler)
-	router.Post("/post/new/?", NewPostPostHandler)
+	router.Get("/post/new/?", handlers.NewPostGetHandler)
+	router.Post("/post/new/?", handlers.NewPostPostHandler)
 
-	router.Get("/post/:id/?", PostHandler)
+	router.Get("/post/:id/?", handlers.PostHandler)
 
-	router.Get("/settings", SettingsGetHandler)
-	router.Post("/settings", SettingsPostHandler)
+	router.Get("/settings", handlers.SettingsGetHandler)
+	router.Post("/settings", handlers.SettingsPostHandler)
 
 	router.AddBeforeFilter(HstsMiddleware)
 	router.Use(NewStaticMiddleware(traffic.PublicPath()))
