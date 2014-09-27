@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"fmt"
 	"github.com/gorilla/sessions"
+	"github.com/icco/natnatnat/handlers"
 	"github.com/pilu/traffic"
 	"github.com/russross/blackfriday"
 	"html/template"
@@ -61,7 +62,7 @@ func init() {
 	traffic.TemplateFunc("mrkdwn", markdown)
 
 	router := traffic.New()
-	router.Get("/", RootHandler)
+	router.Get("/", handlers.RootHandler)
 
 	router.Get("/post/new/?", NewPostGetHandler)
 	router.Post("/post/new/?", NewPostPostHandler)
