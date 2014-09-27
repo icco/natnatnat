@@ -14,6 +14,7 @@ css:
 	scss --trace -t compressed public/scss/style.scss public/css/style.css
 
 run: css *.go
+	goapp get -v github.com/icco/natnatnat
 	gcloud preview app run . --project=natwelch-writing
 
 deploy:
