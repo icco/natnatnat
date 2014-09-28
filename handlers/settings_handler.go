@@ -3,11 +3,15 @@ package handlers
 import (
 	"appengine"
 	"appengine/user"
+	"bytes"
 	"code.google.com/p/xsrftoken"
 	"errors"
+	"fmt"
 	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 	"net/http"
+	"rand"
+	"time"
 )
 
 type SettingsPageData struct {

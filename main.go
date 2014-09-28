@@ -3,14 +3,12 @@ package main
 import (
 	"appengine"
 	"appengine/user"
-	"bytes"
 	"fmt"
 	"github.com/gorilla/sessions"
 	"github.com/icco/natnatnat/handlers"
 	"github.com/pilu/traffic"
 	"github.com/russross/blackfriday"
 	"html/template"
-	"math/rand"
 	"net/http"
 	"time"
 )
