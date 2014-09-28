@@ -13,7 +13,7 @@ install:
 
 # run build
 script:
- - go get -d -v ./... 
+ - ./go_appengine/goapp get -d -v ./... 
  - ./go_appengine/goapp build
  - ./go_appengine/goapp test
 
