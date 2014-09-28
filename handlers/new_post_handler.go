@@ -36,7 +36,7 @@ func NewPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	} else {
 		url, _ := user.LogoutURL(c, "/")
-		token := xsrftoken.Generate(models.GetFlag(c, "SESSION_KEY"), u.String(), "/post/new")
+		token := xsrftoken.Generate(models.GetFlagLogError(c, "SESSION_KEY"), u.String(), "/post/new")
 		responseData := &NewPostPageData{LogoutUrl: url, User: u.String(), Xsrf: token, IsAdmin: user.IsAdmin(c)}
 		w.Render("new_post", responseData)
 	}
@@ -66,7 +66,7 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		public := true
 
 		c.Infof("Got POST params: title: %+v, text: %+v, xsrf: %v", title, content, xsrf)
-		if xsrftoken.Valid(xsrf, models.GetFlag(c, "SESSION_KEY"), u.String(), "/post/new") {
+		if xsrftoken.Valid(xsrf, models.GetFlagLogError(c, "SESSION_KEY"), u.String(), "/post/new") {
 			c.Infof("Valid Token!")
 		} else {
 			c.Infof("Invalid Token...")

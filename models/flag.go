@@ -35,3 +35,17 @@ func GetFlag(c appengine.Context, flag string) (string, error) {
 
 	return retrieved.Value, nil
 }
+
+func GetFlagLogErrors(c appengine.Context, flag string) string {
+	ret, err := GetFlag(c, flag)
+	if err != nil {
+		c.Warningf("Error getting flag '%s': %v", flag, err)
+		return ""
+	}
+
+	return ret
+}
+
+func WriteVersionKey(c appengine.Context) error {
+	return SetFlag(c, "VERSION", "1.0.1")
+}

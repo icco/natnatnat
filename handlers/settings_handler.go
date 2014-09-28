@@ -39,22 +39,23 @@ func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, errors.New("Not a valid user.").Error(), 403)
 		return
 	} else {
-		err := WriteVersionKey(c)
+		err := models.WriteVersionKey(c)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
 		}
 
 		url, _ := user.LogoutURL(c, "/")
-		token := xsrftoken.Generate(models.GetFlag(c, "SESSION_KEY"), u.String(), "/settings")
+		token := xsrftoken.Generate(models.GetFlagLogError(c, "SESSION_KEY"), u.String(), "/settings")
 
-		twt_sec, _ := models.GetFlag(c, "TWITTER_SECRET")
-		twt_key, _ := models.GetFlag(c, "TWITTER_KEY")
-		twt_atok, _ := models.GetFlag(c, "TWITTER_ACCESS_TOKEN")
-		twt_asec, _ := models.GetFlag(c, "TWITTER_ACCESS_SECRET")
+		twt_sec := models.GetFlagLogError(c, "TWITTER_SECRET")
+		twt_key := models.GetFlagLogError(c, "TWITTER_KEY")
+		twt_atok := models.GetFlagLogError(c, "TWITTER_ACCESS_TOKEN")
+		twt_asec := models.GetFlagLogError(c, "TWITTER_ACCESS_SECRET")
 
-		ses, _ := models.GetFlag(c, "SESSION_KEY")
-		ver, _ := models.GetFlag(c, "VERSION")
+		ses := models.GetFlagLogError(c, "SESSION_KEY")
+		ver := models.GetFlagLogError(c, "VERSION")
+
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
@@ -95,7 +96,7 @@ func SettingsPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	} else {
 		xsrf := r.Request.FormValue("xsrf")
 
-		if xsrftoken.Valid(xsrf, models.GetFlag(c, "SESSION_KEY"), u.String(), "/settings") {
+		if xsrftoken.Valid(xsrf, models.GetFlagLogError(c, "SESSION_KEY"), u.String(), "/settings") {
 			c.Infof("Valid Token!")
 		} else {
 			c.Infof("Invalid Token...")

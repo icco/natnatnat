@@ -17,10 +17,6 @@ import (
 
 var store *sessions.CookieStore
 
-func WriteVersionKey(c appengine.Context) error {
-	return SetFlag(c, "VERSION", "1.0.1")
-}
-
 func HstsMiddleware(w traffic.ResponseWriter, r *traffic.Request) {
 	w.Header().Add("Strict-Transport-Security", "max-age=15768000")
 }
