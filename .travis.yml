@@ -9,7 +9,7 @@ install:
  - ./go_appengine/goapp env
  - env `./go_appengine/goapp env` mkdir $GOPATH/src/resize
  - env `./go_appengine/goapp env` curl https://appengine-go.googlecode.com/hg/example/moustachio/resize/resize.go > $GOPATH/src/resize/resize.go
- - ./go_appengine/goapp get ...
+ - ./go_appengine/goapp get -v github.com/icco/natnatnat
 
 # run build
 script:
