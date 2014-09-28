@@ -70,7 +70,7 @@ func (e *Entry) HasId() bool {
 
 func (e *Entry) Save(c appengine.Context) error {
 	var k *datastore.Key
-	if e.hasId() {
+	if e.HasId() {
 		id, _ := MaxId(c)
 		e.Id = id + 1
 		k = datastore.NewIncompleteKey(c, "Entry", nil)
