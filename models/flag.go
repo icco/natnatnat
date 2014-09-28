@@ -36,7 +36,7 @@ func GetFlag(c appengine.Context, flag string) (string, error) {
 	return retrieved.Value, nil
 }
 
-func GetFlagLogErrors(c appengine.Context, flag string) string {
+func GetFlagLogError(c appengine.Context, flag string) string {
 	ret, err := GetFlag(c, flag)
 	if err != nil {
 		c.Warningf("Error getting flag '%s': %v", flag, err)
