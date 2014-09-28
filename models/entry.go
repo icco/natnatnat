@@ -64,11 +64,11 @@ func AllPosts(c appengine.Context) (*[]Entry, error) {
 	return entries, err
 }
 
-func (e *Entry) hasId() bool {
+func (e *Entry) HasId() bool {
 	return (e.Id <= 0)
 }
 
-func (e *Entry) save(c appengine.Context) error {
+func (e *Entry) Save(c appengine.Context) error {
 	var k *datastore.Key
 	if e.hasId() {
 		id, _ := MaxId(c)

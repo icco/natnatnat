@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"appengine"
+	"appengine/user"
 	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 	"net/http"
@@ -19,6 +20,6 @@ func RootHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	data := &RootData{Posts: entries, IsAdmin: IsAdmin(c)}
+	data := &RootData{Posts: entries, IsAdmin: user.IsAdmin(c)}
 	w.Render("index", data)
 }

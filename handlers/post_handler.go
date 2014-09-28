@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"appengine"
+	"appengine/user"
 	"errors"
 	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
@@ -10,7 +11,8 @@ import (
 )
 
 type ResponseData struct {
-	Entry *models.Entry
+	Entry   *models.Entry
+	IsAdmin bool
 }
 
 func PostHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -20,7 +22,7 @@ func PostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	entry, err := GetEntry(c, id)
+	entry, err := models.GetEntry(c, id)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
@@ -30,7 +32,7 @@ func PostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, errors.New("Post is not public").Error(), 403)
 		return
 	} else {
-		responseData := &ResponseData{entry}
+		responseData := &ResponseData{Entry: entry, IsAdmin: user.IsAdmin(c)}
 		w.Render("post", responseData)
 		return
 	}

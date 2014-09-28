@@ -36,11 +36,8 @@ func NewPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	} else {
 		url, _ := user.LogoutURL(c, "/")
-		// ey is a secret key for your application. userID is a unique identifier
-		// for the user. actionID is the action the user is taking (e.g. POSTing to a
-		// particular path).
-		token := xsrftoken.Generate(string(secret), u.String(), "/post/new")
-		responseData := &NewPostPageData{LogoutUrl: url, User: u.String(), Xsrf: token, IsAdmin: IsAdmin(c)}
+		token := xsrftoken.Generate(models.GetFlag(c, "SESSION_KEY"), u.String(), "/post/new")
+		responseData := &NewPostPageData{LogoutUrl: url, User: u.String(), Xsrf: token, IsAdmin: user.IsAdmin(c)}
 		w.Render("new_post", responseData)
 	}
 }
@@ -69,7 +66,7 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		public := true
 
 		c.Infof("Got POST params: title: %+v, text: %+v, xsrf: %v", title, content, xsrf)
-		if xsrftoken.Valid(xsrf, string(secret), u.String(), "/post/new") {
+		if xsrftoken.Valid(xsrf, models.GetFlag(c, "SESSION_KEY"), u.String(), "/post/new") {
 			c.Infof("Valid Token!")
 		} else {
 			c.Infof("Invalid Token...")
@@ -78,7 +75,7 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		}
 
 		e := models.NewEntry(title, content, time.Now(), public, tags)
-		err := e.save(c)
+		err := e.Save(c)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return

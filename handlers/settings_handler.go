@@ -46,7 +46,7 @@ func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		}
 
 		url, _ := user.LogoutURL(c, "/")
-		token := xsrftoken.Generate(string(secret), u.String(), "/settings")
+		token := xsrftoken.Generate(models.GetFlag(c, "SESSION_KEY"), u.String(), "/settings")
 
 		twt_sec, _ := models.GetFlag(c, "TWITTER_SECRET")
 		twt_key, _ := models.GetFlag(c, "TWITTER_KEY")
@@ -95,7 +95,7 @@ func SettingsPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	} else {
 		xsrf := r.Request.FormValue("xsrf")
 
-		if xsrftoken.Valid(xsrf, string(secret), u.String(), "/settings") {
+		if xsrftoken.Valid(xsrf, models.GetFlag(c, "SESSION_KEY"), u.String(), "/settings") {
 			c.Infof("Valid Token!")
 		} else {
 			c.Infof("Invalid Token...")
@@ -141,4 +141,15 @@ func SettingsPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Redirect(w, r.Request, "/", 302)
 		return
 	}
+}
+
+func RandomString(length int) string {
+	buffer := bytes.NewBufferString("")
+
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for _, v := range r.Perm(length) {
+		buffer.WriteString(fmt.Sprintf("%X", v))
+	}
+
+	return buffer.String()
 }
