@@ -54,6 +54,9 @@ func init() {
 	router.Get("/settings", handlers.SettingsGetHandler)
 	router.Post("/settings", handlers.SettingsPostHandler)
 
+	router.Get("/mention", handlers.WebMentionGetHandler)
+	router.Post("/mention", handlers.WebMentionPostHandler)
+
 	router.AddBeforeFilter(HstsMiddleware)
 	router.Use(NewStaticMiddleware(traffic.PublicPath()))
 
