@@ -17,3 +17,7 @@ deploy:
 clean:
 	rm -rf /tmp/natnatnat
 	mkdir -p /tmp/natnatnat
+
+test: clean
+	goapp get -v github.com/icco/natnatnat
+	goapp test
