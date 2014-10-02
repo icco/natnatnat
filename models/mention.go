@@ -4,17 +4,18 @@ import (
 	"appengine"
 	"appengine/datastore"
 	"fmt"
+	"net/url"
 	"time"
 )
 
 type Mention struct {
-	Source   string
-	Target   string
+	Source   url.URL
+	Target   url.URL
 	Recieved time.Time
 	Verified bool
 }
 
-func NewMention(c appengine.Context, source string, target string) *Mention {
+func NewMention(c appengine.Context, source string, target string) (*Mention, error) {
 	var k *datastore.Key
 	var e *Mention
 
@@ -22,13 +23,32 @@ func NewMention(c appengine.Context, source string, target string) *Mention {
 	if k == nil {
 		k = datastore.NewIncompleteKey(c, "Mention", nil)
 		e = new(Mention)
-		e.Source = source
-		e.target = target
+		src, err := url.Parse(source)
+		if err != nil {
+			return nil, err
+		}
+
+		trg, err := url.Parse(target)
+		if err != nil {
+			return nil, err
+		}
+
+		e.Source = src
+		e.target = trg
 		e.Recieved = time.Now()
 		e.Verified = false
+
+		_, err := datastore.Put(c, k, e)
+		if err != nil {
+			return nil, err
+		}
+	} else {
+		if err = datastore.Get(c, k, &e); err != nil {
+			return nil, err
+		}
 	}
 
-	return e
+	return e, nil
 }
 
 func MentionExists(c appengine.Context, source string, target string) bool {
@@ -43,23 +63,4 @@ func GetMention(c appengine.Context, source string, target string) *datastore.Ke
 		return nil
 	}
 	return k
-}
-
-func (e *Entry) Save(c appengine.Context) error {
-	var k *datastore.Key
-	if e.HasId() {
-		id, _ := MaxId(c)
-		e.Id = id + 1
-		k = datastore.NewIncompleteKey(c, "Entry", nil)
-	} else {
-		k = datastore.NewKey(c, "Entry", fmt.Sprintf("%d", e.Id), 0, nil)
-	}
-
-	_, err := datastore.Put(c, k, e)
-	if err == nil {
-		c.Infof("Wrote %+v", e)
-	} else {
-		c.Warningf("Error writing entry: %v", e)
-	}
-	return err
 }
