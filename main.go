@@ -38,7 +38,7 @@ func markdown(args ...interface{}) template.HTML {
 }
 
 func twitterHandleToMarkdown(in []byte) []byte {
-	return TwitterHandleRegex.ReplaceAll(in, "[@$2](http://twitter.com/$2)")
+	return TwitterHandleRegex.ReplaceAll(in, []byte("[@$2](http://twitter.com/$2)"))
 }
 
 // init is one of those magic functions that runs once on project create.
