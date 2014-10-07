@@ -3,7 +3,6 @@ package models
 import (
 	"appengine"
 	"appengine/datastore"
-	"fmt"
 	"net/url"
 	"time"
 )
@@ -33,12 +32,12 @@ func NewMention(c appengine.Context, source string, target string) (*Mention, er
 			return nil, err
 		}
 
-		e.Source = src
-		e.target = trg
+		e.Source = &src
+		e.Target = &trg
 		e.Recieved = time.Now()
 		e.Verified = false
 
-		_, err := datastore.Put(c, k, e)
+		k, err = datastore.Put(c, k, e)
 		if err != nil {
 			return nil, err
 		}
