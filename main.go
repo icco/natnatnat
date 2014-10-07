@@ -15,7 +15,7 @@ import (
 )
 
 var store *sessions.CookieStore
-var TwitterHandleRegex *regexp.Regexp = regexp.MustCompile(`(?<=^|(?<=[^a-zA-Z0-9-_\.]))@([A-Za-z]+[A-Za-z0-9]+)`)
+var TwitterHandleRegex *regexp.Regexp = regexp.MustCompile(`\s@([_A-Za-z0-9]+)`)
 
 func HstsMiddleware(w traffic.ResponseWriter, r *traffic.Request) {
 	w.Header().Add("Strict-Transport-Security", "max-age=15768000")
