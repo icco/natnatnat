@@ -15,7 +15,7 @@ import (
 )
 
 var store *sessions.CookieStore
-var TwitterHandleRegex *regexp.Regexp = regexp.MustCompile(`\s@([_A-Za-z0-9]+)`)
+var TwitterHandleRegex *regexp.Regexp = regexp.MustCompile(`(\s)@([_A-Za-z0-9]+)`)
 
 func HstsMiddleware(w traffic.ResponseWriter, r *traffic.Request) {
 	w.Header().Add("Strict-Transport-Security", "max-age=15768000")
@@ -38,7 +38,7 @@ func markdown(args ...interface{}) template.HTML {
 }
 
 func twitterHandleToMarkdown(in []byte) []byte {
-	return TwitterHandleRegex.ReplaceAll(in, []byte("[@$1](http://twitter.com/$1)"))
+	return TwitterHandleRegex.ReplaceAll(in, []byte("$1[@$2](http://twitter.com/$2)"))
 }
 
 // init is one of those magic functions that runs once on project create.
