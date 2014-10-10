@@ -10,10 +10,12 @@ import (
 	"github.com/russross/blackfriday"
 	"html/template"
 	"net/http"
+	"regexp"
 	"time"
 )
 
 var store *sessions.CookieStore
+var TwitterHandleRegex *regexp.Regexp = regexp.MustCompile(`(\s)@([_A-Za-z0-9]+)`)
 
 func HstsMiddleware(w traffic.ResponseWriter, r *traffic.Request) {
 	w.Header().Add("Strict-Transport-Security", "max-age=15768000")
@@ -30,8 +32,13 @@ func fmtTime(t time.Time) string {
 
 func markdown(args ...interface{}) template.HTML {
 	inc := []byte(fmt.Sprintf("%s", args...))
+	inc = twitterHandleToMarkdown(inc)
 	s := blackfriday.MarkdownCommon(inc)
 	return template.HTML(s)
+}
+
+func twitterHandleToMarkdown(in []byte) []byte {
+	return TwitterHandleRegex.ReplaceAll(in, []byte("$1[@$2](http://twitter.com/$2)"))
 }
 
 // init is one of those magic functions that runs once on project create.
