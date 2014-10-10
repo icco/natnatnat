@@ -54,3 +54,9 @@ The current thought is that tags will filter out what is shown on each domain. S
  * https://developers.google.com/appengine/docs/domain
  * https://developers.google.com/appengine/docs/go/users/reference
 
+### IRC Convos
+
+ * http://indiewebcamp.com/irc/2014-10-09/line/1412887317947
+   * http://indiewebcamp.com/irc/2014-10-09/line/1412888630804
+   * http://indiewebcamp.com/irc/2014-10-09/line/1412888100522
+   * http://indiewebcamp.com/irc/2014-10-09/line/1412887481931
