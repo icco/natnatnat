@@ -60,3 +60,10 @@ The current thought is that tags will filter out what is shown on each domain. S
    * http://indiewebcamp.com/irc/2014-10-09/line/1412888630804
    * http://indiewebcamp.com/irc/2014-10-09/line/1412888100522
    * http://indiewebcamp.com/irc/2014-10-09/line/1412887481931
+
+## Git DB Idea
+
+ * Creation: git log --diff-filter=A --follow --format=%aD -- main.go
+ * Modified: git log --format=%aD -1 main.go
+ * ID: filename
+ * Tags: Hashtags
