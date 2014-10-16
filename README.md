@@ -45,6 +45,7 @@ The current thought is that tags will filter out what is shown on each domain. S
  * `/post/new` - Special admin only page to create a new post
  * `/post/:id` - View an individual post and its related webmentions
  * `/feed.atom` - Atom feed of content
+ * `/tags/:tag` - List of all posts with this tag
 
 ## TODO
 
