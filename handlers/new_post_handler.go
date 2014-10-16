@@ -60,10 +60,14 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		title := r.Request.FormValue("title")
 		content := r.Request.FormValue("text")
 		xsrf := r.Request.FormValue("xsrf")
-		tags := strings.Split(r.Request.FormValue("tags"), ",")
+		tags, err := models.ParseTags(content)
+		if err != nil {
+			c.Warningf("Couldn't parse tags: %v", err)
+			tags = []string{}
+		}
 
-		// TODO(icco): Add as HTML option
 		public := true
+		c.Infof("Private: %v", r.Request.FormValue("private"))
 
 		c.Infof("Got POST params: title: %+v, text: %+v, xsrf: %v", title, content, xsrf)
 		if xsrftoken.Valid(xsrf, models.GetFlagLogError(c, "SESSION_KEY"), u.String(), "/post/new") {

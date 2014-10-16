@@ -4,6 +4,7 @@ import (
 	"appengine"
 	"appengine/datastore"
 	"fmt"
+	"regexp"
 	"time"
 )
 
@@ -18,6 +19,8 @@ type Entry struct {
 	Public   bool
 	// TODO(icco): Define a meta field that is a json hash of extra data
 }
+
+var HashtagRegex *regexp.Regexp = regexp.MustCompile(`\s#(\w+)`)
 
 func NewEntry(title string, content string, datetime time.Time, public bool, tags []string) *Entry {
 	e := new(Entry)
@@ -36,14 +39,40 @@ func NewEntry(title string, content string, datetime time.Time, public bool, tag
 	return e
 }
 
+func ParseTags(text string) ([]string, error) {
+	// http://golang.org/pkg/regexp/#Regexp.FindAllStringSubmatch
+	finds := HashtagRegex.FindAllStringSubmatch(text, -1)
+	ret := []string{}
+	for _, v := range finds {
+		if finds[1] != nil {
+			ret := append(ret, finds[1])
+		}
+	}
+
+	return ret
+}
+
 func GetEntry(c appengine.Context, id int64) (*Entry, error) {
 	var entry Entry
 	q := datastore.NewQuery("Entry").Filter("Id =", id)
-	_, err := q.Run(c).Next(&entry)
+	k, err := q.Run(c).Next(&entry)
 	if err != nil {
 		c.Warningf("Error getting entry %d", id)
 		return nil, err
 	}
+
+	// Do this for a while, why not.
+	tags, err := ParseTags(entry.Content)
+	if err != nil {
+		return nil, err
+	}
+	entry.Tags = tags
+	_, err := datastore.Put(c, k, entry)
+	if err != nil {
+		c.Warningf("Error resaving entry %d", id)
+		return nil, err
+	}
+
 	return &entry, nil
 }
 

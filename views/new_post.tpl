@@ -12,10 +12,6 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
   <input type="hidden" value="{{.Xsrf}}" name="xsrf" />
 
   <div class="pure-g">
-    <div class="pure-u-1-2">
-      <input type="text" class="pure-input-1" name="tags" placeholder="tags" />
-    </div>
-
     <div class="pure-u-1-2 form-padding">
       <label for="option-one" class="pure-checkbox">
         <input id="option-one" type="checkbox" value="" name="private">
