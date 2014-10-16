@@ -44,12 +44,12 @@ func ParseTags(text string) ([]string, error) {
 	finds := HashtagRegex.FindAllStringSubmatch(text, -1)
 	ret := []string{}
 	for _, v := range finds {
-		if finds[1] != nil {
-			ret := append(ret, finds[1])
+		if len(v) > 1 {
+			ret = append(ret, v[1])
 		}
 	}
 
-	return ret
+	return ret, nil
 }
 
 func GetEntry(c appengine.Context, id int64) (*Entry, error) {
@@ -67,7 +67,7 @@ func GetEntry(c appengine.Context, id int64) (*Entry, error) {
 		return nil, err
 	}
 	entry.Tags = tags
-	_, err := datastore.Put(c, k, entry)
+	_, err = datastore.Put(c, k, entry)
 	if err != nil {
 		c.Warningf("Error resaving entry %d", id)
 		return nil, err

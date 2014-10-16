@@ -9,7 +9,6 @@ import (
 	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 	"net/http"
-	"strings"
 	"time"
 )
 
@@ -79,7 +78,7 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		}
 
 		e := models.NewEntry(title, content, time.Now(), public, tags)
-		err := e.Save(c)
+		err = e.Save(c)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
