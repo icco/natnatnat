@@ -68,7 +68,6 @@ func GetEntry(c appengine.Context, id int64) (*Entry, error) {
 	}
 	entry.Tags = tags
 	_, err = datastore.Put(c, k, &entry)
-	c.Infof("%v", entry)
 	if err != nil {
 		c.Warningf("Error resaving entry %d: %v", id, err)
 		return nil, err
