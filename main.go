@@ -44,7 +44,7 @@ func twitterHandleToMarkdown(in []byte) []byte {
 }
 
 func hashTagsToMarkdown(in []byte) []byte {
-	return HashtagRegex.ReplaceAll(in, []byte("$1[#$2](/tags/$2)"))
+	return models.HashtagRegex.ReplaceAll(in, []byte("$1[#$2](/tags/$2)"))
 }
 
 // init is one of those magic functions that runs once on project create.
