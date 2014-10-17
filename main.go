@@ -8,7 +8,6 @@ import (
 	"github.com/icco/natnatnat/handlers"
 	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
-	"github.com/russross/blackfriday"
 	"html/template"
 	"net/http"
 	"regexp"
@@ -16,7 +15,6 @@ import (
 )
 
 var store *sessions.CookieStore
-var TwitterHandleRegex *regexp.Regexp = regexp.MustCompile(`(\s)@([_A-Za-z0-9]+)`)
 
 func HstsMiddleware(w traffic.ResponseWriter, r *traffic.Request) {
 	w.Header().Add("Strict-Transport-Security", "max-age=15768000")
@@ -32,19 +30,7 @@ func fmtTime(t time.Time) string {
 }
 
 func markdown(args ...interface{}) template.HTML {
-	inc := []byte(fmt.Sprintf("%s", args...))
-	inc = twitterHandleToMarkdown(inc)
-	inc = hashTagsToMarkdown(inc)
-	s := blackfriday.MarkdownCommon(inc)
-	return template.HTML(s)
-}
-
-func twitterHandleToMarkdown(in []byte) []byte {
-	return TwitterHandleRegex.ReplaceAll(in, []byte("$1[@$2](http://twitter.com/$2)"))
-}
-
-func hashTagsToMarkdown(in []byte) []byte {
-	return models.HashtagRegex.ReplaceAll(in, []byte("$1[#$2](/tags/$2)"))
+	return models.Markdown(args)
 }
 
 // init is one of those magic functions that runs once on project create.
@@ -69,6 +55,9 @@ func init() {
 
 	router.Get("/mention", handlers.WebMentionGetHandler)
 	router.Post("/mention", handlers.WebMentionPostHandler)
+
+	router.Get("/feed.atom", handers.FeedAtomHandler)
+	router.Get("/feed.rss", handers.FeedRssHandler)
 
 	router.AddBeforeFilter(HstsMiddleware)
 	router.Use(NewStaticMiddleware(traffic.PublicPath()))

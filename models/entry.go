@@ -4,6 +4,8 @@ import (
 	"appengine"
 	"appengine/datastore"
 	"fmt"
+	"github.com/russross/blackfriday"
+	"html/template"
 	"regexp"
 	"time"
 )
@@ -21,6 +23,7 @@ type Entry struct {
 }
 
 var HashtagRegex *regexp.Regexp = regexp.MustCompile(`(\s)#(\w+)`)
+var TwitterHandleRegex *regexp.Regexp = regexp.MustCompile(`(\s)@([_A-Za-z0-9]+)`)
 
 func NewEntry(title string, content string, datetime time.Time, public bool, tags []string) *Entry {
 	e := new(Entry)
@@ -114,4 +117,28 @@ func (e *Entry) Save(c appengine.Context) error {
 		c.Warningf("Error writing entry: %v", e)
 	}
 	return err
+}
+
+func (e *Entry) Url() string {
+	return fmt.Sprintf("/post/%d", e.Id)
+}
+
+func (e *Entry) Html() template.HTML {
+	return Markdown(e.Content)
+}
+
+func Markdown(args ...interface{}) template.HTML {
+	inc := []byte(fmt.Sprintf("%s", args...))
+	inc = twitterHandleToMarkdown(inc)
+	inc = hashTagsToMarkdown(inc)
+	s := blackfriday.MarkdownCommon(inc)
+	return template.HTML(s)
+}
+
+func twitterHandleToMarkdown(in []byte) []byte {
+	return TwitterHandleRegex.ReplaceAll(in, []byte("$1[@$2](http://twitter.com/$2)"))
+}
+
+func hashTagsToMarkdown(in []byte) []byte {
+	return HashtagRegex.ReplaceAll(in, []byte("$1[#$2](/tags/$2)"))
 }
