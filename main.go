@@ -3,14 +3,12 @@ package main
 import (
 	"appengine"
 	"appengine/user"
-	"fmt"
 	"github.com/gorilla/sessions"
 	"github.com/icco/natnatnat/handlers"
 	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 	"html/template"
 	"net/http"
-	"regexp"
 	"time"
 )
 
@@ -56,8 +54,8 @@ func init() {
 	router.Get("/mention", handlers.WebMentionGetHandler)
 	router.Post("/mention", handlers.WebMentionPostHandler)
 
-	router.Get("/feed.atom", handers.FeedAtomHandler)
-	router.Get("/feed.rss", handers.FeedRssHandler)
+	router.Get("/feed.atom", handlers.FeedAtomHandler)
+	router.Get("/feed.rss", handlers.FeedRssHandler)
 
 	router.AddBeforeFilter(HstsMiddleware)
 	router.Use(NewStaticMiddleware(traffic.PublicPath()))
