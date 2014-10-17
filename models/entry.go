@@ -129,8 +129,8 @@ func (e *Entry) Html() template.HTML {
 
 func Markdown(args ...interface{}) template.HTML {
 	inc := []byte(fmt.Sprintf("%s", args...))
-	//inc = twitterHandleToMarkdown(inc)
-	//inc = hashTagsToMarkdown(inc)
+	inc = twitterHandleToMarkdown(inc)
+	inc = hashTagsToMarkdown(inc)
 	s := blackfriday.MarkdownCommon(inc)
 	return template.HTML(s)
 }
