@@ -46,6 +46,11 @@ func FeedAtomHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 	feed := buildFeed(c, entries)
 	atom, err := feed.ToAtom()
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	w.WriteXML(atom)
 }
 
 func FeedRssHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -57,4 +62,9 @@ func FeedRssHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 	feed := buildFeed(c, entries)
 	rss, err := feed.ToRss()
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	w.WriteXML(rss)
 }
