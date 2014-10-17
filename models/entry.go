@@ -42,7 +42,7 @@ func NewEntry(title string, content string, datetime time.Time, public bool, tag
 func ParseTags(text string) ([]string, error) {
 	// http://golang.org/pkg/regexp/#Regexp.FindAllStringSubmatch
 	finds := HashtagRegex.FindAllStringSubmatch(text, -1)
-	ret := make([]string, 1)
+	ret := make([]string, 0)
 	for _, v := range finds {
 		if len(v) > 1 {
 			ret = append(ret, v[1])
