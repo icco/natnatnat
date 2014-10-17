@@ -5,6 +5,7 @@ import (
 	"github.com/gorilla/feeds"
 	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
+	"net/http"
 	"time"
 )
 
@@ -21,14 +22,16 @@ func buildFeed(c appengine.Context, entries *[]models.Entry) *feeds.Feed {
 
 	feed.Items = []*feeds.Item{}
 	for _, v := range *entries {
-		feed.Items = append(feed.Items, &feeds.Item{
-			Title:       v.Title,
-			Link:        &feeds.Link{Href: v.Url()},
-			Description: v.Html(),
-			Author:      me,
-			Created:     v.Datetime,
-			Updated:     v.Updated,
-		})
+		if v.Public {
+			feed.Items = append(feed.Items, &feeds.Item{
+				Title:       v.Title,
+				Link:        &feeds.Link{Href: v.Url()},
+				Description: string(v.Html()),
+				Author:      me,
+				Created:     v.Datetime,
+				Updated:     v.Modified,
+			})
+		}
 	}
 
 	return feed
