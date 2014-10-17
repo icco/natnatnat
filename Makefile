@@ -10,3 +10,6 @@ run: css *.go
 
 deploy:
 	gcloud preview app deploy . --project=natwelch-writing
+
+update:
+	goapp get -v -u ...
