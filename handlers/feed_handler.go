@@ -2,14 +2,13 @@ package handlers
 
 import (
 	"appengine"
-	"fmt"
 	"github.com/gorilla/feeds"
 	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 	"time"
 )
 
-func buildFeed(c appengine.Context, entries *[]models.Entry) feeds.Feed {
+func buildFeed(c appengine.Context, entries *[]models.Entry) *feeds.Feed {
 	now := time.Now()
 	me := &feeds.Author{"Nat Welch", "nat@natwelch.com"}
 	feed := &feeds.Feed{
@@ -21,7 +20,7 @@ func buildFeed(c appengine.Context, entries *[]models.Entry) feeds.Feed {
 	}
 
 	feed.Items = []*feeds.Item{}
-	for _, v := range entries {
+	for _, v := range *entries {
 		feed.Items = append(feed.Items, &feeds.Item{
 			Title:       v.Title,
 			Link:        &feeds.Link{Href: v.Url()},
@@ -42,9 +41,17 @@ func FeedAtomHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
+	feed := buildFeed(c, entries)
 	atom, err := feed.ToAtom()
 }
 
 func FeedRssHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	c := appengine.NewContext(r.Request)
+	entries, err := models.AllPosts(c)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	feed := buildFeed(c, entries)
 	rss, err := feed.ToRss()
 }
