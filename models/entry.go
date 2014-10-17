@@ -20,7 +20,7 @@ type Entry struct {
 	// TODO(icco): Define a meta field that is a json hash of extra data
 }
 
-var HashtagRegex *regexp.Regexp = regexp.MustCompile(`\s#(\w+)`)
+var HashtagRegex *regexp.Regexp = regexp.MustCompile(`(\s)#(\w+)`)
 
 func NewEntry(title string, content string, datetime time.Time, public bool, tags []string) *Entry {
 	e := new(Entry)
@@ -44,8 +44,8 @@ func ParseTags(text string) ([]string, error) {
 	finds := HashtagRegex.FindAllStringSubmatch(text, -1)
 	ret := make([]string, 0)
 	for _, v := range finds {
-		if len(v) > 1 {
-			ret = append(ret, v[1])
+		if len(v) > 2 {
+			ret = append(ret, v[2])
 		}
 	}
 
