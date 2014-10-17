@@ -12,17 +12,12 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
   <input type="hidden" value="{{.Xsrf}}" name="xsrf" />
 
   <div class="pure-g">
-    <div class="pure-u-1-2 form-padding">
+    <div class="pure-u-1-1 form-padding">
+      <input type="submit" class="pure-button pure-button-primary" />
       <label for="option-one" class="pure-checkbox">
         <input id="option-one" type="checkbox" value="" name="private">
         Private?
       </label>
-    </div>
-
-    <div class="pure-g">
-      <div class="pure-u-1-4">
-        <input type="submit" class="pure-button pure-button-primary" />
-      </div>
     </div>
   </div>
 </form>
