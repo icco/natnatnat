@@ -13,9 +13,11 @@
   <body>
     <div class="wrap">
       <div class="pure-g">
-        <div class="pure-u-1-5">
-          <div class="leftnav">
-            <a href="/"><img src="/img/natwelchlogo2.png" class="logo"></a>
+        <div class="pure-u-1-12">
+          <a href="/"><img src="/img/natwelchlogo2.png" class="pure-img" alt="Nat? Nat. Nat!"></a>
+        </div>
+        <div class="pure-u-11-12">
+          <div class="menu">
             <ul>
               <li><a href="/about">About</a></li>
               <li><a href="/archives">Archives</a></li>
@@ -28,5 +30,7 @@
             </ul>
           </div>
         </div>
+      </div>
 
-        <div class="pure-u-4-5">
+      <div class="pure-g">
+        <div class="pure-u-1">

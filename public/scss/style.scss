@@ -114,22 +114,28 @@ html {
 body {
 }
 
-.leftnav {
-  text-align: right;
-  padding: 3px 10px 50px;
-
+.menu {
   ul {
-    margin: 20px 0 0 0;
+    display: block;
+    zoom: 1;
+    vertical-align: middle;
+    visibility: visible;
+    list-style: none;
+    margin: 0;
     padding: 0;
   }
 
-  img.logo {
-    width: 80px;
+  li {
+    position: relative;
+    margin: 1em;
+
+    a {
+      padding: 5px;
+    }
   }
 
-  li {
-    list-style: none;
-    margin-right: 10px;
+  li:first-child {
+    margin-top: 0.1em;
   }
 }
 
