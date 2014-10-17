@@ -4,7 +4,7 @@
     <title>Nat? Nat. Nat! {{.Title}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/pure-min.0.5.0.css" />
-    <link rel="stylesheet" href="//yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css">
+    <link rel="stylesheet" href="/css/pure-responsive-min.0.5.0.css">
     <link rel="stylesheet" href="/css/style.css" />
 
     <!-- same shit, old and new -->
