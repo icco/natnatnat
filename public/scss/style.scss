@@ -114,28 +114,18 @@ html {
 body {
 }
 
-.menu {
-  ul {
-    display: block;
-    zoom: 1;
-    vertical-align: middle;
-    visibility: visible;
-    list-style: none;
-    margin: 0;
-    padding: 0;
+.footer {
+  text-align: center;
+  padding: 1em 0;
+
+  a {
+    color: #ccc;
+    font-size: 80%;
   }
 
-  li {
-    position: relative;
-    margin: 1em;
-
-    a {
-      padding: 5px;
-    }
-  }
-
-  li:first-child {
-    margin-top: 0.1em;
+  .pure-menu a:hover,
+  .pure-menu a:focus {
+    background: none;
   }
 }
 
