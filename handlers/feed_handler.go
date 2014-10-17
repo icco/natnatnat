@@ -50,7 +50,8 @@ func FeedAtomHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	w.WriteXML(atom)
+	w.Header().Set("Content-Type", "application/atom+xml; charset=utf-8")
+	w.WriteText("%s", atom)
 }
 
 func FeedRssHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -66,5 +67,6 @@ func FeedRssHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	w.WriteXML(rss)
+	w.Header().Set("Content-Type", "application/rss+xml; charset=utf-8")
+	w.WriteText("%s", rss)
 }
