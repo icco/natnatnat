@@ -132,7 +132,6 @@ func Markdown(args ...interface{}) template.HTML {
 	inc = twitterHandleToMarkdown(inc)
 	inc = hashTagsToMarkdown(inc)
 	s := blackfriday.MarkdownCommon(inc)
-	fmt.Printf("%s\n", s)
 	return template.HTML(s)
 }
 
