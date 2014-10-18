@@ -28,7 +28,7 @@ func fmtTime(t time.Time) string {
 }
 
 func markdown(args ...interface{}) template.HTML {
-	return models.Markdown(args)
+	return models.Markdown(args...)
 }
 
 // init is one of those magic functions that runs once on project create.
