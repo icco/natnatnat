@@ -16,4 +16,11 @@
   </div>
 </div>
 
+<div class="post-nav">
+  <ul class="pager">
+    <li><a class="prev" href="#">&#171;</a></li>
+    <li><a class="next" href="#">&#187;</a></li>
+  </ul>
+</div>
+
 {{ template "includes/footer" }}
