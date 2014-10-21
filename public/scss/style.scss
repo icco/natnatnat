@@ -143,8 +143,11 @@ body {
   }
 }
 
-.post {
-  padding: 10px;
+.post-content {
+  padding: 5px 0 0 20px;
+  margin-left: 3px;
+
+  border-left: 1px $border_color solid;
 
   h1 {
     margin-top: 0;
@@ -163,10 +166,14 @@ body {
   }
 }
 
+.post {
+  .time {
+    margin-bottom: 10px;
+  }
+}
+
 .front-page {
-  border-left: 1px $border_color solid;
-  margin: 20px 5px;
-  padding: 10px;
+  margin: 20px 10px;
 }
 
 .wrap {
