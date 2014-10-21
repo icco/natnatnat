@@ -18,8 +18,8 @@
 
 <div class="post-nav">
   <ul class="pager">
-    <li><a class="prev" href="#">&#171;</a></li>
-    <li><a class="next" href="#">&#187;</a></li>
+    <li class="{{if not .Prev}}disabled{{end}}"><a class="prev" href="{{.Prev}}">&#171;</a></li>
+    <li class="{{if not .Next}}disabled{{end}}"><a class="next" href="{{.Next}}">&#187;</a></li>
   </ul>
 </div>
 
