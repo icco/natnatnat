@@ -13,6 +13,8 @@ import (
 type ResponseData struct {
 	Entry   *models.Entry
 	IsAdmin bool
+	Next    string
+	Prev    string
 }
 
 func PostHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -32,7 +34,11 @@ func PostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, errors.New("Post is not public").Error(), 403)
 		return
 	} else {
-		responseData := &ResponseData{Entry: entry, IsAdmin: user.IsAdmin(c)}
+		responseData := &ResponseData{
+			Entry:   entry,
+			IsAdmin: user.IsAdmin(c),
+			Next:    entry.NextPost(c),
+			Prev:    entry.PrevPost(c)}
 		w.Render("post", responseData)
 		return
 	}
