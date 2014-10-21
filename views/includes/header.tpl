@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/pure-min.0.5.0.css" />
     <link rel="stylesheet" href="/css/pure-responsive-min.0.5.0.css">
-    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/style.css?v=12345" />
 
     <!-- same shit, old and new -->
     <link rel="webmention" href="/mention" />
