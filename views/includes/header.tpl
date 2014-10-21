@@ -10,10 +10,6 @@
     <!-- same shit, old and new -->
     <link rel="webmention" href="/mention" />
     <link rel="http://webmention.org/" href="/mention" />
-
-    <!-- Testing out embeds -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" type="text/javascript"></script>
-    <script src="//cdn.embed.ly/jquery.embedly-3.1.1.min.js" type="text/javascript"></script>
   </head>
   <body>
     <div class="wrap">
