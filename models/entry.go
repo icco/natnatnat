@@ -127,6 +127,31 @@ func (e *Entry) Html() template.HTML {
 	return Markdown(e.Content)
 }
 
+func (e *Entry) PrevPost(c appengine.Context) string {
+	var entry Entry
+	q := datastore.NewQuery("Entry").Order("-Datetime").Filter("Datetime <", e.Datetime).Limit(1)
+	_, err := q.Run(c).Next(&entry)
+	if err != nil {
+		c.Warningf("Error getting next post", e.Id)
+		return ""
+	}
+
+	return entry.Url()
+}
+
+func (e *Entry) NextPost(c appengine.Context) string {
+	var entry Entry
+	q := datastore.NewQuery("Entry").Order("Datetime").Filter("Datetime >", e.Datetime).Limit(1)
+	_, err := q.Run(c).Next(&entry)
+	if err != nil {
+		c.Warningf("Error getting next post", e.Id)
+		return ""
+	}
+
+	return entry.Url()
+}
+
+// Markdown.
 func Markdown(args ...interface{}) template.HTML {
 	inc := []byte(fmt.Sprintf("%s", args...))
 	inc = twitterHandleToMarkdown(inc)
