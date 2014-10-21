@@ -12,4 +12,5 @@ deploy:
 	gcloud preview app deploy . --project=natwelch-writing
 
 update:
+	cd $(GOPATH)/src/github.com/icco/natnatnat/; git pull
 	goapp get -v -u ...
