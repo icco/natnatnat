@@ -48,6 +48,9 @@ func init() {
 
 	router.Get("/post/:id/?", handlers.PostHandler)
 
+	router.Get("/edit/:id/?", handlers.EditPostGetHandler)
+	router.Post("/edit/:id/?", handlers.EditPostPostHandler)
+
 	router.Get("/settings", handlers.SettingsGetHandler)
 	router.Post("/settings", handlers.SettingsPostHandler)
 

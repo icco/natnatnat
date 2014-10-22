@@ -8,7 +8,6 @@ import (
 	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 	"net/http"
-	"strconv"
 	"time"
 )
 
