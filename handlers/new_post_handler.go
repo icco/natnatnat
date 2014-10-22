@@ -8,6 +8,7 @@ import (
 	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 	"net/http"
+	"strconv"
 	"time"
 )
 
@@ -64,8 +65,12 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			tags = []string{}
 		}
 
-		public := true
-		c.Infof("Private: %v", r.Request.FormValue("private"))
+		c.Infof("Incomming: %v", r.Request)
+		public, err := strconv.ParseBool(r.Request.FormValue("private"))
+		if err != nil {
+			c.Warningf("Couldn't parse public: %v", err)
+			public = true
+		}
 
 		c.Infof("Got POST params: title: %+v, text: %+v, xsrf: %v", title, content, xsrf)
 		if xsrftoken.Valid(xsrf, models.GetFlagLogError(c, "SESSION_KEY"), u.String(), "/post/new") {
