@@ -123,6 +123,10 @@ func (e *Entry) Url() string {
 	return fmt.Sprintf("/post/%d", e.Id)
 }
 
+func (e *Entry) EditUrl() string {
+	return fmt.Sprintf("/edit/%d", e.Id)
+}
+
 func (e *Entry) Html() template.HTML {
 	return Markdown(e.Content)
 }
