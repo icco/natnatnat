@@ -136,7 +136,7 @@ func (e *Entry) PrevPost(c appengine.Context) string {
 	q := datastore.NewQuery("Entry").Order("-Datetime").Filter("Datetime <", e.Datetime).Limit(1)
 	_, err := q.Run(c).Next(&entry)
 	if err != nil {
-		c.Warningf("Error getting next post", e.Id)
+		c.Infof("Error getting previous post for %d.", e.Id)
 		return ""
 	}
 
@@ -148,7 +148,7 @@ func (e *Entry) NextPost(c appengine.Context) string {
 	q := datastore.NewQuery("Entry").Order("Datetime").Filter("Datetime >", e.Datetime).Limit(1)
 	_, err := q.Run(c).Next(&entry)
 	if err != nil {
-		c.Warningf("Error getting next post", e.Id)
+		c.Infof("Error getting next post for %d.", e.Id)
 		return ""
 	}
 
