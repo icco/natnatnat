@@ -56,6 +56,10 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, errors.New("Not a valid user.").Error(), 403)
 		return
 	} else {
+		err := r.ParseForm()
+		if err != nil {
+			c.Warningf("Couldn't parse form: %v", r)
+		}
 		title := r.Request.FormValue("title")
 		content := r.Request.FormValue("text")
 		xsrf := r.Request.FormValue("xsrf")
