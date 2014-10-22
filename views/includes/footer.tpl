@@ -21,6 +21,6 @@
     <!-- Testing out embeds -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js" type="text/javascript"></script>
     <script src="//cdn.embed.ly/jquery.embedly-3.1.1.min.js" type="text/javascript"></script>
-    <script src="/js/app.js?v=12345" type="text/javascript"></script>
+    <script src="/js/app.js?v=20141022" type="text/javascript"></script>
   </body>
 </html>
