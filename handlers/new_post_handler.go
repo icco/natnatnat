@@ -84,8 +84,7 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			return
 		}
 
-		new_route := fmt.Sprintf("/post/%d", e.Id)
-		http.Redirect(w, r.Request, new_route, 302)
+		http.Redirect(w, r.Request, e.Url(), 302)
 		return
 	}
 }
