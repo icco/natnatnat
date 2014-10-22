@@ -64,19 +64,14 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		content := r.Request.FormValue("text")
 		xsrf := r.Request.FormValue("xsrf")
 		tags, err := models.ParseTags(content)
+		public := r.Request.FormValue("private") != "on"
 		if err != nil {
 			c.Warningf("Couldn't parse tags: %v", err)
 			tags = []string{}
 		}
 
-		c.Infof("Incomming: %v", r.Request)
-		public, err := strconv.ParseBool(r.Request.FormValue("private"))
-		if err != nil {
-			c.Warningf("Couldn't parse public: %v", err)
-			public = true
-		}
+		c.Infof("Got POST params: title: %+v, text: %+v, xsrf: %v, private: %v", title, content, xsrf, !public)
 
-		c.Infof("Got POST params: title: %+v, text: %+v, xsrf: %v", title, content, xsrf)
 		if xsrftoken.Valid(xsrf, models.GetFlagLogError(c, "SESSION_KEY"), u.String(), "/post/new") {
 			c.Infof("Valid Token!")
 		} else {

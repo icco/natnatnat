@@ -15,7 +15,7 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
     <div class="pure-u-1-1 form-padding">
       <input type="submit" class="pure-button pure-button-primary" />
       <label for="option-one" class="pure-checkbox">
-        <input id="option-one" type="checkbox" value="" name="private">
+        <input id="option-one" type="checkbox" name="private">
         Private?
       </label>
     </div>

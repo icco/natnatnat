@@ -83,22 +83,22 @@ func EditPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, errors.New("Not a valid user.").Error(), 403)
 		return
 	} else {
+		err := r.ParseForm()
+		if err != nil {
+			c.Warningf("Couldn't parse form: %v", r)
+		}
 		title := r.Request.FormValue("title")
 		content := r.Request.FormValue("text")
 		xsrf := r.Request.FormValue("xsrf")
 		tags, err := models.ParseTags(content)
+		public := r.Request.FormValue("private") != "on"
 		if err != nil {
 			c.Warningf("Couldn't parse tags: %v", err)
 			tags = []string{}
 		}
 
-		public, err := strconv.ParseBool(r.Request.FormValue("private"))
-		if err != nil {
-			c.Warningf("Couldn't parse public: %v", err)
-			public = true
-		}
+		c.Infof("Got POST params: title: %+v, text: %+v, xsrf: %v, private: %v", title, content, xsrf, !public)
 
-		c.Infof("Got POST params: title: %+v, text: %+v, xsrf: %v", title, content, xsrf)
 		if xsrftoken.Valid(xsrf, models.GetFlagLogError(c, "SESSION_KEY"), u.String(), entry.EditUrl()) {
 			c.Infof("Valid Token!")
 		} else {
