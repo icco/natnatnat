@@ -1,0 +1,123 @@
+package handlers
+
+import (
+	"appengine"
+	"appengine/user"
+	"code.google.com/p/xsrftoken"
+	"errors"
+	"github.com/icco/natnatnat/models"
+	"github.com/pilu/traffic"
+	"net/http"
+	"strconv"
+)
+
+type EditPostPageData struct {
+	Entry     *models.Entry
+	IsAdmin   bool
+	LogoutUrl string
+	User      string
+	Xsrf      string
+}
+
+func EditPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	c := appengine.NewContext(r.Request)
+	id, err := strconv.ParseInt(r.Param("id"), 10, 64)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	entry, err := models.GetEntry(c, id)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	u := user.Current(c)
+	if u == nil {
+		url, _ := user.LoginURL(c, entry.EditUrl())
+		http.Redirect(w, r.Request, url, 302)
+		return
+	} else {
+		c.Infof("Logged in as: %s", u.String())
+	}
+
+	if u != nil && !user.IsAdmin(c) {
+		http.Error(w, errors.New("Not a valid user.").Error(), 403)
+		return
+	} else {
+		url, _ := user.LogoutURL(c, "/")
+		token := xsrftoken.Generate(models.GetFlagLogError(c, "SESSION_KEY"), u.String(), entry.EditUrl())
+		responseData := &EditPostPageData{
+			LogoutUrl: url,
+			User:      u.String(),
+			Xsrf:      token,
+			IsAdmin:   user.IsAdmin(c),
+			Entry:     entry}
+		w.Render("edit_post", responseData)
+	}
+}
+
+func EditPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	c := appengine.NewContext(r.Request)
+	id, err := strconv.ParseInt(r.Param("id"), 10, 64)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	entry, err := models.GetEntry(c, id)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	u := user.Current(c)
+	if u == nil {
+		url, _ := user.LoginURL(c, entry.EditUrl())
+		http.Redirect(w, r.Request, url, 302)
+		return
+	} else {
+		c.Infof("Logged in as: %s", u.String())
+	}
+
+	if u != nil && !user.IsAdmin(c) {
+		http.Error(w, errors.New("Not a valid user.").Error(), 403)
+		return
+	} else {
+		title := r.Request.FormValue("title")
+		content := r.Request.FormValue("text")
+		xsrf := r.Request.FormValue("xsrf")
+		tags, err := models.ParseTags(content)
+		if err != nil {
+			c.Warningf("Couldn't parse tags: %v", err)
+			tags = []string{}
+		}
+
+		public, err := strconv.ParseBool(r.Request.FormValue("private"))
+		if err != nil {
+			c.Warningf("Couldn't parse public: %v", err)
+			public = true
+		}
+
+		c.Infof("Got POST params: title: %+v, text: %+v, xsrf: %v", title, content, xsrf)
+		if xsrftoken.Valid(xsrf, models.GetFlagLogError(c, "SESSION_KEY"), u.String(), entry.EditUrl()) {
+			c.Infof("Valid Token!")
+		} else {
+			c.Infof("Invalid Token...")
+			http.Error(w, errors.New("Invalid Token").Error(), 403)
+			return
+		}
+
+		entry.Title = title
+		entry.Tags = tags
+		entry.Content = content
+		entry.Public = public
+		err = entry.Save(c)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+
+		http.Redirect(w, r.Request, entry.Url(), 302)
+		return
+	}
+}
