@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="/css/style.css?v=12345" />
 
     <!-- Feeds! -->
-    <link rel="feed" type="application/rss+xml" title="RSS" href="/feed.rss" />
-    <link rel="feed" type="application/atom+xml" title="atom" href="/feed.atom" />
+    <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.rss" />
+    <link rel="alternate" type="application/atom+xml" title="atom" href="/feed.atom" />
 
     <!-- same shit, old and new -->
     <link rel="webmention" href="/mention" />
