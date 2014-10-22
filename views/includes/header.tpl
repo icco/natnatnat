@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="/css/pure-responsive-min.0.5.0.css">
     <link rel="stylesheet" href="/css/style.css?v=12345" />
 
+    <!-- Feeds! -->
+    <link rel="rss" type="application/rss+xml" title="RSS" href="/feed.rss" />
+    <link rel="atom" type="application/atom+xml" title="atom" href="/feed.atom" />
+
     <!-- same shit, old and new -->
     <link rel="webmention" href="/mention" />
     <link rel="http://webmention.org/" href="/mention" />
