@@ -233,6 +233,19 @@ body {
   }
 }
 
+.post {
+  .addons {
+    h1 {
+      margin: 0;
+    }
+
+    .embed {
+      padding: 10px;
+      border: dashed 1px #D3D3D3;
+    }
+  }
+}
+
 .wrap {
   max-width: 960px;
   margin: 0 auto;
