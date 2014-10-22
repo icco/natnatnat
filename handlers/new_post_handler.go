@@ -5,7 +5,6 @@ import (
 	"appengine/user"
 	"code.google.com/p/xsrftoken"
 	"errors"
-	"fmt"
 	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 	"net/http"
