@@ -14,6 +14,9 @@
       {{.Entry.Content|mrkdwn}}
     </div>
   </div>
+
+  <div class="addons">
+  </div>
 </div>
 
 <div class="post-nav">
