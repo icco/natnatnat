@@ -9,7 +9,7 @@ $(document).ready(function() {
   $.embedly.defaults = {
     key: 'be853af8968a408eb7ec368d2019614a',
     query: {
-      maxwidth: 480,
+      maxwidth: Math.min($(window).width(), 720),
       words: 20,
     },
     secure: true,
