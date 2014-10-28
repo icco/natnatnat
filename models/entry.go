@@ -97,17 +97,17 @@ func AllPosts(c appengine.Context) (*[]Entry, error) {
 }
 
 func (e *Entry) HasId() bool {
-	return (e.Id <= 0)
+	return (e.Id > 0)
 }
 
 func (e *Entry) Save(c appengine.Context) error {
-	// Note to self: This logic is fucked.
 	var k *datastore.Key
-	if e.HasId() {
+	if !e.HasId() {
 		id, _ := MaxId(c)
 		e.Id = id + 1
 		k = datastore.NewIncompleteKey(c, "Entry", nil)
 	} else {
+		// Find the key
 		var err error
 		q := datastore.NewQuery("Entry").Filter("Id =", e.Id).Limit(1).KeysOnly()
 		k, err = q.Run(c).Next(nil)
