@@ -107,7 +107,7 @@ func (e *Entry) Save(c appengine.Context) error {
 	// Figure out Tags
 	tags, err := ParseTags(e.Content)
 	if err != nil {
-		return nil, err
+		return err
 	}
 	e.Tags = tags
 
