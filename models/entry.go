@@ -64,18 +64,6 @@ func GetEntry(c appengine.Context, id int64) (*Entry, error) {
 		return nil, err
 	}
 
-	// Do this for a while, why not.
-	tags, err := ParseTags(entry.Content)
-	if err != nil {
-		return nil, err
-	}
-	entry.Tags = tags
-	_, err = datastore.Put(c, k, &entry)
-	if err != nil {
-		c.Warningf("Error resaving entry %d: %v", id, err)
-		return nil, err
-	}
-
 	return &entry, nil
 }
 
@@ -115,6 +103,13 @@ func (e *Entry) Save(c appengine.Context) error {
 			return err
 		}
 	}
+
+	// Figure out Tags
+	tags, err := ParseTags(e.Content)
+	if err != nil {
+		return nil, err
+	}
+	e.Tags = tags
 
 	k2, err := datastore.Put(c, k, e)
 	if err == nil {
