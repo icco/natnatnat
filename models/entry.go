@@ -116,9 +116,10 @@ func (e *Entry) Save(c appengine.Context) error {
 		}
 	}
 
-	_, err := datastore.Put(c, k, e)
+	k2, err := datastore.Put(c, k, e)
 	if err == nil {
 		c.Infof("Wrote %+v", e)
+		c.Infof("Old key: %+v; New Key: %+v", k, k2)
 	} else {
 		c.Warningf("Error writing entry: %v", e)
 	}

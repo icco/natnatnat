@@ -115,8 +115,8 @@ func EditPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		entry.Tags = tags
 		entry.Content = content
 		entry.Public = public
-		err = entry.Save(c)
 
+		err = entry.Save(c)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
