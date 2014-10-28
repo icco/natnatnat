@@ -17,6 +17,7 @@ type EditPostPageData struct {
 	LogoutUrl string
 	User      string
 	Xsrf      string
+	EditUrl   string
 }
 
 func EditPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -52,6 +53,7 @@ func EditPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			User:      u.String(),
 			Xsrf:      token,
 			IsAdmin:   user.IsAdmin(c),
+			EditUrl:   entry.EditUrl(),
 			Entry:     entry}
 		w.Render("edit_post", responseData)
 	}
