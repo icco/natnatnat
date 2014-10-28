@@ -57,7 +57,7 @@ func ParseTags(text string) ([]string, error) {
 
 func GetEntry(c appengine.Context, id int64) (*Entry, error) {
 	var entry Entry
-	q := datastore.NewQuery("Entry").Filter("Id =", id)
+	q := datastore.NewQuery("Entry").Filter("Id =", id).Limit(1)
 	k, err := q.Run(c).Next(&entry)
 	if err != nil {
 		c.Warningf("Error getting entry %d", id)
@@ -107,7 +107,12 @@ func (e *Entry) Save(c appengine.Context) error {
 		e.Id = id + 1
 		k = datastore.NewIncompleteKey(c, "Entry", nil)
 	} else {
-		k = datastore.NewKey(c, "Entry", fmt.Sprintf("%d", e.Id), 0, nil)
+		var err error
+		q := datastore.NewQuery("Entry").Filter("Id =", e.Id).Limit(1).KeysOnly()
+		k, err = q.Run(c).Next(nil)
+		if err != nil {
+			return err
+		}
 	}
 
 	_, err := datastore.Put(c, k, e)
