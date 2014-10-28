@@ -9,6 +9,7 @@ import (
 	"github.com/pilu/traffic"
 	"net/http"
 	"strconv"
+	"time"
 )
 
 type EditPostPageData struct {
@@ -109,11 +110,13 @@ func EditPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			return
 		}
 
+		entry.Modified = time.Now()
 		entry.Title = title
 		entry.Tags = tags
 		entry.Content = content
 		entry.Public = public
 		err = entry.Save(c)
+
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
