@@ -101,6 +101,7 @@ func (e *Entry) HasId() bool {
 }
 
 func (e *Entry) Save(c appengine.Context) error {
+	// Note to self: This logic is fucked.
 	var k *datastore.Key
 	if e.HasId() {
 		id, _ := MaxId(c)
