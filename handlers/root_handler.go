@@ -23,3 +23,7 @@ func RootHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	data := &RootData{Posts: entries, IsAdmin: user.IsAdmin(c)}
 	w.Render("index", data)
 }
+
+func AboutHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	http.Redirect(w, r.Request, "http://natwelch.com", 301)
+}
