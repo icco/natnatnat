@@ -12,11 +12,10 @@ Docs: [godoc.org/github.com/icco/natnatnat](https://godoc.org/github.com/icco/na
 ## Install
 
  0. Install Go
- 1. `go get code.google.com/p/xsrftoken`
- 2. `go get github.com/pilu/traffic`
- 3. `curl https://sdk.cloud.google.com | bash`
- 4. `gcloud components update app`
- 5. `make run`
+ 1. `goapp get -v -u ...`
+ 2. `curl https://sdk.cloud.google.com | bash`
+ 3. `gcloud components update app`
+ 4. `make`
 
 ## Design
 
