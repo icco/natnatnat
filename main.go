@@ -43,6 +43,8 @@ func init() {
 	router := traffic.New()
 	router.Get("/", handlers.RootHandler)
 	router.Get("/about", handlers.AboutHandler)
+	router.Get("/archive", handlers.UnimplementedHandler)
+	router.Get("/stats", handlers.UnimplementedHandler)
 
 	router.Get("/post/new/?", handlers.NewPostGetHandler)
 	router.Post("/post/new/?", handlers.NewPostPostHandler)
