@@ -3,6 +3,11 @@
 
 // Colors
 $border_color: #808080;
+$font_color: #232520;
+$light_font_color: lighten($font-color, 15%);
+$background_color: #F2F6ED;
+$link_color: #08A8E6;
+$disabled_color: #777;
 
 /* #TYPE */
 @mixin clearfix() {
@@ -81,7 +86,7 @@ a {
 }
 
 a:hover {
-  color: #33a3ff;
+  color: $link_color;
 }
 
 // Enable word-breaking for weird text.
@@ -126,8 +131,8 @@ p {
 html {
   font: 112.5%/1.444444444 "Runda", "Helvetica Neue", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
-  color: #47525d;
-  background: #FFFFFF;
+  color: $font_color;
+  background: $background_color;
 }
 
 @media (max-width: 700px) {
@@ -139,13 +144,22 @@ html {
 body {
 }
 
+.pure-menu.pure-menu-open, .pure-menu.pure-menu-horizontal li .pure-menu-children {
+  color: $font_color;
+  background: $background_color;
+}
+
 .footer {
   text-align: center;
   padding: 1em 0;
 
   a {
-    color: #ccc;
+    color: $light_font_color;
     font-size: 80%;
+  }
+
+  a:hover {
+    color: $link_color;
   }
 
   .pure-menu a:hover,
@@ -227,7 +241,7 @@ body {
     > a:hover,
     > a:focus,
     > span {
-      color: #777;
+      color: $disabled_color;
       cursor: not-allowed;
     }
   }
@@ -241,7 +255,7 @@ body {
 
     .embed {
       padding: 10px;
-      border: dashed 1px #D3D3D3;
+      border: dashed 1px $border_color;
     }
   }
 }
