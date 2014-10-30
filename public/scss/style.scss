@@ -4,10 +4,11 @@
 // Colors
 $border_color: #808080;
 $font_color: #232520;
-$light_font_color: lighten($font-color, 15%);
+$light_font_color: lighten($font_color, 15%);
 $background_color: #F2F6ED;
 $link_color: #08A8E6;
 $disabled_color: #777;
+$pre_background_color: lighten($background_color, 15%);
 
 /* #TYPE */
 @mixin clearfix() {
@@ -60,7 +61,7 @@ h3, .gamma {
 
 code, pre {
   font: 83.333%/1.5333 "Source Code Pro", Monaco, monospace;
-  background-color: #f6f7f8;
+  background-color: $pre_background_color;
   border-radius: .25em;
 }
 
@@ -70,10 +71,10 @@ pre {
 
   i {
     font-style: normal;
-    color: #c26262;
+    color: $font_color;
   }
 
-  b { color: #b5bd68; }
+  b { color: $font_color; }
 }
 
 .promo {
