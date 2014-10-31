@@ -6,7 +6,8 @@ $border_color: #808080;
 $font_color: #232520;
 $light_font_color: lighten($font_color, 15%);
 $background_color: #F2F6ED;
-$link_color: #08A8E6;
+$link_color: lighten($font_color, 15%);
+$link_highlight_color: #08A8E6;
 $disabled_color: #777;
 $pre_background_color: lighten($background_color, 15%);
 
@@ -83,11 +84,11 @@ pre {
 
 a {
   text-decoration: none;
-  color: inherit;
+  color: $link_color;
 }
 
 a:hover {
-  color: $link_color;
+  color: $link_highlight_color;
 }
 
 // Enable word-breaking for weird text.
@@ -131,16 +132,17 @@ body {
   padding: 1em 0;
 
   a {
-    color: $light_font_color;
+    color: $link_color;
     font-size: 80%;
   }
 
   a:hover {
-    color: $link_color;
+    color: $link_highlight_color;
   }
 
   .pure-menu a:hover,
   .pure-menu a:focus {
+    color: $link_highlight_color;
     background: none;
   }
 }
