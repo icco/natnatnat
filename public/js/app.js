@@ -5,7 +5,7 @@ $(document).ready(function() {
   var defaultUrlRe = /(http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
 
   // Youtube and Vimeo only
-  var videoUrlRe = /https?:\/\/(www\.)?(youtu|vimeo).+/i;
+  var videoUrlRe = /https?:\/\/(www\.)?(youtu|vimeo|soundcloud).+/i;
   $.embedly.defaults = {
     key: 'be853af8968a408eb7ec368d2019614a',
     query: {
