@@ -21,7 +21,7 @@ $(document).ready(function() {
     var url = $(el).attr('href');
     $.embedly.oembed([url]).done(function(results) {
       // console.log(results[0]);
-      var addon = $('<div/>', {class: "embed pure-u-md-1-2 pure-u-1", data: url});
+      var addon = $('<div/>', {class: "embed pure-u-1", data: url});
       if (results[0].error) {
         return;
       }
