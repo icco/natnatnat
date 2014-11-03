@@ -160,6 +160,7 @@ func (e *Entry) NextPost(c appengine.Context) string {
 	return entry.Url()
 }
 
+// TODO(icco): Actually finish this.
 func GetLinksFromContent(c appengine.Context, content string) ([]string, error) {
 	httpRegex := regexp.MustCompile(`http:\/\/((\w|\.)+)`)
 	matches := httpRegex.FindAllString(content, -1)
