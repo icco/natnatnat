@@ -161,7 +161,7 @@ func (e *Entry) NextPost(c appengine.Context) string {
 }
 
 func GetLinksFromContent(c appengine.Context, content string) ([]string, error) {
-	httpRegex := regexp.MustCompile(`http:\/\/`)
+	httpRegex := regexp.MustCompile(`http:\/\/((\w|\.)+)`)
 	matches := httpRegex.FindAllString(content, -1)
 	if matches == nil {
 		return []string{}, nil
