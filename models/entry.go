@@ -104,6 +104,9 @@ func (e *Entry) Save(c appengine.Context) error {
 		}
 	}
 
+	// Pull out links
+	GetLinksFromContent(c, e.Content)
+
 	// Figure out Tags
 	tags, err := ParseTags(e.Content)
 	if err != nil {
@@ -155,6 +158,20 @@ func (e *Entry) NextPost(c appengine.Context) string {
 	}
 
 	return entry.Url()
+}
+
+func GetLinksFromContent(c appengine.Context, content string) ([]string, error) {
+	httpRegex := regexp.MustCompile(`http:\/\/`)
+	matches := httpRegex.FindAllString(content, -1)
+	if matches == nil {
+		return []string{}, nil
+	}
+
+	for _, match := range matches {
+		c.Infof("%+v", match)
+	}
+
+	return []string{}, nil
 }
 
 // Markdown.
