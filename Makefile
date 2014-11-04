@@ -10,6 +10,7 @@ run: css *.go
 
 deploy:
 	gcloud preview app deploy . --project=natwelch-writing
+	git push
 
 update:
 	cd $(GOPATH)/src/github.com/icco/natnatnat/; git pull
