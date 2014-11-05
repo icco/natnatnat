@@ -1,13 +1,16 @@
 package models
 
 import (
-	"appengine"
-	"appengine/datastore"
 	"fmt"
-	"github.com/russross/blackfriday"
 	"html/template"
 	"regexp"
 	"time"
+
+	"appengine"
+	"appengine/datastore"
+
+	"github.com/kennygrant/sanitize"
+	"github.com/russross/blackfriday"
 )
 
 type Entry struct {
@@ -134,6 +137,16 @@ func (e *Entry) EditUrl() string {
 
 func (e *Entry) Html() template.HTML {
 	return Markdown(e.Content)
+}
+
+func (e *Entry) Summary() string {
+	// truncate(strip_tags(m(p.text)), :length => 100).strip
+	stripped := sanitize.HTML(e.Html())
+	if len(stripped) > 100 {
+		return fmt.Sprintf("%s...", stripped[:100])
+	} else {
+		return stripped
+	}
 }
 
 func (e *Entry) PrevPost(c appengine.Context) string {
