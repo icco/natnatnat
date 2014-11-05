@@ -141,7 +141,7 @@ func (e *Entry) Html() template.HTML {
 
 func (e *Entry) Summary() string {
 	// truncate(strip_tags(m(p.text)), :length => 100).strip
-	stripped := sanitize.HTML(e.Html())
+	stripped := sanitize.HTML(string(e.Html()))
 	if len(stripped) > 100 {
 		return fmt.Sprintf("%s...", stripped[:100])
 	} else {
