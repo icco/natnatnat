@@ -15,9 +15,6 @@
         {{$entry.Content|mrkdwn}}
       </div>
     </div>
-
-    <div class="addons">
-    </div>
   </div>
 {{ end }}
 
