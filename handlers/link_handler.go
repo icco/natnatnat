@@ -66,25 +66,25 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	client := urlfetch.Client(c)
 	resp, err := client.Get(pb_url)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("Error getting '%s': %+v", pb_url, err), http.StatusInternalServerError)
 		return
 	}
 
 	var p []byte
 	_, err = resp.Body.Read(p)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("Error reading body: %+v", pb_url, err), http.StatusInternalServerError)
 		return
 	}
 	err = resp.Body.Close()
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("Error closing body: %+v", pb_url, err), http.StatusInternalServerError)
 		return
 	}
 
 	posts := new(Posts)
 	if err = xml.Unmarshal(p, posts); err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("Error parsing XML: %+v", pb_url, err), http.StatusInternalServerError)
 		return
 	}
 
@@ -93,7 +93,7 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		e := models.NewLink(pin.Desc, pin.Url, pin.Notes, tags, pin.Time)
 		err = e.Save(c)
 		if err != nil {
-			http.Error(w, err.Error(), 500)
+			http.Error(w, fmt.Sprintf("Error saving link: %+v", pb_url, err), http.StatusInternalServerError)
 			return
 		}
 	}
