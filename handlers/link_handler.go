@@ -2,12 +2,16 @@ package handlers
 
 import (
 	"encoding/xml"
+	"errors"
 	"fmt"
+	"net/http"
 	"net/url"
 	"time"
 
+	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 
+	"appengine"
 	"appengine/taskqueue"
 	"appengine/urlfetch"
 )
