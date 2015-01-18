@@ -39,7 +39,7 @@ func NewLink(title string, url string, desc string, tags []string, when time.Tim
 func (l *Link) TagString() string {
 	tags := []string{}
 	for i, t := range l.Tags {
-		append(tags, fmt.Sprintf("#%s", t))
+		tags := append(tags, fmt.Sprintf("#%s", t))
 	}
 
 	return strings.Join(tags, " ")
