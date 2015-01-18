@@ -71,12 +71,12 @@ func LinkWorkGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 
 	var p []byte
-	_, err := resp.Body.Reader.Read(p)
+	_, err = resp.Body.Read(p)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	err := resp.Body.Closer.Close()
+	err = resp.Body.Close()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
