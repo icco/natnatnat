@@ -22,7 +22,6 @@ type Entry struct {
 	Modified time.Time
 	Tags     []string
 	Public   bool
-	// TODO(icco): Define a meta field that is a json hash of extra data
 }
 
 var HashtagRegex *regexp.Regexp = regexp.MustCompile(`(\s)#(\w+)`)
