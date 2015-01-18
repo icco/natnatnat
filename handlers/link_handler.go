@@ -3,7 +3,7 @@ package handlers
 import (
 	"encoding/xml"
 	"fmt"
-	"url"
+	"net/url"
 
 	"github.com/pilu/traffic"
 
