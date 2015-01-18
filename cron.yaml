@@ -1,4 +1,4 @@
 cron:
-- description: hourly work
-  url: /work/link
+- description: Enque hourly work
+  url: /link/queue
   schedule: every 1 hours
