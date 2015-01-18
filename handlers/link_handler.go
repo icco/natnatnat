@@ -65,12 +65,13 @@ func LinkWorkGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	client := urlfetch.Client(c)
 	resp, err := client.Get(pb_url)
-	posts := new(Posts)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	if err = xml.Unmarshal(resp, posts); err != nil {
+
+	posts := new(Posts)
+	if err = xml.Unmarshal(resp.Body, posts); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
