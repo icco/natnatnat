@@ -70,8 +70,20 @@ func LinkWorkGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 
+	var p []byte
+	_, err := resp.Body.Reader.Read(p)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	err := resp.Body.Closer.Close()
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	posts := new(Posts)
-	if err = xml.Unmarshal(resp.Body, posts); err != nil {
+	if err = xml.Unmarshal(p, posts); err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
