@@ -70,6 +70,11 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 
+	if resp.StatusCode != 200 {
+		http.Error(w, fmt.Sprintf("Error getting '%s': %+v", pb_url, resp.Status), http.StatusInternalServerError)
+		return
+	}
+
 	var p []byte
 	_, err = resp.Body.Read(p)
 	if err != nil {
