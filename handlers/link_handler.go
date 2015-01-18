@@ -4,6 +4,7 @@ import (
 	"encoding/xml"
 	"fmt"
 	"net/url"
+	"time"
 
 	"github.com/pilu/traffic"
 
