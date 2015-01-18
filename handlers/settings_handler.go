@@ -23,6 +23,8 @@ type SettingsPageData struct {
 	TwitterAccessTokenSecret string
 	TwitterKey               string
 	TwitterSecret            string
+	PinboardUser             string
+	PinboardToken            string
 	User                     string
 	Version                  string
 	Xsrf                     string
@@ -60,6 +62,9 @@ func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		ses := models.GetFlagLogError(c, "SESSION_KEY")
 		ver := models.GetFlagLogError(c, "VERSION")
 
+		pb_usr := models.GetFlagLogError(c, "PINBOARD_USER")
+		pb_tok := models.GetFlagLogError(c, "PINBOARD_TOKEN")
+
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
@@ -68,6 +73,8 @@ func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			LogoutUrl:                url,
 			Random:                   RandomString(64),
 			Session:                  ses,
+			PinboardUser:             pb_usr,
+			PinboardToken:            pb_tok,
 			TwitterAccessToken:       twt_atok,
 			TwitterAccessTokenSecret: twt_asec,
 			TwitterKey:               twt_key,
@@ -138,6 +145,20 @@ func SettingsPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 		twitter_asec := r.Request.FormValue("twitter_asec")
 		err = models.SetFlag(c, "TWITTER_ACCESS_SECRET", twitter_asec)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+
+		pb_usr := r.Request.FormValue("pb_usr")
+		err = models.SetFlag(c, "PINBOARD_USER", pb_usr)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+
+		pb_tok := r.Request.FormValue("pb_tok")
+		err = models.SetFlag(c, "PINBOARD_TOKEN", pb_tok)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return

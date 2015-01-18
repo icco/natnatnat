@@ -1,0 +1,4 @@
+cron:
+- description: hourly work
+  url: /work/link
+  schedule: every hour

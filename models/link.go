@@ -12,11 +12,12 @@ type Link struct {
 	Url         string
 	Description string `datastore:",noindex"` // Markdown
 	Tags        []string
+	Posted      time.Time
 	Created     time.Time
 	Modified    time.Time
 }
 
-func NewLink(title string, url string, desc string, tags []string) *Link {
+func NewLink(title string, url string, desc string, tags []string, when time.Time) *Link {
 	e := new(Link)
 
 	// User supplied content
@@ -24,6 +25,7 @@ func NewLink(title string, url string, desc string, tags []string) *Link {
 	e.Url = url
 	e.Description = desc
 	e.Tags = tags
+	e.Posted = when
 
 	// Computer generated content
 	e.Created = time.Now()

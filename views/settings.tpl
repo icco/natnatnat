@@ -33,6 +33,16 @@
     </div>
 
     <div class="pure-control-group">
+      <label for="pb_usr">Pinboard User</label>
+      <input id="pb_usr" name="pb_usr" type="text" placeholder="Pinboard User" value="{{.PinboardUser}}">
+    </div>
+
+    <div class="pure-control-group">
+      <label for="pb_tok">Pinboard Token</label>
+      <input id="pb_tok" name="pb_tok" type="text" placeholder="Pinboard Token" value="{{.PinboardToken}}">
+    </div>
+
+    <div class="pure-control-group">
       <label for="version">Version</label>
       <input id="version" name="version" type="text" placeholder="Version" value="{{.Version}}" disabled>
     </div>

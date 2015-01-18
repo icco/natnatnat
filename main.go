@@ -66,6 +66,9 @@ func init() {
 	router.Get("/summary.atom", handlers.SummaryAtomHandler)
 	router.Get("/summary.rss", handlers.SummaryRssHandler)
 
+	router.Get("/link/queue", handlers.LinkQueueGetHandler)
+	router.Get("/link/work", handlers.LinkWorkGetHandler)
+
 	router.AddBeforeFilter(HstsMiddleware)
 	router.Use(NewStaticMiddleware(traffic.PublicPath()))
 
