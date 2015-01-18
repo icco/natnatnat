@@ -73,14 +73,10 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	var p []byte
 	_, err = resp.Body.Read(p)
 	if err != nil {
-		http.Error(w, fmt.Sprintf("Error reading body: %+v", pb_url, err), http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("Error reading body of '%s': %+v", pb_url, err), http.StatusInternalServerError)
 		return
 	}
-	err = resp.Body.Close()
-	if err != nil {
-		http.Error(w, fmt.Sprintf("Error closing body: %+v", pb_url, err), http.StatusInternalServerError)
-		return
-	}
+	defer resp.Body.Close()
 
 	posts := new(Posts)
 	if err = xml.Unmarshal(p, posts); err != nil {
