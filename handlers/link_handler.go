@@ -61,7 +61,7 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	user := models.GetFlagLogError(c, "PINBOARD_USER")
 	token := models.GetFlagLogError(c, "PINBOARD_TOKEN")
 	params := "count=100"
-	pb_url := fmt.Sprintf("https://api.pinboard.in/v1/%s?auth_token=%s:%s?%s", "posts/recent", user, token, params)
+	pb_url := fmt.Sprintf("https://api.pinboard.in/v1/%s?auth_token=%s:%s&%s", "posts/recent", user, token, params)
 
 	client := urlfetch.Client(c)
 	resp, err := client.Get(pb_url)
