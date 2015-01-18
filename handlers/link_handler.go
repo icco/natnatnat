@@ -44,7 +44,7 @@ type Posts struct {
 	Pins    []Link   `xml:"post"`
 }
 
-func LinkQueueGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
+func LinkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	t := taskqueue.NewPOSTTask("/link/work", url.Values{})
 	_, err := taskqueue.Add(c, t, "")
@@ -56,7 +56,7 @@ func LinkQueueGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 }
 
-func LinkWorkGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
+func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	user := models.GetFlagLogError(c, "PINBOARD_USER")
 	token := models.GetFlagLogError(c, "PINBOARD_TOKEN")
