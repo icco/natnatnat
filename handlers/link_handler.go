@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/xml"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strings"
@@ -75,16 +76,15 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 
-	var p []byte
-	i, err := resp.Body.Read(p)
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
-		http.Error(w, fmt.Sprintf("Error reading body of '%s' (%d bytes): %+v. '%+v' parsed from %+v", pb_url, i, err, p, resp), http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("Error reading body of '%s': %+v. '%+v' parsed from %+v", pb_url, err, body, resp), http.StatusInternalServerError)
 		return
 	}
-	// defer resp.Body.Close()
 
 	posts := new(Posts)
-	if err = xml.Unmarshal(p, posts); err != nil {
+	if err = xml.Unmarshal(body, posts); err != nil {
 		http.Error(w, fmt.Sprintf("Error parsing XML: %+v", pb_url, err), http.StatusInternalServerError)
 		return
 	}
