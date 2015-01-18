@@ -39,12 +39,18 @@ func NewPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	} else {
 		url, _ := user.LogoutURL(c, "/")
 		token := xsrftoken.Generate(models.GetFlagLogError(c, "SESSION_KEY"), u.String(), "/post/new")
+		links, err := models.AllLinks(c, 250)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+
 		responseData := &NewPostPageData{
 			LogoutUrl: url,
 			User:      u.String(),
 			Xsrf:      token,
 			IsAdmin:   user.IsAdmin(c),
-			Links:     models.AllLinks(c, 250)}
+			Links:     links}
 		w.Render("new_post", responseData)
 	}
 }
