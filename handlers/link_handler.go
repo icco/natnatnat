@@ -2,10 +2,10 @@ package handlers
 
 import (
 	"encoding/xml"
-	"errors"
 	"fmt"
 	"net/http"
 	"net/url"
+	"strings"
 	"time"
 
 	"github.com/icco/natnatnat/models"
@@ -45,7 +45,7 @@ type Posts struct {
 }
 
 func LinkQueueGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
-	c := appengine.NewContext(r)
+	c := appengine.NewContext(r.Request)
 	t := taskqueue.NewPOSTTask("/link/work", url.Values{})
 	_, err := taskqueue.Add(c, t, "")
 
@@ -57,11 +57,11 @@ func LinkQueueGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 }
 
 func LinkWorkGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
-	c := appengine.NewContext(r)
+	c := appengine.NewContext(r.Request)
 	user := models.GetFlagLogError(c, "PINBOARD_USER")
 	token := models.GetFlagLogError(c, "PINBOARD_TOKEN")
 	params := "count=100"
-	pb_url = fmt.Sprintf("https://api.pinboard.in/v1/%s?auth_token=%s:%s?%s", "posts/recent", user, token, params)
+	pb_url := fmt.Sprintf("https://api.pinboard.in/v1/%s?auth_token=%s:%s?%s", "posts/recent", user, token, params)
 
 	client := urlfetch.Client(c)
 	resp, err := client.Get(pb_url)
@@ -71,12 +71,13 @@ func LinkWorkGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 	if err = xml.Unmarshal(resp, posts); err != nil {
-		return nil, err
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
 	}
 
 	for _, pin := range posts.Pins {
 		tags := strings.Fields(pin.Tags)
-		e := models.NewLink(title, pin.Url, pin.Desc, tags, pin.Time)
+		e := models.NewLink(pin.Desc, pin.Url, pin.Notes, tags, pin.Time)
 		err = e.Save(c)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
