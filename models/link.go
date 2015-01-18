@@ -57,8 +57,8 @@ func (e *Link) Save(c appengine.Context) error {
 	return err
 }
 
-func AllLinks(c appengine.Context, limit int) (*[]Entry, error) {
-	q := datastore.NewQuery("Link").Order("-Datetime").Limit(limit)
+func AllLinks(c appengine.Context, limit int) (*[]Link, error) {
+	q := datastore.NewQuery("Link").Order("-Posted").Limit(limit)
 	links := new([]Link)
 	_, err := q.GetAll(c, links)
 	return links, err
