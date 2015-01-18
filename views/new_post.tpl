@@ -24,7 +24,9 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
 
 <ul>
   {{ range $link := .Links }}
-    <li class="link"><a data-tags="{{$link.TagString()}}">Add</a> &mdash; <a href="{{$link.Url}}">{{$link.Title}}</a></li>
+    {{ with $link }}
+      <li class="link"><a data-tags="{{.TagString}}">Add</a> &mdash; <a href="{{.Url}}">{{.Title}}</a></li>
+    {{end}}
   {{ end }}
 </ul>
 
