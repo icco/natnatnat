@@ -78,7 +78,7 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	var p []byte
 	i, err := resp.Body.Read(p)
 	if err != nil {
-		http.Error(w, fmt.Sprintf("Error reading body of '%s' (%d bytes): %+v. '%+v'", pb_url, i, err, p), http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("Error reading body of '%s' (%d bytes): %+v. '%+v' parsed from %+v", pb_url, i, err, p, resp), http.StatusInternalServerError)
 		return
 	}
 	// defer resp.Body.Close()
