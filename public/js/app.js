@@ -39,4 +39,15 @@ $(document).ready(function() {
       prent.append(addon);
     });
   });
+
+  $('li.link').each(function(i, el) {
+    $(el).click(function() {
+      link = $(this).children('a.actual')[0];
+      title = $(link).text();
+      url =  $(link).attr('href');
+      mkd = "\n[" + title + "](" + url + ")";
+      ta = $('textarea[name="text"]');
+      ta.val(ta.val() + mkd);
+    });
+  });
 });
