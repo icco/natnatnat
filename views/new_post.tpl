@@ -22,4 +22,10 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
   </div>
 </form>
 
+<ul>
+  {{ range $link := .Links }}
+    <li class="link"><a data-tags="{{$link.TagString()}}">Add</a> &mdash; <a href="{{$link.Url}}">{{$link.Title}}</a></li>
+  {{ end }}
+</ul>
+
 {{ template "includes/footer" }}

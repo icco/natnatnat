@@ -1,6 +1,6 @@
 {{ template "includes/header" }}
 
-{{range $entry := .Posts }}
+{{ range $entry := .Posts }}
   <div class="front-page post">
     <div class="time">
       # <a href="/post/{{$entry.Id}}">{{$entry.Datetime|fmttime}}</a>

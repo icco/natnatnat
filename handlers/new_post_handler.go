@@ -19,6 +19,7 @@ type NewPostPageData struct {
 	LogoutUrl string
 	User      string
 	Xsrf      string
+	Links     *[]models.Link
 }
 
 func NewPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -38,7 +39,12 @@ func NewPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	} else {
 		url, _ := user.LogoutURL(c, "/")
 		token := xsrftoken.Generate(models.GetFlagLogError(c, "SESSION_KEY"), u.String(), "/post/new")
-		responseData := &NewPostPageData{LogoutUrl: url, User: u.String(), Xsrf: token, IsAdmin: user.IsAdmin(c)}
+		responseData := &NewPostPageData{
+			LogoutUrl: url,
+			User:      u.String(),
+			Xsrf:      token,
+			IsAdmin:   user.IsAdmin(c),
+			Links:     models.AllLinks(c, 250)}
 		w.Render("new_post", responseData)
 	}
 }
