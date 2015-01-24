@@ -4,10 +4,12 @@ import (
 	"appengine"
 	"appengine/user"
 	"errors"
-	"github.com/icco/natnatnat/models"
-	"github.com/pilu/traffic"
+	"fmt"
 	"net/http"
 	"strconv"
+
+	"github.com/icco/natnatnat/models"
+	"github.com/pilu/traffic"
 )
 
 type ResponseData struct {
@@ -15,6 +17,7 @@ type ResponseData struct {
 	IsAdmin bool
 	Next    string
 	Prev    string
+	Title   string
 }
 
 func PostHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -38,7 +41,8 @@ func PostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			Entry:   entry,
 			IsAdmin: user.IsAdmin(c),
 			Next:    entry.NextPost(c),
-			Prev:    entry.PrevPost(c)}
+			Prev:    entry.PrevPost(c),
+			Title:   fmt.Sprintf("#%d", entry.Id)}
 		w.Render("post", responseData)
 		return
 	}
