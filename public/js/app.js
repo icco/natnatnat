@@ -41,11 +41,12 @@ $(document).ready(function() {
   });
 
   $('li.link').each(function(i, el) {
-    $(el).click(function() {
-      link = $(this).children('a.actual')[0];
+    $(el).children('a.adder').click(function() {
+      link = $(el).children('a.actual')[0];
       title = $(link).text();
+      tags = $(this).data('tags');
       url =  $(link).attr('href');
-      mkd = "\n[" + title + "](" + url + ")";
+      mkd = "\n[" + title + "](" + url + ")\n\n" + tags;
       ta = $('textarea[name="text"]');
       ta.val(ta.val() + mkd);
     });
