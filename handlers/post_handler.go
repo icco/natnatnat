@@ -4,7 +4,6 @@ import (
 	"appengine"
 	"appengine/user"
 	"errors"
-	"fmt"
 	"net/http"
 	"strconv"
 
