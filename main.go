@@ -1,15 +1,17 @@
 package main
 
 import (
+	"html/template"
+	"net/http"
+	"time"
+
 	"appengine"
 	"appengine/user"
+
 	"github.com/gorilla/sessions"
 	"github.com/icco/natnatnat/handlers"
 	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
-	"html/template"
-	"net/http"
-	"time"
 )
 
 var store *sessions.CookieStore

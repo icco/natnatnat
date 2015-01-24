@@ -1,4 +1,6 @@
+{{with printf "#%s", .Entry.Id}}
 {{ template "includes/header" }}
+{{end}}
 
 <div class="post">
   <div class="time">
