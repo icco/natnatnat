@@ -1,4 +1,4 @@
-{{ template "includes/header" }}
+{{ template "includes/header" printf "#editpost #%d" .Entry.Id }}
 
 <p>
 Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)

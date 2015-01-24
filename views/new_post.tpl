@@ -1,4 +1,4 @@
-{{ template "includes/header" }}
+{{ template "includes/header" "#NewPost" }}
 
 <p>
 Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)

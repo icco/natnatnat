@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Nat? Nat. Nat! {{.Title}}</title>
+    <title>Nat? Nat. Nat! {{.}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/css/pure-min.0.5.0.css" />
     <link rel="stylesheet" href="/css/pure-responsive-min.0.5.0.css">

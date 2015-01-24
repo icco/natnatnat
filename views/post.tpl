@@ -1,6 +1,4 @@
-{{with printf "#%s", .Entry.Id}}
-{{ template "includes/header" }}
-{{end}}
+{{ template "includes/header" printf "#%d" .Entry.Id }}
 
 <div class="post">
   <div class="time">
