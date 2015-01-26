@@ -12,12 +12,14 @@ import (
 	"github.com/pilu/traffic"
 )
 
+var baseUrl = "https://writing.natwelch.com"
+
 func buildFeed(c appengine.Context, entries *[]models.Entry) *feeds.Feed {
 	now := time.Now()
 	me := &feeds.Author{"Nat Welch", "nat@natwelch.com"}
 	feed := &feeds.Feed{
 		Title:       "Nat? Nat. Nat!",
-		Link:        &feeds.Link{Href: "https://writing.natwelch.com"},
+		Link:        &feeds.Link{Href: baseUrl},
 		Description: "Thoughts from Nat about stuff",
 		Author:      me,
 		Created:     now,
@@ -28,7 +30,7 @@ func buildFeed(c appengine.Context, entries *[]models.Entry) *feeds.Feed {
 		if v.Public {
 			feed.Items = append(feed.Items, &feeds.Item{
 				Title:       v.Title,
-				Link:        &feeds.Link{Href: v.Url()},
+				Link:        &feeds.Link{Href: baseUrl + v.Url()},
 				Description: string(v.Html()),
 				Author:      me,
 				Created:     v.Datetime,
@@ -45,7 +47,7 @@ func buildSummary(c appengine.Context, entries *[]models.Entry) *feeds.Feed {
 	me := &feeds.Author{"Nat Welch", "nat@natwelch.com"}
 	feed := &feeds.Feed{
 		Title:       "Nat? Nat. Nat! - Summaries",
-		Link:        &feeds.Link{Href: "https://writing.natwelch.com"},
+		Link:        &feeds.Link{Href: baseUrl},
 		Description: "Thoughts from Nat about stuff",
 		Author:      me,
 		Created:     now,
@@ -56,7 +58,7 @@ func buildSummary(c appengine.Context, entries *[]models.Entry) *feeds.Feed {
 		if v.Public {
 			feed.Items = append(feed.Items, &feeds.Item{
 				Title:       fmt.Sprintf("Nat? Nat. Nat! #%d", v.Id),
-				Link:        &feeds.Link{Href: v.Url()},
+				Link:        &feeds.Link{Href: baseUrl + v.Url()},
 				Description: "At some point, I'll put something here.",
 				Author:      me,
 				Created:     v.Datetime,
