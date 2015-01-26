@@ -1,12 +1,15 @@
 package handlers
 
 import (
+	"fmt"
+	"net/http"
+	"time"
+
 	"appengine"
+
 	"github.com/gorilla/feeds"
 	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
-	"net/http"
-	"time"
 )
 
 func buildFeed(c appengine.Context, entries *[]models.Entry) *feeds.Feed {
