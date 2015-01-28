@@ -1,6 +1,8 @@
 {{ template "includes/header" printf "#%s" .Tag }}
 
-<div>All posts that contain the tag <strong>{{.Tag}}</strong>.</div>
+<div class="tag-header">
+    All posts that contain the tag <strong>{{.Tag}}</strong>.
+</div>
 
 {{ range $entry := .Posts }}
   <div class="front-page post">
