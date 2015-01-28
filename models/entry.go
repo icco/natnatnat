@@ -187,6 +187,13 @@ func GetLinksFromContent(c appengine.Context, content string) ([]string, error) 
 	return []string{}, nil
 }
 
+func PostsWithTag(c appengine.Context, tag string) (*[]Entry, error) {
+	q := datastore.NewQuery("Entry").Order("-Datetime").Filter("Tags =", tag)
+	entries := new([]Entry)
+	_, err := q.GetAll(c, entries)
+	return entries, err
+}
+
 // Markdown.
 func Markdown(args ...interface{}) template.HTML {
 	inc := []byte(fmt.Sprintf("%s", args...))
