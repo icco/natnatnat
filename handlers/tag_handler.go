@@ -1,7 +1,9 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
+	"strings"
 
 	"appengine"
 
@@ -20,6 +22,10 @@ func TagHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	if tag == "" {
 		http.Redirect(w, r.Request, "/tags", 301)
+	}
+
+	if tag != strings.ToLower(tag) {
+		http.Redirect(w, r.Request, fmt.Sprintf("/tags/%s", strings.ToLower(tag)), 301)
 	}
 
 	entries, err := models.PostsWithTag(c, tag)

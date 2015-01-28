@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"html/template"
 	"regexp"
+	"strings"
 	"time"
 
 	"appengine"
@@ -50,7 +51,7 @@ func ParseTags(text string) ([]string, error) {
 	ret := make([]string, 0)
 	for _, v := range finds {
 		if len(v) > 2 {
-			ret = append(ret, v[2])
+			ret = append(ret, strings.ToLower(v[2]))
 		}
 	}
 
