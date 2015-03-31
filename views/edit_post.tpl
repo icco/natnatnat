@@ -5,7 +5,7 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
 </p>
 
 <form method="post" action="{{.EditUrl}}" class="pure-form pure-form-stacked">
-  <input type="text" name="title" placeholder="Title"  class="pure-input-1" />
+  <input type="text" name="title" placeholder="Title"  class="pure-input-1" value="{{.Entry.Title}}" />
 
   <textarea name="text" class="pure-input-1" style="min-height: 200px;">{{.Entry.Content}}</textarea>
 
