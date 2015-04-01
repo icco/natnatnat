@@ -8,7 +8,7 @@
 
     <div class="post-content">
       {{ if $entry.Title }}
-        <h2><a href="/post/{{$entry.Id}}">{{$entry.Title}}</a></h2>
+        <h1><a href="/post/{{$entry.Id}}">{{$entry.Title}}</a></h1>
       {{ end }}
 
       <div class="markdown">
