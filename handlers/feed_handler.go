@@ -72,7 +72,7 @@ func buildSummary(c appengine.Context, entries *[]models.Entry) *feeds.Feed {
 
 func FeedAtomHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	entries, err := models.AllPosts(c)
+	entries, err := models.RecentPosts(c)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
@@ -90,7 +90,7 @@ func FeedAtomHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 func FeedRssHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	entries, err := models.AllPosts(c)
+	entries, err := models.RecentPosts(c)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return

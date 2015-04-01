@@ -87,6 +87,13 @@ func AllPosts(c appengine.Context) (*[]Entry, error) {
 	return entries, err
 }
 
+func RecentPosts(c appengine.Context) (*[]Entry, error) {
+	q := datastore.NewQuery("Entry").Order("-Datetime").Limit(20)
+	entries := new([]Entry)
+	_, err := q.GetAll(c, entries)
+	return entries, err
+}
+
 func (e *Entry) HasId() bool {
 	return (e.Id > 0)
 }
