@@ -4,4 +4,4 @@ version: 1-0-1
 handlers:
 - url: .*
   script: natnatnat
-  secure: always
+  secure: optional
