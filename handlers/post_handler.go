@@ -31,7 +31,7 @@ func PostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 
-	if !entry.Public {
+	if !entry.Public && !user.IsAdmin(c) {
 		http.Error(w, errors.New("Post is not public").Error(), 403)
 		return
 	} else {
