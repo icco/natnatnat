@@ -12,6 +12,12 @@ indexes:
 
 - kind: Entry
   properties:
+  - name: Public
+  - name: Datetime
+    direction: desc
+
+- kind: Entry
+  properties:
   - name: Tags
   - name: Datetime
     direction: desc
