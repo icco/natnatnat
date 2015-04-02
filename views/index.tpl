@@ -3,7 +3,7 @@
 {{ range $entry := .Posts }}
   <div class="front-page post">
     <div class="time">
-      # <a href="/post/{{$entry.Id}}">{{$entry.Datetime|fmttime}}</a>
+      #{{$entry.Id}} <a href="/post/{{$entry.Id}}">{{$entry.Datetime|fmttime}}</a>
     </div>
 
     <div class="post-content">

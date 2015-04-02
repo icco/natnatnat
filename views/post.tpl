@@ -2,7 +2,7 @@
 
 <div class="post">
   <div class="time">
-    # <a href="/post/{{.Entry.Id}}">{{.Entry.Datetime|fmttime}}</a>
+    #{{.Entry.Id}} <a href="/post/{{.Entry.Id}}">{{.Entry.Datetime|fmttime}}</a>
   </div>
 
   <div class="post-content">
