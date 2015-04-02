@@ -56,8 +56,13 @@ func buildSummary(c appengine.Context, entries *[]models.Entry) *feeds.Feed {
 	feed.Items = []*feeds.Item{}
 	for _, v := range *entries {
 		if v.Public {
+			title := fmt.Sprintf("Nat? Nat. Nat! #%d", v.Id)
+			if v.Title != "" {
+				title = v.Title
+			}
+
 			feed.Items = append(feed.Items, &feeds.Item{
-				Title:       fmt.Sprintf("Nat? Nat. Nat! #%d", v.Id),
+				Title:       title,
 				Link:        &feeds.Link{Href: baseUrl + v.Url()},
 				Description: "At some point, I'll put something here.",
 				Author:      me,
