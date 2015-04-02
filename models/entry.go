@@ -81,14 +81,14 @@ func MaxId(c appengine.Context) (int64, error) {
 }
 
 func AllPosts(c appengine.Context) (*[]Entry, error) {
-	q := datastore.NewQuery("Entry").Order("-Datetime")
+	q := datastore.NewQuery("Entry").Filter("Public =", true).Order("-Datetime")
 	entries := new([]Entry)
 	_, err := q.GetAll(c, entries)
 	return entries, err
 }
 
 func RecentPosts(c appengine.Context) (*[]Entry, error) {
-	q := datastore.NewQuery("Entry").Order("-Datetime").Limit(20)
+	q := datastore.NewQuery("Entry").Filter("Public =", true).Order("-Datetime").Limit(20)
 	entries := new([]Entry)
 	_, err := q.GetAll(c, entries)
 	return entries, err
