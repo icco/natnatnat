@@ -6,6 +6,10 @@
   </div>
 
   <div class="post-content">
+    {{ if not .Entry.Public }}
+      <h2 style="color: red; font-weight: 800;">POST IS NOT PUBLIC.</h2>
+    {{ end }}
+
     {{ if .Entry.Title }}
       <h1>{{.Entry.Title}}</h1>
     {{ end }}
