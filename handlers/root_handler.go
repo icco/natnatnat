@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"time"
 
 	"appengine"
 	"appengine/user"
@@ -32,4 +33,47 @@ func AboutHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 func UnimplementedHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	http.Error(w, "Sorry, I haven't implemented this yet", 500)
+}
+
+type ArchiveData struct {
+	Years   map[int]Year
+	IsAdmin bool
+}
+
+type Year map[time.Month]Month
+type Month map[int]Day
+type Day []models.Entry
+
+func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	c := appengine.NewContext(r.Request)
+	entries, err := models.AllPosts(c)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	var years map[int]Year
+
+	for _, p := range *entries {
+		year := p.Datetime.Year()
+		month := p.Datetime.Month()
+		day := p.Datetime.Day()
+
+		if years[year] == nil {
+			years[year] = make(Year)
+		}
+
+		if years[year][month] == nil {
+			years[year][month] = make(Month)
+		}
+
+		if years[year][month][day] == nil {
+			years[year][month][day] = make(Day, 1)
+		}
+
+		years[year][month][day] = append(years[year][month][day], p)
+	}
+
+	data := &ArchiveData{Years: years, IsAdmin: user.IsAdmin(c)}
+	w.Render("archive", data)
 }
