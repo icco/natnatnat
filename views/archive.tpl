@@ -9,7 +9,9 @@
         <div class="month">{{ $month }}</div>
         {{ range $day, $posts := $days }}
           <div class="day">{{ $day }}</div>
-          <li><a href="/post/{{ $post.Id }}">#{{ $post.Id }}</a></li>
+          {{ range $post := $posts }}
+            <li><a href="/post/{{ $post.Id }}">#{{ $post.Id }}</a></li>
+          {{ end }}
         {{ end }}
       {{ end }}
     {{ end }}
