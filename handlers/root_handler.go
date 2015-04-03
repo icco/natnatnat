@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"time"
 
 	"appengine"
 	"appengine/user"
@@ -39,17 +40,9 @@ type ArchiveData struct {
 	IsAdmin bool
 }
 
-type Year struct {
-	Months map[int]Month
-}
-
-type Month struct {
-	Days map[int]Day
-}
-
-type Day struct {
-	Posts []models.Entry
-}
+type Year map[time.Month]Month
+type Month map[int]Day
+type Day []models.Entry
 
 func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
@@ -59,28 +52,26 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 
-	years := make(map[int]Year, 2)
+	var years map[int]Year
+
 	for _, p := range *entries {
 		year := p.Datetime.Year()
 		month := p.Datetime.Month()
 		day := p.Datetime.Day()
 
-		year_blob := years[year]
-		if year_blob == nil {
-			year_blob = Year{Months: make(map[int]Month, 12)}
+		if years[year] == nil {
+			years[year] = make(Year)
 		}
 
-		month_blob := year_blob[month]
-		if month_blob == nil {
-			month_blob = Month{make(map[int]Day, 31)}
+		if years[year][month] == nil {
+			years[year][month] = make(Month)
 		}
 
-		day_blob := month_blob[day]
-		if day_blob == nil {
-			day_blob = Day{make([]models.Entry, 1)}
+		if years[year][month][day] == nil {
+			years[year][month][day] = make(Day, 1)
 		}
 
-		day_blob = append(day_blob, p)
+		years[year][month][day] = append(years[year][month][day], p)
 	}
 
 	data := &ArchiveData{Years: years, IsAdmin: user.IsAdmin(c)}
