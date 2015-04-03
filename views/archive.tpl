@@ -2,7 +2,7 @@
 
 <div id="archives">
   <ul>
-    {{ range $year, $months := .DateMap }}
+    {{ range $year, $months := .Years }}
       <div class="year">{{ $year }}</div>
 
       {{ range $month, $days := $months }}

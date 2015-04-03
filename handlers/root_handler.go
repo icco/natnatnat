@@ -68,7 +68,7 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		}
 
 		if years[year][month][day] == nil {
-			years[year][month][day] = make(Day, 1)
+			years[year][month][day] = make(Day, 0)
 		}
 
 		years[year][month][day] = append(years[year][month][day], p)
