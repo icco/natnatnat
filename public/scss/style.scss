@@ -1,5 +1,5 @@
 /* #IMPORT */
-// Nothing
+@import url('//fonts.googleapis.com/css?subset=latin,cyrillic-ext,latin-ext,cyrillic&family=Open+Sans+Condensed:300|Open+Sans:400,600,400italic,600italic|Merriweather:400,300,300italic,400italic,700,700italic|Roboto+Slab:400,300');
 
 // Colors
 $border_color: #808080;
@@ -21,6 +21,11 @@ $pre_background_color: lighten($background_color, 15%);
   &:after {
     clear: both;
   }
+}
+
+blockquote {
+  border-left: 3px solid $border_color;
+  padding-left: 1em;
 }
 
 h1, .alpha {
@@ -153,23 +158,45 @@ body {
     margin-bottom: 1em;
   }
 
-  .meta {
-    border-top: dotted $border_color 1px ;
-    margin-top: 20px;
-    padding-top: 10px;
-    text-align: right;
-  }
-
   p:first-of-type {
     margin-top: 0;
   }
 }
 
-.post {
-  margin: 40px 10px;
+.navigator {
+  text-align: center;
+  margin: 10px 0;
 
-  .time {
+  .pure-menu-item {
+    margin: 3px 10px;
+  }
+}
+
+.l-box {
+  padding: 1em;
+  // background: $light_background_color;
+  margin-top: 10px;
+}
+
+.post {
+  margin: 10px;
+
+  .meta {
+    @include clearfix();
     margin-bottom: 10px;
+
+    .time {
+      text-align: right;
+      display: inline-block;
+      float: right;
+    }
+
+    .id {
+      text-align: left;
+      display: inline-block;
+      float: left;
+      font-weight: 800;
+    }
   }
 }
 

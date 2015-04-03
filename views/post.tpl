@@ -1,8 +1,13 @@
 {{ template "includes/header" printf "#%d" .Entry.Id }}
 
 <div class="post">
-  <div class="time">
-    #{{.Entry.Id}} <a href="/post/{{.Entry.Id}}">{{.Entry.Datetime|fmttime}}</a>
+  <div class="meta">
+    <div class="id">
+      #{{.Entry.Id}}
+    </div>
+    <div class="time">
+      <a href="/post/{{.Entry.Id}}">{{.Entry.Datetime|fmttime}}</a>
+    </div>
   </div>
 
   <div class="post-content">
