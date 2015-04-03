@@ -35,20 +35,20 @@ func UnimplementedHandler(w traffic.ResponseWriter, r *traffic.Request) {
 }
 
 type ArchiveData struct {
-	DateMap map[int]Year
+	Years   map[int]Year
 	IsAdmin bool
 }
 
 type Year struct {
-	map[int]Month
+	Months map[int]Month
 }
 
 type Month struct {
-	map[int]Day
+	Days map[int]Day
 }
 
 type Day struct {
-	[]models.Entry
+	Posts []models.Entry
 }
 
 func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -67,7 +67,7 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 		year_blob := years[year]
 		if year_blob == nil {
-			year_blob = Year{make(map[int]Month, 12)}
+			year_blob = Year{Months: make(map[int]Month, 12)}
 		}
 
 		month_blob := year_blob[month]
@@ -83,6 +83,6 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		day_blob = append(day_blob, p)
 	}
 
-	data := &ArchiveData{DateMap: years, IsAdmin: user.IsAdmin(c)}
+	data := &ArchiveData{Years: years, IsAdmin: user.IsAdmin(c)}
 	w.Render("archive", data)
 }
