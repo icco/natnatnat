@@ -40,6 +40,7 @@ type ArchiveData struct {
 	IsAdmin bool
 }
 
+// TODO(icco): Rewrite to fix map iteration problems.
 type Year map[time.Month]Month
 type Month map[int]Day
 type Day []models.Entry
