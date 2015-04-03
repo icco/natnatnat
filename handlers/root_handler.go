@@ -52,7 +52,7 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 
-	var years map[int]Year
+	years := make(map[int]Year)
 
 	for _, p := range *entries {
 		year := p.Datetime.Year()
