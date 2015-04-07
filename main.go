@@ -25,8 +25,18 @@ func IsAdmin(c appengine.Context) bool {
 }
 
 func fmtTime(t time.Time) string {
-	const layout = "03:04 on Jan 2, 2006"
+	const layout = "03:04 on Jan 2, 2006 UTC"
 	return t.Format(layout)
+}
+
+func jsonTime(t time.Time) string {
+	b, err := t.MarshalJSON()
+	if err != nil {
+		// TODO(icco): Log something
+		return ""
+	}
+
+	return string(b)
 }
 
 func markdown(args ...interface{}) template.HTML {
@@ -40,6 +50,7 @@ func init() {
 	}
 
 	traffic.TemplateFunc("fmttime", fmtTime)
+	traffic.TemplateFunc("jsontime", jsonTime)
 	traffic.TemplateFunc("mrkdwn", markdown)
 
 	router := traffic.New()

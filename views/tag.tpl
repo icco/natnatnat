@@ -13,7 +13,7 @@
         #{{$entry.Id}}
       </div>
       <div class="time">
-        <a href="/post/{{$entry.Id}}">{{$entry.Datetime|fmttime}}</a>
+        <a href="/post/{{$entry.Id}}"><time datetime="{{$entry.Datetime|jsontime}}">{{$entry.Datetime|fmttime}}</time></a>
       </div>
     </div>
 
