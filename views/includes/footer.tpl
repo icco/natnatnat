@@ -13,9 +13,10 @@
       </div>
     </div> <!-- /.wrap -->
 
-    <!-- Testing out embeds -->
+    <!-- Javascripts -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js" type="text/javascript"></script>
-    <script src="//cdn.embed.ly/jquery.embedly-3.1.1.min.js" type="text/javascript"></script>
+    <script src="//cdn.embed.ly/jquery.embedly-3.1.2.min.js" type="text/javascript"></script>
+    <script src="//d3js.org/d3.v3.min.js" charset="utf-8" type="text/javascript"></script>
     <script src="/js/app.js?v=20150124" type="text/javascript"></script>
 
     <script>
