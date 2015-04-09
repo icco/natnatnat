@@ -56,10 +56,10 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	data := &StatsData{
 		Posts:       postCount,
-		PostsPerDay: postCount / dayCount,
+		PostsPerDay: float64(postCount) / dayCount,
 		IsAdmin:     user.IsAdmin(c),
 	}
-	w.Render("index", data)
+	w.Render("stats", data)
 }
 
 type ArchiveData struct {
