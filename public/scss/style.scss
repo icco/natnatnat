@@ -341,3 +341,20 @@ li.link {
     padding: 5px;
   }
 }
+
+.stat {
+  width: 7em;
+  height: 100px;
+  float: left;
+  text-align: center;
+  margin: 15px;
+
+  .big {
+    font-size: 3em;
+    font-weight: 700;
+  }
+
+  .small {
+    font-weight: 300;
+  }
+}
