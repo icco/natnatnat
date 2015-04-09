@@ -17,7 +17,7 @@ import (
 type Entry struct {
 	Id       int64     `json:"id"`
 	Title    string    `json:"title"`                     // optional
-	Content  string    `datastore:",noindex",json:"text"` // Markdown
+	Content  string    `datastore:",noindex" json:"text"` // Markdown
 	Datetime time.Time `json:"date"`
 	Created  time.Time `json:"created"`
 	Modified time.Time `json:"modified"`
