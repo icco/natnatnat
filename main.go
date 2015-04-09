@@ -57,7 +57,7 @@ func init() {
 	router.Get("/", handlers.RootHandler)
 	router.Get("/about", handlers.AboutHandler)
 	router.Get("/archives", handlers.ArchiveHandler)
-	router.Get("/stats", handlers.UnimplementedHandler)
+	router.Get("/stats", handlers.StatsHandler)
 
 	router.Get("/post/new/?", handlers.NewPostGetHandler)
 	router.Post("/post/new/?", handlers.NewPostPostHandler)

@@ -35,6 +35,31 @@ func UnimplementedHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	http.Error(w, "Sorry, I haven't implemented this yet", 500)
 }
 
+type StatsData struct {
+	Posts        int
+	WordsPerPost float64
+	PostsPerDay  float64
+	IsAdmin      bool
+}
+
+func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	c := appengine.NewContext(r.Request)
+	entries, err := models.AllPosts(c)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	postCount := len(*entries)
+	dayCount := *entries[-1].Datetime.Sub(*entries[0].Datetime).Hours() / 24
+
+	data := &StatData{
+		Posts:       postCount,
+		PostsPerDay: postCount / dayCount,
+		IsAdmin:     user.IsAdmin(c),
+	}
+	w.Render("index", data)
+}
+
 type ArchiveData struct {
 	Years   map[int]Year
 	IsAdmin bool
