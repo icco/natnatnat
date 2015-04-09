@@ -81,17 +81,29 @@ func MaxId(c appengine.Context) (int64, error) {
 }
 
 func AllPosts(c appengine.Context) (*[]Entry, error) {
-	q := datastore.NewQuery("Entry").Filter("Public =", true).Order("-Datetime")
+	return Posts(c, -1, true)
+}
+
+func Posts(c appengine.Context, limit int, recentFirst bool) (*[]Entry, error) {
+	q := datastore.NewQuery("Entry").Filter("Public =", true)
+
+	if recentFirst {
+		q = q.Order("-Datetime")
+	} else {
+		q = q.Order("Datetime")
+	}
+
+	if limit > 0 {
+		q = q.Limit(limit)
+	}
+
 	entries := new([]Entry)
 	_, err := q.GetAll(c, entries)
 	return entries, err
 }
 
 func RecentPosts(c appengine.Context) (*[]Entry, error) {
-	q := datastore.NewQuery("Entry").Filter("Public =", true).Order("-Datetime").Limit(20)
-	entries := new([]Entry)
-	_, err := q.GetAll(c, entries)
-	return entries, err
+	return Posts(c, 20, true)
 }
 
 func (e *Entry) HasId() bool {

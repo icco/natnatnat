@@ -47,7 +47,7 @@ type Day []models.Entry
 
 func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	entries, err := models.AllPosts(c)
+	entries, err := models.Posts(c, -1, false)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
