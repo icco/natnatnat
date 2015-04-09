@@ -1,4 +1,4 @@
-{{ template "includes/header" }}
+{{ template "includes/header" "Archives" }}
 
 <div id="archives">
   <ul>
