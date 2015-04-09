@@ -50,9 +50,11 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 	postCount := len(*entries)
-	dayCount := *entries[-1].Datetime.Sub(*entries[0].Datetime).Hours() / 24
+	newestPost := (*entries)[0]
+	oldestPost := (*entries)[-1]
+	dayCount := newestPost.Datetime.Sub(oldestPost.Datetime).Hours() / 24
 
-	data := &StatData{
+	data := &StatsData{
 		Posts:       postCount,
 		PostsPerDay: postCount / dayCount,
 		IsAdmin:     user.IsAdmin(c),
