@@ -15,14 +15,14 @@ import (
 )
 
 type Entry struct {
-	Id       int64
-	Title    string // optional
-	Content  string `datastore:",noindex"` // Markdown
-	Datetime time.Time
+	Id       int64     `json:"id"`
+	Title    string    `json:"title"`         // optional
+	Content  string    `datastore:",noindex"` // Markdown
+	Datetime time.Time `json:"date"`
 	Created  time.Time
 	Modified time.Time
-	Tags     []string
-	Public   bool
+	Tags     []string `json:"tags"`
+	Public   bool     `json:"page"`
 }
 
 var HashtagRegex *regexp.Regexp = regexp.MustCompile(`(\s)#(\w+)`)

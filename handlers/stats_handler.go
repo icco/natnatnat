@@ -44,3 +44,13 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 	w.Render("stats", data)
 }
+
+func StatsHistoryJsonHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	c := appengine.NewContext(r.Request)
+	entries, err := models.AllPosts(c)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	w.WriteJSON(entries)
+}
