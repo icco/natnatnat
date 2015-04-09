@@ -1,6 +1,6 @@
 {{ template "includes/header" "Stats" }}
 
-<h2>Stats</h2>
+<h1 style="text-align: center;">Stats</h1>
 
 <div id="stats">
   <div class="stat">

@@ -1,5 +1,7 @@
 {{ template "includes/header" "Archives" }}
 
+<h1 style="text-align: center;">Archives</h1>
+
 <div id="archives">
   <ul>
     {{ range $year, $months := .Years }}
