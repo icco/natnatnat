@@ -33,4 +33,7 @@
   </div>
 </div>
 
+<div id="statsgraph">
+</div>
+
 {{ template "includes/footer" }}

@@ -51,4 +51,37 @@ $(document).ready(function() {
       ta.val(ta.val() + mkd);
     });
   });
+
+
+  // Stats Graph
+  if ($("#statsgraph").length) {
+    d3.json("/posts.json", function(error, data) {
+      var w = 500;
+      var h = 500;
+      var canvas = d3.select("#statsgraph")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h)
+        .attr("border", "black");
+
+      var group = canvas.append("g")
+        .attr("transform", "translate(100,10)");
+
+      var x = d3.time.scale().range([0, w]);
+      var y = d3.scale.linear().range([0, h]);
+
+      var line = d3.svg.line()
+        .interpolate("basis")
+        .x(function(d) { return console.log(d); x(new Date(d.date)); })
+        .y(function(d) { return y(d.id); }); 
+
+      group.selectAll("path")
+        .data(data).enter()
+        .append("path")
+        .attr("d", function(d) { console.log(y(d.id), y(new Date(d.date)), line(d)); return line(d); })
+        .attr("fill", "none")
+        .attr("stroke", "green")
+        .attr("stroke-width", 3);
+    });
+  }
 });
