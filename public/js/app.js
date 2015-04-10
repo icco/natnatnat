@@ -54,7 +54,7 @@ $(document).ready(function() {
 
 
   // Stats Graph
-  if ($("#statsgraph").length) {
+  if ($("#statsgraph").length && false) {
     // Chart dimensions
     var m = [20, 80, 20, 80]; // Margins
     var w = 960 - m[1] - m[3];
