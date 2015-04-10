@@ -36,7 +36,13 @@ func UnimplementedHandler(w traffic.ResponseWriter, r *traffic.Request) {
 }
 
 func MarkdownHandler(w traffic.ResponseWriter, r *traffic.Request) {
-	md := models.Markdown(r.Param("text"))
+	c := appengine.NewContext(r.Request)
+
+	in := r.Param("text")
+	md := models.Markdown(in)
+
+	c.Infof("Markdown Recieved: %s", in)
+	c.Infof("Markdown Rendered: %s", md)
 	w.WriteText(string(md))
 }
 
