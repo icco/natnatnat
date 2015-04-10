@@ -1,15 +1,18 @@
 package handlers
 
 import (
-	"appengine"
-	"appengine/user"
-	"code.google.com/p/xsrftoken"
 	"errors"
-	"github.com/icco/natnatnat/models"
-	"github.com/pilu/traffic"
 	"net/http"
 	"strconv"
 	"time"
+
+	"appengine"
+	"appengine/user"
+
+	"code.google.com/p/xsrftoken"
+
+	"github.com/icco/natnatnat/models"
+	"github.com/pilu/traffic"
 )
 
 type EditPostPageData struct {
