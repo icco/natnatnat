@@ -52,6 +52,20 @@ $(document).ready(function() {
     });
   });
 
+  // Markdown Preview
+  var md_text_name = "textarea[name=text]";
+  if ($(md_text_name).length) {
+    $(md_text_name).bind('input propertychange', function(){
+      jQuery.post('/md', {'text': $(this).val()}, function (data) {
+        $('#rendered').html(data);
+      });
+    });
+  }
+
+  $(".slidingDiv").hide();
+  $('.show_hide').click(function() {
+    $("#rendered").slideToggle();
+  });
 
   // Stats Graph
   if ($("#statsgraph").length && false) {

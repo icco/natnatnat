@@ -4,6 +4,11 @@
 Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
 </p>
 
+<div class="preview">
+  <div><small><a class="show_hide">Preview...</a></small></div>
+  <div id="rendered"></div>
+</div>
+
 <form method="post" action="{{.EditUrl}}" class="pure-form pure-form-stacked">
   <input type="text" name="title" placeholder="Title"  class="pure-input-1" value="{{.Entry.Title}}" />
 
