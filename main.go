@@ -60,6 +60,8 @@ func init() {
 	router.Get("/stats", handlers.StatsHandler)
 	router.Get("/posts.json", handlers.StatsHistoryJsonHandler)
 
+	router.Post("/md", handlers.MarkdownHandler)
+
 	router.Get("/post/new/?", handlers.NewPostGetHandler)
 	router.Post("/post/new/?", handlers.NewPostPostHandler)
 

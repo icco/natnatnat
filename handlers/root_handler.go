@@ -35,6 +35,11 @@ func UnimplementedHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	http.Error(w, "Sorry, I haven't implemented this yet", 500)
 }
 
+func MarkdownHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	md := models.Markdown(r.Param("text"))
+	w.WriteText(string(md))
+}
+
 type ArchiveData struct {
 	Years   map[int]Year
 	IsAdmin bool
