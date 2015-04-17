@@ -8,16 +8,14 @@
     <div class="small">Avg. posts made per day</div>
   </div>
 
-  <!-- TODO
   <div class="pure-u-1 pure-u-md-1-3 stat">
-    <div class="big"><%= @avgs[:articles] %></div>
-    <div class="small">Avg. articles read per day</div>
+    <div class="big">{{printf "%.2f" .LinksPerDay}}</div>
+    <div class="small">Avg. links read per day</div>
   </div>
-  -->
 
   <!-- TODO
   <div class="pure-u-1 pure-u-md-1-3 stat">
-    <div class="big"><%= @avgs[:links] %></div>
+    <div class="big">{{printf "%.2f" .LinksPerPost}}</div>
     <div class="small">Avg. links per post</div>
   </div>
   -->
