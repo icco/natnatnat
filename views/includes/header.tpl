@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/css/pure-responsive-min.0.6.0.css">
 
     <!-- Generated from SCSS -->
-    <link rel="stylesheet" href="/css/style.css?v=20150417-1" />
+    <link rel="stylesheet" href="/css/style.css?v=20150417-2" />
 
     <!-- Feeds! -->
     <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.rss" />
@@ -22,7 +22,7 @@
   <body>
     <div class="wrap">
       <div class="pure-g">
-        <div class="pure-u-1-6 pure-u-md-1-12" style="margin: 0 auto;">
+        <div class="pure-u-1-6 pure-u-md-1-12 header-logo">
           <a href="/"><img src="/img/natwelchlogo2.png" class="pure-img logo" alt="Nat? Nat. Nat!"></a>
         </div>
       </div>
