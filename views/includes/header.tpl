@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/css/pure-responsive-min.0.6.0.css">
 
     <!-- Generated from SCSS -->
-    <link rel="stylesheet" href="/css/style.css?v=20150409" />
+    <link rel="stylesheet" href="/css/style.css?v=20150417" />
 
     <!-- Feeds! -->
     <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.rss" />
