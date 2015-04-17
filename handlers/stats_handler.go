@@ -16,6 +16,7 @@ type StatsData struct {
 	Posts        int
 	WordsPerPost float64
 	PostsPerDay  float64
+	WordsPerDay  float64
 	IsAdmin      bool
 }
 
