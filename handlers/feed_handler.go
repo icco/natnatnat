@@ -28,34 +28,6 @@ func buildFeed(c appengine.Context, entries *[]models.Entry) *feeds.Feed {
 	feed.Items = []*feeds.Item{}
 	for _, v := range *entries {
 		if v.Public {
-			feed.Items = append(feed.Items, &feeds.Item{
-				Title:       v.Title,
-				Link:        &feeds.Link{Href: baseUrl + v.Url()},
-				Description: string(v.Html()),
-				Author:      me,
-				Created:     v.Datetime,
-				Updated:     v.Modified,
-			})
-		}
-	}
-
-	return feed
-}
-
-func buildSummary(c appengine.Context, entries *[]models.Entry) *feeds.Feed {
-	now := time.Now()
-	me := &feeds.Author{"Nat Welch", "nat@natwelch.com"}
-	feed := &feeds.Feed{
-		Title:       "Nat? Nat. Nat! - Summaries",
-		Link:        &feeds.Link{Href: baseUrl},
-		Description: "Thoughts from Nat about stuff",
-		Author:      me,
-		Created:     now,
-	}
-
-	feed.Items = []*feeds.Item{}
-	for _, v := range *entries {
-		if v.Public {
 			title := fmt.Sprintf("Nat? Nat. Nat! #%d", v.Id)
 			if v.Title != "" {
 				title = v.Title
@@ -64,7 +36,7 @@ func buildSummary(c appengine.Context, entries *[]models.Entry) *feeds.Feed {
 			feed.Items = append(feed.Items, &feeds.Item{
 				Title:       title,
 				Link:        &feeds.Link{Href: baseUrl + v.Url()},
-				Description: "At some point, I'll put something here.",
+				Description: string(v.Html()),
 				Author:      me,
 				Created:     v.Datetime,
 				Updated:     v.Modified,
@@ -112,37 +84,9 @@ func FeedRssHandler(w traffic.ResponseWriter, r *traffic.Request) {
 }
 
 func SummaryAtomHandler(w traffic.ResponseWriter, r *traffic.Request) {
-	c := appengine.NewContext(r.Request)
-	entries, err := models.AllPosts(c)
-	if err != nil {
-		http.Error(w, err.Error(), 500)
-		return
-	}
-	feed := buildSummary(c, entries)
-	atom, err := feed.ToAtom()
-	if err != nil {
-		http.Error(w, err.Error(), 500)
-		return
-	}
-	w.Header().Set("Content-Type", "application/atom+xml; charset=utf-8")
-	w.WriteText("%s", atom)
-	return
+	http.Redirect(w, r.Request, "/feed.atom", 301)
 }
 
 func SummaryRssHandler(w traffic.ResponseWriter, r *traffic.Request) {
-	c := appengine.NewContext(r.Request)
-	entries, err := models.AllPosts(c)
-	if err != nil {
-		http.Error(w, err.Error(), 500)
-		return
-	}
-	feed := buildSummary(c, entries)
-	rss, err := feed.ToRss()
-	if err != nil {
-		http.Error(w, err.Error(), 500)
-		return
-	}
-	w.Header().Set("Content-Type", "application/rss+xml; charset=utf-8")
-	w.WriteText("%s", rss)
-	return
+	http.Redirect(w, r.Request, "/feed.rss", 301)
 }
