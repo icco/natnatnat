@@ -17,6 +17,7 @@ type StatsData struct {
 	WordsPerPost float64
 	PostsPerDay  float64
 	WordsPerDay  float64
+	DaysSince    float64
 	IsAdmin      bool
 }
 
@@ -29,7 +30,7 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 	postCount := len(*entries)
 	oldestPost := (*entries)[postCount-1]
-	dayCount := time.Since(oldestPost.Datetime).Hours() / 24
+	dayCount := time.Since(oldestPost.Datetime).Hours() / 24.0
 
 	words := 0
 	for _, p := range *entries {
@@ -42,6 +43,7 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		PostsPerDay:  float64(postCount) / dayCount,
 		WordsPerPost: float64(words) / float64(postCount),
 		WordsPerDay:  float64(words) / dayCount,
+		DaysSince:    dayCount,
 		IsAdmin:      user.IsAdmin(c),
 	}
 	w.Render("stats", data)
