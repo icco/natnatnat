@@ -23,6 +23,16 @@
   -->
 
   <div class="stat">
+    <div class="big">{{printf "%.2f" .DaysSince}}</div>
+    <div class="small">Days since first post</div>
+  </div>
+
+  <div class="stat">
+    <div class="big">{{printf "%.2f" .WordsPerDay}}</div>
+    <div class="small">Avg. words per day</div>
+  </div>
+
+  <div class="stat">
     <div class="big">{{printf "%.2f" .WordsPerPost}}</div>
     <div class="small">Avg. words per post</div>
   </div>
