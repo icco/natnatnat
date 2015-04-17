@@ -40,6 +40,7 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		Posts:        postCount,
 		PostsPerDay:  float64(postCount) / dayCount,
 		WordsPerPost: float64(words) / float64(postCount),
+		WordsPerDay:  float64(words) / dayCount,
 		IsAdmin:      user.IsAdmin(c),
 	}
 	w.Render("stats", data)
