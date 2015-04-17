@@ -19,6 +19,8 @@ type StatsData struct {
 	WordsPerDay  float64
 	DaysSince    float64
 	IsAdmin      bool
+	LinksPerPost float64
+	LinksPerDay  float64
 }
 
 func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -38,6 +40,13 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		words += len(strings.Fields(p.Title))
 	}
 
+	links, err := models.AllLinks(c, -1)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	readLinks := len(*links)
+
 	data := &StatsData{
 		Posts:        postCount,
 		PostsPerDay:  float64(postCount) / dayCount,
@@ -45,6 +54,7 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		WordsPerDay:  float64(words) / dayCount,
 		DaysSince:    dayCount,
 		IsAdmin:      user.IsAdmin(c),
+		LinksPerDay:  float64(readLinks) / dayCount,
 	}
 	w.Render("stats", data)
 }
