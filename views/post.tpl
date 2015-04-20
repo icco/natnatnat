@@ -1,4 +1,8 @@
-{{ template "includes/header" printf "#%d" .Entry.Id }}
+{{ if .Entry.Title }}
+  {{ template "includes/header" printf "#%d - \"%s\"" .Entry.Id .Entry.Title }}
+{{ else }}
+  {{ template "includes/header" printf "#%d" .Entry.Id }}
+{{ end }}
 
 <div class="post">
   <div class="meta">
