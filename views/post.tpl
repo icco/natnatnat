@@ -10,7 +10,7 @@
       #{{.Entry.Id}}
     </div>
     <div class="time">
-      <a href="/post/{{.Entry.Id}}"><time datetime={{.Entry.Datetime|jsontime}}>{{.Entry.Datetime|fmttime}}</time></a>
+      <a href="/post/{{.Entry.Id}}"><time datetime="{{.Entry.Datetime|jsontime}}">{{.Entry.Datetime|fmttime}}</time></a>
     </div>
   </div>
 

@@ -30,7 +30,7 @@ func fmtTime(t time.Time) string {
 }
 
 func jsonTime(t time.Time) string {
-	b, err := t.MarshalJSON()
+	b, err := t.MarshalText()
 	if err != nil {
 		// TODO(icco): Log something
 		return ""
