@@ -9,11 +9,11 @@ css:
 
 run: clean css *.go
 	goapp get -v github.com/icco/natnatnat
-	gcloud preview app run . --project=natwelch-writing
+	gcloud preview app run app.yaml --project=natwelch-writing
 
 deploy:
 	git push
-	gcloud preview app deploy . --project=natwelch-writing
+	gcloud preview app deploy app.yaml --project=natwelch-writing
 
 deploy_alt:
 	goapp deploy -application=natwelch-writing
