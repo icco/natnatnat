@@ -4,11 +4,6 @@
 Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
 </p>
 
-<div class="preview">
-  <div><small><a class="show_hide">Preview...</a></small></div>
-  <div id="rendered"></div>
-</div>
-
 <form method="post" action="/post/new" class="pure-form pure-form-stacked">
   <input type="text" name="title" placeholder="Title"  class="pure-input-1" />
 
@@ -27,12 +22,20 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
   </div>
 </form>
 
-<ul>
-  {{ range $link := .Links }}
-    {{ with $link }}
-      <li class="link"><a class="adder" data-tags="{{.TagString}}">&plus;</a> &ndash; <a class="actual" href="{{.Url}}">{{.Title}}</a></li>
-    {{end}}
-  {{ end }}
-</ul>
+<div class="preview">
+  <div><small><a class="show_hide">Preview...</a></small></div>
+  <h1 id="rendered_title"></h1>
+  <div id="rendered"></div>
+</div>
+
+<div class="links">
+  <ul>
+    {{ range $link := .Links }}
+      {{ with $link }}
+        <li class="link"><a class="adder" data-tags="{{.TagString}}">&plus;</a> &ndash; <a class="actual" href="{{.Url}}">{{.Title}}</a></li>
+      {{end}}
+    {{ end }}
+  </ul>
+</div>
 
 {{ template "includes/footer" }}
