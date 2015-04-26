@@ -161,6 +161,8 @@ $(document).ready(function() {
   // Change the time elements to be relative times.
   // Requires moment.js
   $('time').each(function(i, el) {
-    $(el).text(moment($(el).attr('datetime'), "YYYY-MM-DDTHH:mm:ss.SSSSSSZ").fromNow());
+    var t = moment($(el).attr('datetime'), "YYYY-MM-DDTHH:mm:ss.SSSSSSZ");
+    $(el).text(t.fromNow());
+    $(el).attr("title", t.format());
   });
 });
