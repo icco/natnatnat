@@ -87,6 +87,7 @@ func init() {
 
 	router.Get("/link/queue", handlers.LinkQueueHandler)
 	router.Post("/link/work", handlers.LinkWorkHandler)
+	router.Get("/links", handlers.LinkPageGetHandler)
 
 	router.AddBeforeFilter(HstsMiddleware)
 	router.Use(NewStaticMiddleware(traffic.PublicPath()))
