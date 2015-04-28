@@ -37,9 +37,11 @@ func TagHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	w.Render("tag", data)
 }
 
+type TagsData struct {
+	Tags map[string]int
+}
+
 func TagsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	models.AllTags(c)
-
-	http.Error(w, "", 500)
+	w.Render("tags", &TagsData{Tags: models.AllTags(c)})
 }
