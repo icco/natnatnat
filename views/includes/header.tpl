@@ -34,6 +34,9 @@
               <li class="pure-menu-item"><a href="/about">About</a></li>
               <li class="pure-menu-item"><a href="/archives">Archives</a></li>
               <li class="pure-menu-item"><a href="/stats">Stats</a></li>
+              <br /> <!-- Is there a better way to break this list? -->
+              <li class="pure-menu-item"><a href="/tags">Tags</a></li>
+              <li class="pure-menu-item"><a href="/links">Links</a></li>
             </ul>
           </div>
         </div>
