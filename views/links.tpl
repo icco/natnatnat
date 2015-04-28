@@ -5,10 +5,10 @@
 <p>This is a list of all links that I have read grouped by day. You can also see this data in a more comprehensible form on <a href="https://pinboard.in/u:icco">Pinboard.in</a>.
 
 <div id="links">
-  {{ range $day := .Keys}}
+  {{ range $day := .Days}}
     <h2>{{$day}}</h2>
     <ul>
-      {{ range $link := .Links[$day] }}
+      {{ range $link := index .Links $day }}
         <li><a href="{{$link.Url}}">{{$link.Title}}</a></li>
       {{ end }}
     </ul>

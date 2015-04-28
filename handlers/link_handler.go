@@ -105,9 +105,22 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 type LinkPageData struct {
 	Links   map[time.Time]LinkDay
 	IsAdmin bool
-	Days    []time.Time
+	Days    timeSlice
 }
 type LinkDay []models.Link
+type timeSlice []time.Time
+
+func (p timeSlice) Len() int {
+	return len(p)
+}
+
+func (p timeSlice) Less(i, j int) bool {
+	return p[i].Before(p[j])
+}
+
+func (p timeSlice) Swap(i, j int) {
+	p[i], p[j] = p[j], p[i]
+}
 
 func LinkPageGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
@@ -128,7 +141,7 @@ func LinkPageGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		linkBundle[date] = append(linkBundle[date], l)
 	}
 
-	keys := make([]time.Time, 0, len(linkBundle))
+	keys := make(timeSlice, 0, len(linkBundle))
 	for k := range linkBundle {
 		keys = append(keys, k)
 	}
