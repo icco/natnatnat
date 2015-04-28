@@ -40,7 +40,7 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		words += len(strings.Fields(p.Title))
 	}
 
-	links, err := models.AllLinks(c, -1)
+	links, err := models.AllLinks(c)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
