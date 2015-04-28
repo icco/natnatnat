@@ -108,7 +108,7 @@ type LinkDay []models.Link
 
 func LinkPageGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	links, err := models.AllLinks()
+	links, err := models.AllLinks(c)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
@@ -117,11 +117,12 @@ func LinkPageGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	linkBundle := make(map[time.Time]LinkDay)
 
 	for _, l := range *links {
-		if _, ok := linkBundle[l.Posted.Date()]; !ok {
-			linkBundle[l.Posted.Date()] = make(LinkDay)
+		date := l.Posted.Round(time.Hour * 24)
+		if _, ok := linkBundle[date]; !ok {
+			linkBundle[date] = make(LinkDay, 0)
 		}
 
-		append(linkBundle[l.Posted.Date()], l)
+		append(linkBundle[date], l)
 	}
 
 	data := &LinkPageData{Links: linkBundle, IsAdmin: user.IsAdmin(c)}
