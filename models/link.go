@@ -62,12 +62,12 @@ func AllLinks(c appengine.Context) (*[]Link, error) {
 }
 
 func Links(c appengine.Context, limit int, recentFirst bool) (*[]Link, error) {
-	q := datastore.NewQuery("Link").Order("-Posted")
+	q := datastore.NewQuery("Link")
 
 	if recentFirst {
-		q = q.Order("-Datetime")
+		q = q.Order("-Posted")
 	} else {
-		q = q.Order("Datetime")
+		q = q.Order("Posted")
 	}
 
 	if limit > 0 {
