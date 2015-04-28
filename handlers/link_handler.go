@@ -15,6 +15,7 @@ import (
 	"appengine"
 	"appengine/taskqueue"
 	"appengine/urlfetch"
+	"appengine/user"
 )
 
 /*
@@ -122,7 +123,7 @@ func LinkPageGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			linkBundle[date] = make(LinkDay, 0)
 		}
 
-		append(linkBundle[date], l)
+		linkBundle[date] = append(linkBundle[date], l)
 	}
 
 	data := &LinkPageData{Links: linkBundle, IsAdmin: user.IsAdmin(c)}
