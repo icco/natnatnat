@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"net/url"
+	"sort"
 	"strings"
 	"time"
 
@@ -104,6 +105,7 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 type LinkPageData struct {
 	Links   map[time.Time]LinkDay
 	IsAdmin bool
+	Days    []time.Time
 }
 type LinkDay []models.Link
 
@@ -126,6 +128,12 @@ func LinkPageGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		linkBundle[date] = append(linkBundle[date], l)
 	}
 
-	data := &LinkPageData{Links: linkBundle, IsAdmin: user.IsAdmin(c)}
+	keys := make([]time.Time, 0, len(linkBundle))
+	for k := range linkBundle {
+		keys = append(keys, k)
+	}
+	sort.Sort(keys)
+
+	data := &LinkPageData{Links: linkBundle, Days: keys, IsAdmin: user.IsAdmin(c)}
 	w.Render("links", data)
 }
