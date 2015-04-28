@@ -38,5 +38,8 @@ func TagHandler(w traffic.ResponseWriter, r *traffic.Request) {
 }
 
 func TagsHandler(w traffic.ResponseWriter, r *traffic.Request) {
-	http.Error(w, "Sorry, I haven't implemented this yet", 500)
+	c := appengine.NewContext(r.Request)
+	models.AllTags(c)
+
+	http.Error(w, "", 500)
 }
