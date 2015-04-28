@@ -99,3 +99,31 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		}
 	}
 }
+
+type LinkPageData struct {
+	Links   map[time.Time]LinkDay
+	IsAdmin bool
+}
+type LinkDay []models.Link
+
+func LinkPageGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	c := appengine.NewContext(r.Request)
+	links, err := models.AllLinks()
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	linkBundle := make(map[time.Time]LinkDay)
+
+	for _, l := range *links {
+		if _, ok := linkBundle[l.Posted.Date()]; !ok {
+			linkBundle[l.Posted.Date()] = make(LinkDay)
+		}
+
+		append(linkBundle[l.Posted.Date()], l)
+	}
+
+	data := &LinkPageData{Links: linkBundle, IsAdmin: user.IsAdmin(c)}
+	w.Render("links", data)
+}
