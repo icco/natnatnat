@@ -26,3 +26,10 @@ indexes:
   - name: Tags
   - name: Datetime
     direction: desc
+
+- kind: Link
+  properties:
+  - name: Posted
+    direction: desc
+  - name: Datetime
+    direction: desc
