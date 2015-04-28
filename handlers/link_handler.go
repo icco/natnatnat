@@ -145,9 +145,8 @@ func LinkPageGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	for k := range linkBundle {
 		keys = append(keys, k)
 	}
-	sort.Sort(keys)
+	sort.Reverse(keys)
 
 	data := &LinkPageData{Links: linkBundle, Days: keys, IsAdmin: user.IsAdmin(c)}
-	c.Infof("Creating links page with %+v", data)
 	w.Render("links", data)
 }
