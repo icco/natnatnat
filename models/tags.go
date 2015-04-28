@@ -5,9 +5,10 @@ import (
 	"appengine/datastore"
 )
 
-func AllTags(c appengine.Context) {
+func AllTags(c appengine.Context) map[string]int {
 	q := datastore.NewQuery("Entry").Project("Tags")
 	t := q.Run(c)
+	m := make(map[string]int, 0)
 	for {
 		var e Entry
 		_, err := t.Next(&e)
@@ -18,6 +19,11 @@ func AllTags(c appengine.Context) {
 			c.Errorf("Running query: %v", err)
 			break
 		}
-		c.Infof("Got Tags: %v", e.Tags)
+
+		for _, v := range e.Tags {
+			m[v] += 1
+		}
 	}
+
+	return m
 }
