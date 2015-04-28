@@ -165,4 +165,9 @@ $(document).ready(function() {
     $(el).text(t.fromNow());
     $(el).attr("title", t.format());
   });
+
+  $('#links h2').each(function(i, el) {
+    var t = moment($(el).text(), "YYYY-MM-DD HH:mm:ssZ");
+    $(el).text(t.utc().format("MMMM Do YYYY"));
+  });
 });
