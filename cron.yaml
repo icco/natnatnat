@@ -1,4 +1,4 @@
 cron:
-- description: Enque hourly work
+- description: Enque Pinboard link grabbing
   url: /link/queue
-  schedule: every 1 hours
+  schedule: every 15 minutes
