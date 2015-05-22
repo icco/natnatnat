@@ -36,14 +36,14 @@ type Alias struct {
 func NewAlias(alias string, tag string) *Alias {
 	a := new(Alias)
 
-	a.Alias = alias
+	a.Name = alias
 	a.Tag = tag
 
 	return a
 }
 
 func (a *Alias) Save(c appengine.Context) error {
-	k := datastore.NewKey(c, "Alias", a.Url, 0, nil)
+	k := datastore.NewKey(c, "Alias", a.Name, 0, nil)
 	k2, err := datastore.Put(c, k, a)
 	if err == nil {
 		c.Infof("Wrote %+v", a)
