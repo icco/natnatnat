@@ -52,7 +52,7 @@ func (e *Link) Save(c appengine.Context) error {
 		c.Infof("Wrote %+v", e)
 		c.Infof("Old key: %+v; New Key: %+v", k, k2)
 	} else {
-		c.Warningf("Error writing entry: %v", e)
+		c.Warningf("Error writing link: %v", e)
 	}
 	return err
 }
