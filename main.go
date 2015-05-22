@@ -73,6 +73,9 @@ func init() {
 	router.Get("/tags/:id/?", handlers.TagHandler)
 	router.Get("/tags/?", handlers.TagsHandler)
 
+	router.Get("/aliases", handlers.TagAliasGetHandler)
+	router.Post("/aliases", handlers.TagAliasPostHandler)
+
 	router.Get("/settings", handlers.SettingsGetHandler)
 	router.Post("/settings", handlers.SettingsPostHandler)
 
