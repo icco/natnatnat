@@ -1,11 +1,15 @@
 package handlers
 
 import (
+	"errors"
 	"fmt"
 	"net/http"
 	"strings"
 
 	"appengine"
+	"appengine/user"
+
+	"code.google.com/p/xsrftoken"
 
 	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
@@ -87,7 +91,7 @@ func TagAliasPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		}
 		xsrf := r.Request.FormValue("xsrf")
 
-		if xsrftoken.Valid(xsrf, models.GetFlagLogError(c, "SESSION_KEY"), u.String(), r.Request.Url.Path) {
+		if xsrftoken.Valid(xsrf, models.GetFlagLogError(c, "SESSION_KEY"), u.String(), r.Request.URL.Path) {
 			c.Infof("Valid Token!")
 		} else {
 			c.Infof("Invalid Token...")
