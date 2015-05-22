@@ -50,6 +50,12 @@ func TagsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	w.Render("tags", &TagsData{Tags: models.AllTags(c)})
 }
 
+type AliasData struct {
+	Aliases map[string]string
+	Xsrf    string
+	IsAdmin bool
+}
+
 func TagAliasGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	u := user.Current(c)
@@ -65,7 +71,12 @@ func TagAliasGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, errors.New("Not a valid user.").Error(), 403)
 		return
 	} else {
-		w.Render("aliases", &TagsData{Tags: models.AllTags(c)})
+		token := xsrftoken.Generate(models.GetFlagLogError(c, "SESSION_KEY"), u.String(), "/aliases")
+		w.Render("aliases", &AliasData{
+			Aliases: models.AllAliases(c),
+			Xsrf:    token,
+			IsAdmin: user.IsAdmin(c),
+		})
 		return
 	}
 }
@@ -74,7 +85,7 @@ func TagAliasPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	u := user.Current(c)
 	if u == nil {
-		url, _ := user.LoginURL(c, "/post/new")
+		url, _ := user.LoginURL(c, "/aliases")
 		http.Redirect(w, r.Request, url, 302)
 		return
 	} else {
@@ -90,9 +101,17 @@ func TagAliasPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			c.Warningf("Couldn't parse form: %v", r)
 		}
 		xsrf := r.Request.FormValue("xsrf")
+		from := r.Request.FormValue("name")
+		to := r.Request.FormValue("tag")
 
 		if xsrftoken.Valid(xsrf, models.GetFlagLogError(c, "SESSION_KEY"), u.String(), r.Request.URL.Path) {
 			c.Infof("Valid Token!")
+			e := models.NewAlias(from, to)
+			err = a.Save(c)
+			if err != nil {
+				http.Error(w, err.Error(), 500)
+				return
+			}
 		} else {
 			c.Infof("Invalid Token...")
 			http.Error(w, errors.New("Invalid Token").Error(), 403)
