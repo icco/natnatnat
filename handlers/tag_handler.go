@@ -73,7 +73,7 @@ func TagAliasGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	} else {
 		token := xsrftoken.Generate(models.GetFlagLogError(c, "SESSION_KEY"), u.String(), "/aliases")
 		w.Render("aliases", &AliasData{
-			Aliases: models.AllAliases(c),
+			Aliases: models.AliasMap(c),
 			Xsrf:    token,
 			IsAdmin: user.IsAdmin(c),
 		})
@@ -106,7 +106,7 @@ func TagAliasPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 		if xsrftoken.Valid(xsrf, models.GetFlagLogError(c, "SESSION_KEY"), u.String(), r.Request.URL.Path) {
 			c.Infof("Valid Token!")
-			e := models.NewAlias(from, to)
+			a := models.NewAlias(from, to)
 			err = a.Save(c)
 			if err != nil {
 				http.Error(w, err.Error(), 500)

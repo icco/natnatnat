@@ -58,6 +58,21 @@ func AllAliases(c appengine.Context) (*[]Alias, error) {
 	return Aliases(c, -1)
 }
 
+func AliasMap(c appengine.Context) map[string]string {
+	m := make(map[string]int, 0)
+	aliases, err := AllAliases(c)
+	if err != nil {
+		c.Error(err.Error())
+		return m
+	}
+
+	for k, v := range aliases {
+		m[v.Name] = v.Tag
+	}
+
+	return m
+}
+
 func Aliases(c appengine.Context, limit int) (*[]Alias, error) {
 	q := datastore.NewQuery("Alias")
 
