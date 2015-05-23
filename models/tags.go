@@ -102,7 +102,7 @@ func GetTagAliases(c appengine.Context, tag string) *[]string {
 	q := datastore.NewQuery("Alias").Filter("Tag =", tag)
 	_, err := q.GetAll(c, aliases)
 	if err != nil {
-		return ret
+		return &ret
 	}
 
 	for _, v := range *aliases {
