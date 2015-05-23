@@ -2,7 +2,7 @@
 
 <h1 style="text-align: center;">Tag Aliases</h1>
 
-<form method="post" action="/post/new" class="pure-form pure-form-stacked">
+<form method="post" action="/aliases" class="pure-form pure-form-stacked">
   <input type="text" name="name" placeholder="From"  class="pure-input-1" />
   <input type="text" name="tag" placeholder="To"  class="pure-input-1" />
 
@@ -16,8 +16,8 @@
 </form>
 
 <ul>
-  {{ range $from, $to:= .Tags }}
-  <li>{{$from}} &rarr; <a href="/tags/{{$to}}">{{$to}}</a></li>
+  {{ range $from, $to:= .Aliases }}
+    <li>{{$from}} &rarr; <a href="/tags/{{$to}}">{{$to}}</a></li>
   {{ end }}
 </ul>
 
