@@ -209,7 +209,7 @@ func GetLinksFromContent(c appengine.Context, content string) ([]string, error) 
 
 func PostsWithTag(c appengine.Context, tag string) (*map[int]Entry, error) {
 	aliases := new([]Alias)
-	entries := make(map[int]Entry, 0)
+	entries := make(map[int64]Entry, 0)
 
 	q := datastore.NewQuery("Alias").Filter("Tag =", tag)
 	_, err := q.GetAll(c, aliases)
@@ -226,7 +226,7 @@ func PostsWithTag(c appengine.Context, tag string) (*map[int]Entry, error) {
 		}
 	}
 
-	return entries, err
+	return &entries, err
 }
 
 // Markdown.
