@@ -66,7 +66,7 @@ func AliasMap(c appengine.Context) map[string]string {
 		return m
 	}
 
-	for k, v := range *aliases {
+	for _, v := range *aliases {
 		m[v.Name] = v.Tag
 	}
 
