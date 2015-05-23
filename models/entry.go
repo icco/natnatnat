@@ -219,14 +219,17 @@ func PostsWithTag(c appengine.Context, tag string) (*map[int64]Entry, error) {
 
 	for _, v := range *aliases {
 		more_entries := new([]Entry)
-		q := datastore.NewQuery("Entry").Order("-Datetime").Filter("Tags =", tag)
+		q := datastore.NewQuery("Entry").Order("-Datetime").Filter("Tags =", v.Tag)
 		_, err := q.GetAll(c, more_entries)
+		if err != nil {
+			return &entries, err
+		}
 		for _, e := range *more_entries {
 			entries[e.Id] = e
 		}
 	}
 
-	return &entries, err
+	return &entries, nil
 }
 
 // Markdown.
