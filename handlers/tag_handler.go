@@ -16,7 +16,7 @@ import (
 )
 
 type TagData struct {
-	Posts   *[]Entry
+	Posts   *[]models.Entry
 	Tag     string
 	Aliases []string
 }
