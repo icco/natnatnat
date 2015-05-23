@@ -207,14 +207,14 @@ func GetLinksFromContent(c appengine.Context, content string) ([]string, error) 
 	return []string{}, nil
 }
 
-func PostsWithTag(c appengine.Context, tag string) (*map[int]Entry, error) {
+func PostsWithTag(c appengine.Context, tag string) (*map[int64]Entry, error) {
 	aliases := new([]Alias)
 	entries := make(map[int64]Entry, 0)
 
 	q := datastore.NewQuery("Alias").Filter("Tag =", tag)
 	_, err := q.GetAll(c, aliases)
 	if err != nil {
-		return entries, err
+		return nil, err
 	}
 
 	for _, v := range *aliases {
