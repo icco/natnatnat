@@ -59,14 +59,14 @@ func AllAliases(c appengine.Context) (*[]Alias, error) {
 }
 
 func AliasMap(c appengine.Context) map[string]string {
-	m := make(map[string]int, 0)
+	m := make(map[string]string, 0)
 	aliases, err := AllAliases(c)
 	if err != nil {
-		c.Error(err.Error())
+		c.Errorf("Error building Alias Map: %+v", err)
 		return m
 	}
 
-	for k, v := range aliases {
+	for k, v := range *aliases {
 		m[v.Name] = v.Tag
 	}
 
