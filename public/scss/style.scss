@@ -370,8 +370,9 @@ ul.inline {
     content: " & ";
   }
 
+  display: inline;
   list-style-type: none;
-  margin: 0 0 0 50px;
+  margin: 0;
   padding: 5px;
 }
 
