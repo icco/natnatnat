@@ -208,18 +208,12 @@ func GetLinksFromContent(c appengine.Context, content string) ([]string, error) 
 }
 
 func PostsWithTag(c appengine.Context, tag string) (*map[int64]Entry, error) {
-	aliases := new([]Alias)
 	entries := make(map[int64]Entry, 0)
-
-	q := datastore.NewQuery("Alias").Filter("Tag =", tag)
-	_, err := q.GetAll(c, aliases)
-	if err != nil {
-		return nil, err
-	}
+	aliases := GetTagAliases(c, tag)
 
 	for _, v := range *aliases {
 		more_entries := new([]Entry)
-		q := datastore.NewQuery("Entry").Order("-Datetime").Filter("Tags =", v.Tag)
+		q := datastore.NewQuery("Entry").Order("-Datetime").Filter("Tags =", v)
 		_, err := q.GetAll(c, more_entries)
 		if err != nil {
 			return &entries, err

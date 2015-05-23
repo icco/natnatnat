@@ -16,8 +16,9 @@ import (
 )
 
 type TagData struct {
-	Posts interface{}
-	Tag   string
+	Posts   *[]Entry
+	Tag     string
+	Aliases []string
 }
 
 func TagHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -42,7 +43,9 @@ func TagHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	data := &TagData{Posts: entries, Tag: tag}
+
+	aliases := models.GetTagAliases(c, tag)
+	data := &TagData{Posts: entries, Tag: tag, Aliases: *aliases}
 	w.Render("tag", data)
 }
 
