@@ -60,7 +60,7 @@ func TagAliasGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	u := user.Current(c)
 	if u == nil {
-		url, _ := user.LoginURL(c, "/post/new")
+		url, _ := user.LoginURL(c, "/aliases")
 		http.Redirect(w, r.Request, url, 302)
 		return
 	} else {
