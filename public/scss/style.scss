@@ -349,6 +349,32 @@ li.link {
   }
 }
 
+ul.inline {
+  li  {
+    text-align: left;
+    display: inline;
+    list-style: none;
+    display: inline;
+    margin: 0;
+  }
+
+  li:after {
+    content: ", ";
+  }
+
+  li:last-child:after {
+    content: "";
+  }
+
+  li:nth-last-child(2):after {
+    content: " & ";
+  }
+
+  list-style-type: none;
+  margin: 0 0 0 50px;
+  padding: 5px;
+}
+
 .stat {
   padding-top: 1rem;
   text-align: center;

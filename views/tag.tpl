@@ -1,7 +1,13 @@
 {{ template "includes/header" printf "#%s" .Tag }}
 
 <div class="tag-header">
-    All posts that contain the tag <strong>{{.Tag}}</strong>.
+    All posts that contain the tag <strong>{{.Tag}}</strong>, and its aliases (
+    <ul class="inline">
+      {{ range $a := .Aliases }}
+      <li>{{ $a }}</li>
+      {{ end }}
+    </ul>
+).
 </div>
 
 {{ range $entry := .Posts }}
