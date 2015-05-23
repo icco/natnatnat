@@ -32,6 +32,11 @@ func TagHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Redirect(w, r.Request, fmt.Sprintf("/tags/%s", strings.ToLower(tag)), 301)
 	}
 
+	isAlias, alias := models.GetAlias(tag)
+	if isAlias {
+		http.Redirect(w, r.Request, fmt.Sprintf("/tags/%s", alias), 301)
+	}
+
 	entries, err := models.PostsWithTag(c, tag)
 	if err != nil {
 		http.Error(w, err.Error(), 500)

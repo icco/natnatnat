@@ -84,3 +84,14 @@ func Aliases(c appengine.Context, limit int) (*[]Alias, error) {
 	_, err := q.GetAll(c, aliases)
 	return aliases, err
 }
+
+func GetAlias(c appengine.Context, tag string) (bool, string) {
+	var retrieved Alias
+	k := datastore.NewKey(c, "Alias", tag, 0, nil)
+	err := datastore.Get(c, k, &retrieved)
+	if err != nil {
+		return false, ""
+	}
+
+	return true, retrieved.Tag
+}
