@@ -222,7 +222,7 @@ func PostsWithTag(c appengine.Context, tag string) (*map[int]Entry, error) {
 		q := datastore.NewQuery("Entry").Order("-Datetime").Filter("Tags =", tag)
 		_, err := q.GetAll(c, more_entries)
 		for _, e := range *more_entries {
-			entries[e.Id] = e
+			*entries[e.Id] = e
 		}
 	}
 
