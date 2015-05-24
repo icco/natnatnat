@@ -18,10 +18,12 @@ package handlers
  */
 
 import (
-	"appengine"
+	"net/http"
+
 	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
-	"net/http"
+
+	"google.golang.org/appengine"
 )
 
 func WebMentionGetHandler(w traffic.ResponseWriter, r *traffic.Request) {

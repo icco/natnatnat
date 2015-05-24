@@ -4,8 +4,9 @@ import (
 	"net/http"
 	"time"
 
-	"appengine"
-	"appengine/user"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/log"
+	"google.golang.org/appengine/user"
 
 	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
@@ -40,7 +41,7 @@ func MarkdownHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	err := r.ParseForm()
 	if err != nil {
-		c.Warningf("Couldn't parse form: %v", r)
+		log.Warningf(c, "Couldn't parse form: %v", r)
 		http.Error(w, "Unable to parse request.", 500)
 		return
 	}
@@ -48,8 +49,8 @@ func MarkdownHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	in := r.Request.FormValue("text")
 	md := models.Markdown(in)
 
-	c.Infof("Markdown Recieved: %s", in)
-	c.Infof("Markdown Rendered: %s", md)
+	log.Infof(c, "Markdown Recieved: %s", in)
+	log.Infof(c, "Markdown Rendered: %s", md)
 	w.WriteText(string(md))
 }
 

@@ -1,11 +1,13 @@
 package models
 
 import (
-	"appengine"
-	"appengine/datastore"
+	"golang.org/x/net/context"
+
+	"google.golang.org/appengine/datastore"
+	"google.golang.org/appengine/log"
 )
 
-func AllTags(c appengine.Context) map[string]int {
+func AllTags(c context.Context) map[string]int {
 	q := datastore.NewQuery("Entry").Project("Tags")
 	t := q.Run(c)
 	m := make(map[string]int, 0)
@@ -16,7 +18,7 @@ func AllTags(c appengine.Context) map[string]int {
 			break
 		}
 		if err != nil {
-			c.Errorf("Running query: %v", err)
+			log.Errorf(c, "Running query: %v", err)
 			break
 		}
 
@@ -42,27 +44,27 @@ func NewAlias(alias string, tag string) *Alias {
 	return a
 }
 
-func (a *Alias) Save(c appengine.Context) error {
+func (a *Alias) Save(c context.Context) error {
 	k := datastore.NewKey(c, "Alias", a.Name, 0, nil)
 	k2, err := datastore.Put(c, k, a)
 	if err == nil {
-		c.Infof("Wrote %+v", a)
-		c.Infof("Old key: %+v; New Key: %+v", k, k2)
+		log.Infof(c, "Wrote %+v", a)
+		log.Infof(c, "Old key: %+v; New Key: %+v", k, k2)
 	} else {
-		c.Warningf("Error writing Alias: %v", a)
+		log.Warningf(c, "Error writing Alias: %v", a)
 	}
 	return err
 }
 
-func AllAliases(c appengine.Context) (*[]Alias, error) {
+func AllAliases(c context.Context) (*[]Alias, error) {
 	return Aliases(c, -1)
 }
 
-func AliasMap(c appengine.Context) map[string]string {
+func AliasMap(c context.Context) map[string]string {
 	m := make(map[string]string, 0)
 	aliases, err := AllAliases(c)
 	if err != nil {
-		c.Errorf("Error building Alias Map: %+v", err)
+		log.Errorf(c, "Error building Alias Map: %+v", err)
 		return m
 	}
 
@@ -73,7 +75,7 @@ func AliasMap(c appengine.Context) map[string]string {
 	return m
 }
 
-func Aliases(c appengine.Context, limit int) (*[]Alias, error) {
+func Aliases(c context.Context, limit int) (*[]Alias, error) {
 	q := datastore.NewQuery("Alias")
 
 	if limit > 0 {
@@ -85,7 +87,7 @@ func Aliases(c appengine.Context, limit int) (*[]Alias, error) {
 	return aliases, err
 }
 
-func GetAlias(c appengine.Context, tag string) (bool, string) {
+func GetAlias(c context.Context, tag string) (bool, string) {
 	var retrieved Alias
 	k := datastore.NewKey(c, "Alias", tag, 0, nil)
 	err := datastore.Get(c, k, &retrieved)
@@ -96,7 +98,7 @@ func GetAlias(c appengine.Context, tag string) (bool, string) {
 	return true, retrieved.Tag
 }
 
-func GetTagAliases(c appengine.Context, tag string) *[]string {
+func GetTagAliases(c context.Context, tag string) *[]string {
 	aliases := new([]Alias)
 	ret := make([]string, 0)
 	q := datastore.NewQuery("Alias").Filter("Tag =", tag)
