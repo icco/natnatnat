@@ -5,6 +5,7 @@ import (
 
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/datastore"
+	"google.golang.org/appengine/log"
 )
 
 func AllTags(c context.Context) map[string]int {
@@ -18,7 +19,7 @@ func AllTags(c context.Context) map[string]int {
 			break
 		}
 		if err != nil {
-			c.Errorf("Running query: %v", err)
+			log.Errorf(c, "Running query: %v", err)
 			break
 		}
 
@@ -48,10 +49,10 @@ func (a *Alias) Save(c context.Context) error {
 	k := datastore.NewKey(c, "Alias", a.Name, 0, nil)
 	k2, err := datastore.Put(c, k, a)
 	if err == nil {
-		c.Infof("Wrote %+v", a)
-		c.Infof("Old key: %+v; New Key: %+v", k, k2)
+		log.Infof(c, "Wrote %+v", a)
+		log.Infof(c, "Old key: %+v; New Key: %+v", k, k2)
 	} else {
-		c.Warningf("Error writing Alias: %v", a)
+		log.Warningf(c, "Error writing Alias: %v", a)
 	}
 	return err
 }
@@ -64,7 +65,7 @@ func AliasMap(c context.Context) map[string]string {
 	m := make(map[string]string, 0)
 	aliases, err := AllAliases(c)
 	if err != nil {
-		c.Errorf("Error building Alias Map: %+v", err)
+		log.Errorf(c, "Error building Alias Map: %+v", err)
 		return m
 	}
 

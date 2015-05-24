@@ -8,6 +8,7 @@ import (
 
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/datastore"
+	"google.golang.org/appengine/log"
 )
 
 type Mention struct {
@@ -61,7 +62,7 @@ func GetMention(c context.Context, source string, target string) *datastore.Key 
 	q := datastore.NewQuery("Mention").Filter("source =", source).Filter("target =", target).KeysOnly()
 	k, err := q.Run(c).Next(nil)
 	if err != nil {
-		c.Infof("Error getting Mention (%s => %s): %v", source, target, err)
+		log.Infof(c, "Error getting Mention (%s => %s): %v", source, target, err)
 		return nil
 	}
 	return k

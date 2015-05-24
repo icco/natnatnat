@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"google.golang.org/appengine"
+	"google.golang.org/appengine/log"
 	"google.golang.org/appengine/user"
 
 	"github.com/icco/natnatnat/models"
@@ -71,7 +72,7 @@ func TagAliasGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Redirect(w, r.Request, url, 302)
 		return
 	} else {
-		c.Infof("Logged in as: %s", u.String())
+		log.Infof(c, "Logged in as: %s", u.String())
 	}
 
 	if u != nil && !user.IsAdmin(c) {
@@ -96,7 +97,7 @@ func TagAliasPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Redirect(w, r.Request, url, 302)
 		return
 	} else {
-		c.Infof("Logged in as: %s", u.String())
+		log.Infof(c, "Logged in as: %s", u.String())
 	}
 
 	if u != nil && !user.IsAdmin(c) {
@@ -105,14 +106,14 @@ func TagAliasPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	} else {
 		err := r.ParseForm()
 		if err != nil {
-			c.Warningf("Couldn't parse form: %v", r)
+			log.Warningf(c, "Couldn't parse form: %v", r)
 		}
 		xsrf := r.Request.FormValue("xsrf")
 		from := r.Request.FormValue("name")
 		to := r.Request.FormValue("tag")
 
 		if xsrftoken.Valid(xsrf, models.GetFlagLogError(c, "SESSION_KEY"), u.String(), r.Request.URL.Path) {
-			c.Infof("Valid Token!")
+			log.Infof(c, "Valid Token!")
 			a := models.NewAlias(from, to)
 			err = a.Save(c)
 			if err != nil {
@@ -120,7 +121,7 @@ func TagAliasPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 				return
 			}
 		} else {
-			c.Infof("Invalid Token...")
+			log.Infof(c, "Invalid Token...")
 			http.Error(w, errors.New("Invalid Token").Error(), 403)
 			return
 		}

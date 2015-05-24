@@ -9,6 +9,7 @@ import (
 
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/datastore"
+	"google.golang.org/appengine/log"
 )
 
 type Link struct {
@@ -51,10 +52,10 @@ func (e *Link) Save(c context.Context) error {
 	k := datastore.NewKey(c, "Link", e.Url, 0, nil)
 	k2, err := datastore.Put(c, k, e)
 	if err == nil {
-		c.Infof("Wrote %+v", e)
-		c.Infof("Old key: %+v; New Key: %+v", k, k2)
+		log.Infof(c, "Wrote %+v", e)
+		log.Infof(c, "Old key: %+v; New Key: %+v", k, k2)
 	} else {
-		c.Warningf("Error writing link: %v", e)
+		log.Warningf(c, "Error writing link: %v", e)
 	}
 	return err
 }

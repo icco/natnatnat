@@ -13,6 +13,7 @@ import (
 	"github.com/pilu/traffic"
 
 	"google.golang.org/appengine"
+	"google.golang.org/appengine/log"
 	"google.golang.org/appengine/user"
 )
 
@@ -40,7 +41,7 @@ func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Redirect(w, r.Request, url, 302)
 		return
 	} else {
-		c.Infof("Logged in as: %s", u.String())
+		log.Infof(c, "Logged in as: %s", u.String())
 	}
 
 	if u != nil && !user.IsAdmin(c) {
@@ -100,7 +101,7 @@ func SettingsPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Redirect(w, r.Request, url, 302)
 		return
 	} else {
-		c.Infof("Logged in as: %s", u.String())
+		log.Infof(c, "Logged in as: %s", u.String())
 	}
 
 	if u != nil && !user.IsAdmin(c) {
@@ -110,9 +111,9 @@ func SettingsPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		xsrf := r.Request.FormValue("xsrf")
 
 		if xsrftoken.Valid(xsrf, models.GetFlagLogError(c, "SESSION_KEY"), u.String(), "/settings") {
-			c.Infof("Valid Token!")
+			log.Infof(c, "Valid Token!")
 		} else {
-			c.Infof("Invalid Token...")
+			log.Infof(c, "Invalid Token...")
 			http.Error(w, errors.New("Invalid Token").Error(), 403)
 			return
 		}

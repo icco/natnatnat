@@ -9,6 +9,7 @@ import (
 
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/datastore"
+	"google.golang.org/appengine/log"
 
 	"golang.org/x/net/context"
 
@@ -65,7 +66,7 @@ func GetEntry(c context.Context, id int64) (*Entry, error) {
 	q := datastore.NewQuery("Entry").Filter("Id =", id).Limit(1)
 	_, err := q.Run(c).Next(&entry)
 	if err != nil {
-		c.Warningf("Error getting entry %d", id)
+		log.Warningf(c, "Error getting entry %d", id)
 		return nil, err
 	}
 
@@ -140,10 +141,10 @@ func (e *Entry) Save(c context.Context) error {
 
 	k2, err := datastore.Put(c, k, e)
 	if err == nil {
-		c.Infof("Wrote %+v", e)
-		c.Infof("Old key: %+v; New Key: %+v", k, k2)
+		log.Infof(c, "Wrote %+v", e)
+		log.Infof(c, "Old key: %+v; New Key: %+v", k, k2)
 	} else {
-		c.Warningf("Error writing entry: %v", e)
+		log.Warningf(c, "Error writing entry: %v", e)
 	}
 	return err
 }
@@ -175,7 +176,7 @@ func (e *Entry) PrevPost(c context.Context) string {
 	q := datastore.NewQuery("Entry").Order("-Datetime").Filter("Datetime <", e.Datetime).Limit(1)
 	_, err := q.Run(c).Next(&entry)
 	if err != nil {
-		c.Infof("Error getting previous post for %d.", e.Id)
+		log.Infof(c, "Error getting previous post for %d.", e.Id)
 		return ""
 	}
 
@@ -187,7 +188,7 @@ func (e *Entry) NextPost(c context.Context) string {
 	q := datastore.NewQuery("Entry").Order("Datetime").Filter("Datetime >", e.Datetime).Limit(1)
 	_, err := q.Run(c).Next(&entry)
 	if err != nil {
-		c.Infof("Error getting next post for %d.", e.Id)
+		log.Infof(c, "Error getting next post for %d.", e.Id)
 		return ""
 	}
 
@@ -203,7 +204,7 @@ func GetLinksFromContent(c context.Context, content string) ([]string, error) {
 	}
 
 	for _, match := range matches {
-		c.Infof("%+v", match)
+		log.Infof(c, "%+v", match)
 	}
 
 	return []string{}, nil
