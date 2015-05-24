@@ -12,14 +12,11 @@ kill:
 
 restart:
 	make kill
-	make update
 	make css
 	goapp build # We do this for build checking
 	goapp serve & echo $$! > $(PID)
 
 clean:
-	rm -rf /tmp/natnatnat
-	mkdir -p /tmp/natnatnat
 	rm -f writing
 	rm -f $(PID)
 
@@ -27,8 +24,8 @@ css:
 	scss --trace -t compressed public/scss/style.scss public/css/style.css
 
 update:
-	cd $(GOPATH)/src/github.com/icco/natnatnat/ && git pull
-	goapp get -u ...
+	#cd $(GOPATH)/src/github.com/icco/natnatnat/ && git pull
+	goapp get -u -v ...
 
 deploy:
 	git push
