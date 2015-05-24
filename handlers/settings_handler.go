@@ -1,17 +1,20 @@
 package handlers
 
 import (
-	"appengine"
-	"appengine/user"
 	"bytes"
-	"code.google.com/p/xsrftoken"
 	"errors"
 	"fmt"
-	"github.com/icco/natnatnat/models"
-	"github.com/pilu/traffic"
 	"math/rand"
 	"net/http"
 	"time"
+
+	"code.google.com/p/xsrftoken"
+
+	"github.com/icco/natnatnat/models"
+	"github.com/pilu/traffic"
+
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/user"
 )
 
 type SettingsPageData struct {

@@ -7,8 +7,8 @@ import (
 	"strings"
 	"time"
 
-	"appengine"
-	"appengine/datastore"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/datastore"
 
 	"github.com/kennygrant/sanitize"
 	"github.com/russross/blackfriday"

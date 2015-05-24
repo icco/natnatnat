@@ -10,8 +10,8 @@ import (
 
 	"code.google.com/p/xsrftoken"
 
-	"appengine"
-	"appengine/user"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/user"
 )
 
 type NewPostPageData struct {

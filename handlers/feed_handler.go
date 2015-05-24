@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"appengine"
+	"google.golang.org/appengine"
 
 	"github.com/gorilla/feeds"
 	"github.com/icco/natnatnat/models"

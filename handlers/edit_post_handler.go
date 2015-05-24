@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"time"
 
-	"appengine"
-	"appengine/user"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/user"
 
 	"code.google.com/p/xsrftoken"
 

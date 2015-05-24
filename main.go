@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"time"
 
-	"appengine"
-	"appengine/user"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/user"
 
 	"github.com/gorilla/sessions"
 	"github.com/icco/natnatnat/handlers"

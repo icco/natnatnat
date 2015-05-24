@@ -1,8 +1,8 @@
 package models
 
 import (
-	"appengine"
-	"appengine/datastore"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/datastore"
 )
 
 func AllTags(c appengine.Context) map[string]int {

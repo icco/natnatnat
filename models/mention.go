@@ -1,10 +1,11 @@
 package models
 
 import (
-	"appengine"
-	"appengine/datastore"
 	"net/url"
 	"time"
+
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/datastore"
 )
 
 type Mention struct {

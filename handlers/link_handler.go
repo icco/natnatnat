@@ -13,10 +13,10 @@ import (
 	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 
-	"appengine"
-	"appengine/taskqueue"
-	"appengine/urlfetch"
-	"appengine/user"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/taskqueue"
+	"google.golang.org/appengine/urlfetch"
+	"google.golang.org/appengine/user"
 )
 
 /*
