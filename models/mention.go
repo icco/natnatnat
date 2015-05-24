@@ -1,10 +1,13 @@
 package models
 
 import (
-	"appengine"
-	"appengine/datastore"
 	"net/url"
 	"time"
+
+	"golang.org/x/net/context"
+
+	"google.golang.org/appengine/datastore"
+	"google.golang.org/appengine/log"
 )
 
 type Mention struct {
@@ -14,7 +17,7 @@ type Mention struct {
 	Verified bool
 }
 
-func NewMention(c appengine.Context, source string, target string) (*Mention, error) {
+func NewMention(c context.Context, source string, target string) (*Mention, error) {
 	var k *datastore.Key
 	var e *Mention
 
@@ -50,15 +53,15 @@ func NewMention(c appengine.Context, source string, target string) (*Mention, er
 	return e, nil
 }
 
-func MentionExists(c appengine.Context, source string, target string) bool {
+func MentionExists(c context.Context, source string, target string) bool {
 	return GetMention(c, source, target) != nil
 }
 
-func GetMention(c appengine.Context, source string, target string) *datastore.Key {
+func GetMention(c context.Context, source string, target string) *datastore.Key {
 	q := datastore.NewQuery("Mention").Filter("source =", source).Filter("target =", target).KeysOnly()
 	k, err := q.Run(c).Next(nil)
 	if err != nil {
-		c.Infof("Error getting Mention (%s => %s): %v", source, target, err)
+		log.Infof(c, "Error getting Mention (%s => %s): %v", source, target, err)
 		return nil
 	}
 	return k

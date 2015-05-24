@@ -1,11 +1,12 @@
 package handlers
 
 import (
-	"appengine"
-	"appengine/user"
 	"errors"
 	"net/http"
 	"strconv"
+
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/user"
 
 	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"

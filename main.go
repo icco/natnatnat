@@ -5,8 +5,10 @@ import (
 	"net/http"
 	"time"
 
-	"appengine"
-	"appengine/user"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/user"
+
+	"golang.org/x/net/context"
 
 	"github.com/gorilla/sessions"
 	"github.com/icco/natnatnat/handlers"
@@ -20,7 +22,7 @@ func HstsMiddleware(w traffic.ResponseWriter, r *traffic.Request) {
 	w.Header().Add("Strict-Transport-Security", "max-age=15768000")
 }
 
-func IsAdmin(c appengine.Context) bool {
+func IsAdmin(c context.Context) bool {
 	return c != nil && user.IsAdmin(c)
 }
 

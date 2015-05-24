@@ -5,8 +5,10 @@ import (
 	"strings"
 	"time"
 
-	"appengine"
-	"appengine/datastore"
+	"golang.org/x/net/context"
+
+	"google.golang.org/appengine/datastore"
+	"google.golang.org/appengine/log"
 )
 
 type Link struct {
@@ -45,23 +47,23 @@ func (l *Link) TagString() string {
 	return strings.Join(tags, " ")
 }
 
-func (e *Link) Save(c appengine.Context) error {
+func (e *Link) Save(c context.Context) error {
 	k := datastore.NewKey(c, "Link", e.Url, 0, nil)
 	k2, err := datastore.Put(c, k, e)
 	if err == nil {
-		c.Infof("Wrote %+v", e)
-		c.Infof("Old key: %+v; New Key: %+v", k, k2)
+		log.Infof(c, "Wrote %+v", e)
+		log.Infof(c, "Old key: %+v; New Key: %+v", k, k2)
 	} else {
-		c.Warningf("Error writing link: %v", e)
+		log.Warningf(c, "Error writing link: %v", e)
 	}
 	return err
 }
 
-func AllLinks(c appengine.Context) (*[]Link, error) {
+func AllLinks(c context.Context) (*[]Link, error) {
 	return Links(c, -1, true)
 }
 
-func Links(c appengine.Context, limit int, recentFirst bool) (*[]Link, error) {
+func Links(c context.Context, limit int, recentFirst bool) (*[]Link, error) {
 	q := datastore.NewQuery("Link")
 
 	if recentFirst {
