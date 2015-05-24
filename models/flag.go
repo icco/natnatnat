@@ -1,6 +1,8 @@
 package models
 
 import (
+	"golang.org/x/net/context"
+
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/datastore"
 )
@@ -10,7 +12,7 @@ type Flag struct {
 	Value string
 }
 
-func SetFlag(c appengine.Context, flag string, value string) error {
+func SetFlag(c context.Context, flag string, value string) error {
 	e := new(Flag)
 	e.Name = flag
 	e.Value = value
@@ -25,7 +27,7 @@ func SetFlag(c appengine.Context, flag string, value string) error {
 	return err
 }
 
-func GetFlag(c appengine.Context, flag string) (string, error) {
+func GetFlag(c context.Context, flag string) (string, error) {
 	var retrieved Flag
 	k := datastore.NewKey(c, "Flag", flag, 0, nil)
 	err := datastore.Get(c, k, &retrieved)
@@ -36,7 +38,7 @@ func GetFlag(c appengine.Context, flag string) (string, error) {
 	return retrieved.Value, nil
 }
 
-func GetFlagLogError(c appengine.Context, flag string) string {
+func GetFlagLogError(c context.Context, flag string) string {
 	ret, err := GetFlag(c, flag)
 	if err != nil {
 		c.Warningf("Error getting flag '%s': %v", flag, err)
@@ -46,6 +48,6 @@ func GetFlagLogError(c appengine.Context, flag string) string {
 	return ret
 }
 
-func WriteVersionKey(c appengine.Context) error {
+func WriteVersionKey(c context.Context) error {
 	return SetFlag(c, "VERSION", "1.0.1")
 }

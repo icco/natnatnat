@@ -7,6 +7,8 @@ import (
 
 	"google.golang.org/appengine"
 
+	"golang.org/x/net/context"
+
 	"github.com/gorilla/feeds"
 	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
@@ -14,7 +16,7 @@ import (
 
 var baseUrl = "https://writing.natwelch.com"
 
-func buildFeed(c appengine.Context, entries *[]models.Entry) *feeds.Feed {
+func buildFeed(c context.Context, entries *[]models.Entry) *feeds.Feed {
 	now := time.Now()
 	me := &feeds.Author{"Nat Welch", "nat@natwelch.com"}
 	feed := &feeds.Feed{

@@ -5,6 +5,8 @@ import (
 	"strings"
 	"time"
 
+	"golang.org/x/net/context"
+
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/datastore"
 )
@@ -45,7 +47,7 @@ func (l *Link) TagString() string {
 	return strings.Join(tags, " ")
 }
 
-func (e *Link) Save(c appengine.Context) error {
+func (e *Link) Save(c context.Context) error {
 	k := datastore.NewKey(c, "Link", e.Url, 0, nil)
 	k2, err := datastore.Put(c, k, e)
 	if err == nil {
@@ -57,11 +59,11 @@ func (e *Link) Save(c appengine.Context) error {
 	return err
 }
 
-func AllLinks(c appengine.Context) (*[]Link, error) {
+func AllLinks(c context.Context) (*[]Link, error) {
 	return Links(c, -1, true)
 }
 
-func Links(c appengine.Context, limit int, recentFirst bool) (*[]Link, error) {
+func Links(c context.Context, limit int, recentFirst bool) (*[]Link, error) {
 	q := datastore.NewQuery("Link")
 
 	if recentFirst {

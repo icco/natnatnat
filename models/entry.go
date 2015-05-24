@@ -10,6 +10,8 @@ import (
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/datastore"
 
+	"golang.org/x/net/context"
+
 	"github.com/kennygrant/sanitize"
 	"github.com/russross/blackfriday"
 )
@@ -58,7 +60,7 @@ func ParseTags(text string) ([]string, error) {
 	return ret, nil
 }
 
-func GetEntry(c appengine.Context, id int64) (*Entry, error) {
+func GetEntry(c context.Context, id int64) (*Entry, error) {
 	var entry Entry
 	q := datastore.NewQuery("Entry").Filter("Id =", id).Limit(1)
 	_, err := q.Run(c).Next(&entry)
@@ -70,7 +72,7 @@ func GetEntry(c appengine.Context, id int64) (*Entry, error) {
 	return &entry, nil
 }
 
-func MaxId(c appengine.Context) (int64, error) {
+func MaxId(c context.Context) (int64, error) {
 	var entry Entry
 	q := datastore.NewQuery("Entry").Order("-Id").Limit(1)
 	_, err := q.Run(c).Next(&entry)
@@ -80,11 +82,11 @@ func MaxId(c appengine.Context) (int64, error) {
 	return entry.Id, nil
 }
 
-func AllPosts(c appengine.Context) (*[]Entry, error) {
+func AllPosts(c context.Context) (*[]Entry, error) {
 	return Posts(c, -1, true)
 }
 
-func Posts(c appengine.Context, limit int, recentFirst bool) (*[]Entry, error) {
+func Posts(c context.Context, limit int, recentFirst bool) (*[]Entry, error) {
 	q := datastore.NewQuery("Entry").Filter("Public =", true)
 
 	if recentFirst {
@@ -102,7 +104,7 @@ func Posts(c appengine.Context, limit int, recentFirst bool) (*[]Entry, error) {
 	return entries, err
 }
 
-func RecentPosts(c appengine.Context) (*[]Entry, error) {
+func RecentPosts(c context.Context) (*[]Entry, error) {
 	return Posts(c, 20, true)
 }
 
@@ -110,7 +112,7 @@ func (e *Entry) HasId() bool {
 	return (e.Id > 0)
 }
 
-func (e *Entry) Save(c appengine.Context) error {
+func (e *Entry) Save(c context.Context) error {
 	var k *datastore.Key
 	if !e.HasId() {
 		id, _ := MaxId(c)
@@ -168,7 +170,7 @@ func (e *Entry) Summary() string {
 	}
 }
 
-func (e *Entry) PrevPost(c appengine.Context) string {
+func (e *Entry) PrevPost(c context.Context) string {
 	var entry Entry
 	q := datastore.NewQuery("Entry").Order("-Datetime").Filter("Datetime <", e.Datetime).Limit(1)
 	_, err := q.Run(c).Next(&entry)
@@ -180,7 +182,7 @@ func (e *Entry) PrevPost(c appengine.Context) string {
 	return entry.Url()
 }
 
-func (e *Entry) NextPost(c appengine.Context) string {
+func (e *Entry) NextPost(c context.Context) string {
 	var entry Entry
 	q := datastore.NewQuery("Entry").Order("Datetime").Filter("Datetime >", e.Datetime).Limit(1)
 	_, err := q.Run(c).Next(&entry)
@@ -193,7 +195,7 @@ func (e *Entry) NextPost(c appengine.Context) string {
 }
 
 // TODO(icco): Actually finish this.
-func GetLinksFromContent(c appengine.Context, content string) ([]string, error) {
+func GetLinksFromContent(c context.Context, content string) ([]string, error) {
 	httpRegex := regexp.MustCompile(`http:\/\/((\w|\.)+)`)
 	matches := httpRegex.FindAllString(content, -1)
 	if matches == nil {
@@ -207,7 +209,7 @@ func GetLinksFromContent(c appengine.Context, content string) ([]string, error) 
 	return []string{}, nil
 }
 
-func PostsWithTag(c appengine.Context, tag string) (*map[int64]Entry, error) {
+func PostsWithTag(c context.Context, tag string) (*map[int64]Entry, error) {
 	entries := make(map[int64]Entry, 0)
 	aliases := GetTagAliases(c, tag)
 	aliasesAndTag := append(*aliases, tag)
