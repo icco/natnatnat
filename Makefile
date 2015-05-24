@@ -7,9 +7,15 @@ all: run
 css:
 	scss --trace -t compressed public/scss/style.scss public/css/style.css
 
+<<<<<<< Updated upstream
 run: clean css *.go
 	goapp get -v github.com/icco/natnatnat
 	gcloud preview app run app.yaml --project=natwelch-writing
+=======
+update:
+	go get -u -v github.com/icco/natnatnat/...
+	goapp get -u -v ...
+>>>>>>> Stashed changes
 
 deploy:
 	git push
