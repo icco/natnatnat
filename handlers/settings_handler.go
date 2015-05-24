@@ -8,9 +8,8 @@ import (
 	"net/http"
 	"time"
 
-	"code.google.com/p/xsrftoken"
-
 	"github.com/icco/natnatnat/models"
+	"github.com/icco/xsrftoken"
 	"github.com/pilu/traffic"
 
 	"google.golang.org/appengine"

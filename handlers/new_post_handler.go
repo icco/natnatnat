@@ -6,9 +6,8 @@ import (
 	"time"
 
 	"github.com/icco/natnatnat/models"
+	"github.com/icco/xsrftoken"
 	"github.com/pilu/traffic"
-
-	"code.google.com/p/xsrftoken"
 
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/user"

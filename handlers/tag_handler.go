@@ -9,9 +9,8 @@ import (
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/user"
 
-	"code.google.com/p/xsrftoken"
-
 	"github.com/icco/natnatnat/models"
+	"github.com/icco/xsrftoken"
 	"github.com/pilu/traffic"
 )
 
