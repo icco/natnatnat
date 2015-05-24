@@ -24,7 +24,6 @@ css:
 	scss --trace -t compressed public/scss/style.scss public/css/style.css
 
 update:
-	#cd $(GOPATH)/src/github.com/icco/natnatnat/ && git pull
 	goapp get -u -v ...
 
 deploy:
