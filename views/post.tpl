@@ -5,11 +5,11 @@
 {{ end }}
 
 <div class="post">
-  <div class="meta">
-    <div class="id">
+  <div class="cf">
+    <div class="fl dib tl">
       #{{.Entry.Id}}
     </div>
-    <div class="time">
+    <div class="fr dib tr">
       <a href="/post/{{.Entry.Id}}"><time datetime="{{.Entry.Datetime|jsontime}}">{{.Entry.Datetime|fmttime}}</time></a>
     </div>
   </div>

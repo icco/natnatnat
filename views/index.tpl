@@ -1,7 +1,7 @@
 {{ template "includes/header" }}
 
 {{ range $entry := .Posts }}
-  <div class="front-page post">
+  <div class="post">
     <div class="cf">
       <div class="fl dib tl">
         #{{$entry.Id}}
