@@ -5,3 +5,8 @@ handlers:
 - url: .*
   script: natnatnat
   secure: always
+skip_files:
+- ^node_modules/*$
+- ^tmp/*$
+- ^sass/*$
+- ^.git/*$
