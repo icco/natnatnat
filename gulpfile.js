@@ -15,7 +15,12 @@ var gulp = require('gulp'),
 gulp.task('minify-css', function(){
   gulp.src('./public/css/style.css')
     .pipe(minifyCSS())
-    .pipe(rename('style.min.css'))
+    .pipe(rename({ extname: '.min.css' }))
+    .pipe(size({gzip:true, showFiles: true}))
+    .pipe(gulp.dest('./public/css/'));
+  gulp.src('./public/css/tachyons.css')
+    .pipe(minifyCSS())
+    .pipe(rename({ extname: '.min.css' }))
     .pipe(size({gzip:true, showFiles: true}))
     .pipe(gulp.dest('./public/css/'));
 });
