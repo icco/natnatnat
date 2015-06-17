@@ -19,17 +19,17 @@
   <body class="sans-serif pam">
     <div class="mw7 center">
       <header class="lh-title">
-      <div class="mw3 header-logo">
-        <a href="/"><img src="/img/natwelchlogo.png" class="logo" alt="Nat? Nat. Nat!"></a>
+      <div class="mw3 center">
+        <a href="/"><img src="/img/natwelchlogo.png" class="db" alt="Nat? Nat. Nat!"></a>
       </div>
       <div class="center mw5 tc mvm">
         <ul class="f4 list pan man">
-          <li class="di"><a href="/about">About</a></li>
-          <li class="di"><a href="/archives">Archives</a></li>
-          <li class="di"><a href="/stats">Stats</a></li>
+          <li class="dib mas"><a href="/about">About</a></li>
+          <li class="dib mas"><a href="/archives">Archives</a></li>
+          <li class="dib mas"><a href="/stats">Stats</a></li>
           <br /> <!-- Is there a better way to break this list? -->
-          <li class="di"><a href="/tags">Tags</a></li>
-          <li class="di"><a href="/links">Links</a></li>
+          <li class="dib mas"><a href="/tags">Tags</a></li>
+          <li class="dib mas"><a href="/links">Links</a></li>
         </ul>
       </div>
       </header>
