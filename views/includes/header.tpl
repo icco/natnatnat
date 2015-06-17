@@ -4,12 +4,9 @@
     <title>Nat? Nat. Nat! {{.}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- http://purecss.io/ -->
-    <link rel="stylesheet" href="/css/pure-min.0.6.0.css" />
-    <link rel="stylesheet" href="/css/pure-responsive-min.0.6.0.css">
-
     <!-- Generated from SCSS -->
-    <link rel="stylesheet" href="/css/style.css?v=20150524" />
+    <link rel="stylesheet" href="/css/tachyons.min.css?v=20150617" />
+    <link rel="stylesheet" href="/css/style.min.css?v=20150617" />
 
     <!-- Feeds! -->
     <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.rss" />
@@ -23,7 +20,7 @@
     <div class="wrap">
       <div class="pure-g">
         <div class="pure-u-1-6 pure-u-md-1-12 header-logo">
-          <a href="/"><img src="/img/natwelchlogo2.png" class="pure-img logo" alt="Nat? Nat. Nat!"></a>
+          <a href="/"><img src="/img/natwelchlogo.png" class="pure-img logo" alt="Nat? Nat. Nat!"></a>
         </div>
       </div>
       <div class="pure-g">
