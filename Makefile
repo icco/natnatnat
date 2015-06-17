@@ -1,10 +1,10 @@
 all: local
 
-PID=tmp/server.pid
+PID = tmp/server.pid
 
 local: clean
 	make restart
-	fswatch -0 *.go public/scss/*.scss | xargs -0 -n 1 -I {} make restart || make kill
+	fswatch -0 *.go sass/*.scss | xargs -0 -n 1 -I {} make restart || make kill
 
 kill:
 	[ -f $(PID) ] && kill -9 `cat $(PID)` || true
@@ -12,20 +12,13 @@ kill:
 
 restart:
 	make kill
-	make css
+	npm start
 	goapp build # We do this for build checking
 	goapp serve & echo $$! > $(PID)
 
 clean:
 	rm -f writing
 	rm -f $(PID)
-
-css:
-	scss --trace -t compressed public/scss/style.scss public/css/style.css
-
-update:
-	go get -u -v github.com/icco/natnatnat/...
-	goapp get -u -v ...
 
 deploy:
 	git push
@@ -34,5 +27,9 @@ deploy:
 
 deploy_alt:
 	goapp deploy -application=natwelch-writing
+
+update:
+	go get -u -v github.com/icco/natnatnat/...
+	goapp get -u -v ...
 
 .PHONY: serve restart kill clean deploy deploy_alt
