@@ -1,8 +1,7 @@
-          </div> <!-- /.l-box -->
-        </div> <!-- /.unit -->
+        </div> <!-- /.l-box -->
       </div> <!-- /.grid -->
-      <div class="pure-g footer">
-        <div class="pure-u-1">
+      <div class="footer">
+        <div class="">
           <ul>
             {{if .IsAdmin}}
             <li><a href="/post/new">New Post</a></li>

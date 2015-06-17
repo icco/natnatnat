@@ -16,29 +16,22 @@
     <link rel="webmention" href="/mention" />
     <link rel="http://webmention.org/" href="/mention" />
   </head>
-  <body>
-    <div class="wrap">
-      <div class="pure-g">
-        <div class="pure-u-1-6 pure-u-md-1-12 header-logo">
-          <a href="/"><img src="/img/natwelchlogo.png" class="pure-img logo" alt="Nat? Nat. Nat!"></a>
-        </div>
+  <body class="sans-serif pam">
+    <div class="mw7 center">
+      <header class="lh-title">
+      <div class="mw3 header-logo">
+        <a href="/"><img src="/img/natwelchlogo.png" class="logo" alt="Nat? Nat. Nat!"></a>
       </div>
-      <div class="pure-g">
-        <div class="pure-u-1 pure-u-md-1-12">&nbsp;</div>
-        <div class="pure-u-1 pure-u-md-5-6 navigator">
-          <div class="pure-menu pure-menu-horizontal">
-            <ul class="pure-menu-list">
-              <li class="pure-menu-item"><a href="/about">About</a></li>
-              <li class="pure-menu-item"><a href="/archives">Archives</a></li>
-              <li class="pure-menu-item"><a href="/stats">Stats</a></li>
-              <br /> <!-- Is there a better way to break this list? -->
-              <li class="pure-menu-item"><a href="/tags">Tags</a></li>
-              <li class="pure-menu-item"><a href="/links">Links</a></li>
-            </ul>
-          </div>
-        </div>
+      <div class="center mw5 tc mvm">
+        <ul class="f4 list pan man">
+          <li class="di"><a href="/about">About</a></li>
+          <li class="di"><a href="/archives">Archives</a></li>
+          <li class="di"><a href="/stats">Stats</a></li>
+          <br /> <!-- Is there a better way to break this list? -->
+          <li class="di"><a href="/tags">Tags</a></li>
+          <li class="di"><a href="/links">Links</a></li>
+        </ul>
       </div>
-      <div class="pure-g">
-        <div class="pure-u-1 pure-u-md-1-12">&nbsp;</div>
-        <div class="pure-u-1 pure-u-md-5-6">
-          <div class="l-box">
+      </header>
+      <div class="lh-copy">
+        <div class="l-box">
