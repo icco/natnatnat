@@ -12,7 +12,7 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
   <input type="hidden" value="{{.Xsrf}}" name="xsrf" />
 
   <div class="cf">
-    <input type="submit" class="btn pas mrm" />
+    <input type="submit" class="btn pas mrm btn--blue" />
     <label for="option-one" class="tr pas fr">
       <input id="option-one" type="checkbox" name="private">
       Private?
