@@ -34,30 +34,12 @@ gulp.task('minify-img', function(){
     .pipe(gulp.dest('./public/img/'));
 });
 
-// Use csslint without box-sizing or compatible vendor prefixes (these
-// don't seem to be kept up to date on what to yell about)
-gulp.task('csslint', function(){
-  gulp.src('./public/css/style.css')
-    .pipe(csslint({
-          'compatible-vendor-prefixes': false,
-          'box-sizing': false,
-          'important': false,
-          'known-properties': false
-        }))
-    .pipe(csslint.reporter());
-});
-
 // Task that compiles scss files down to good old css
 gulp.task('pre-process', function(){
     return gulp.src("./sass/style.scss")
         .pipe(sass())
         .on('error', swallowError)
         .pipe(prefix())
-        .pipe(size({gzip: false, showFiles: true}))
-        .pipe(size({gzip: true, showFiles: true}))
-        .pipe(gulp.dest('./public/css/'))
-        .pipe(minifyCSS())
-        .pipe(rename('style.min.css'))
         .pipe(size({gzip: false, showFiles: true}))
         .pipe(size({gzip: true, showFiles: true}))
         .pipe(gulp.dest('./public/css/'));
@@ -70,12 +52,6 @@ function swallowError(error) {
   this.emit('end');
 }
 
-/*
-   DEFAULT TASK
-
- • Process sass then auto-prefixes and lints outputted css
-
-*/
 gulp.task('default', ['pre-process'], function(){
-  gulp.start('pre-process', 'csslint', 'minify-img');
+  gulp.start('pre-process', 'minify-css', 'minify-img');
 });
