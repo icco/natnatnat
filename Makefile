@@ -4,7 +4,7 @@ PID = tmp/server.pid
 
 local: clean
 	make restart
-	fswatch -0 *.go sass/*.scss | xargs -0 -n 1 -I {} make restart || make kill
+	fswatch -0 *.go */*.go sass/*.scss | xargs -0 -n 1 -I {} make restart || make kill
 
 kill:
 	[ -f $(PID) ] && kill -9 `cat $(PID)` || true
