@@ -1,14 +1,12 @@
 {{ template "includes/header" }}
 
 {{ range $entry := .Posts }}
-  <div class="front-page post">
-    <div class="time">
-    </div>
-    <div class="meta">
-      <div class="id">
+  <div class="post">
+    <div class="cf">
+      <div class="fl dib tl">
         #{{$entry.Id}}
       </div>
-      <div class="time">
+      <div class="fr dib tr">
         <a href="/post/{{$entry.Id}}"><time datetime="{{$entry.Datetime|jsontime}}">{{$entry.Datetime|fmttime}}</time></a>
       </div>
     </div>
