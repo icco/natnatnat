@@ -5,7 +5,7 @@ go:
 # Set it up
 install:
  - curl -O https://storage.googleapis.com/appengine-sdks/featured/go_appengine_sdk_linux_amd64-1.9.23.zip
- - unzip -q go_appengine_sdk_linux_amd64-1.9.12
+ - unzip -q go_appengine_sdk_linux_amd64-1.9.23
  - ./go_appengine/goapp env
 
 # run build
