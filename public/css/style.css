@@ -112,16 +112,3 @@ ul.inline {
     content: ""; }
   ul.inline li:nth-last-child(2):after {
     content: " & "; }
-
-.stat {
-  padding-top: 1rem;
-  text-align: center; }
-  .stat .big {
-    font-size: 3em;
-    font-weight: 700; }
-  .stat .small {
-    font-weight: 300; }
-
-.header-logo {
-  display: block;
-  margin: 0 auto; }
