@@ -61,8 +61,23 @@ type ArchiveData struct {
 
 // TODO(icco): Rewrite to fix map iteration problems.
 type Year map[time.Month]Month
-type Month map[int]Day
+type Month []Day
 type Day []models.Entry
+
+var months = [12]time.Month{
+	time.January,
+	time.February,
+	time.March,
+	time.April,
+	time.May,
+	time.June,
+	time.July,
+	time.August,
+	time.September,
+	time.October,
+	time.November,
+	time.December,
+}
 
 func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
@@ -73,6 +88,13 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 
 	years := make(map[int]Year)
+	for year := range []int{2014, 2015} {
+		years[year] = make(Year)
+
+		for _, month := range months {
+			years[year][month] = make([]Day, daysIn(month, year))
+		}
+	}
 
 	for _, p := range *entries {
 		year := p.Datetime.Year()
@@ -84,7 +106,8 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		}
 
 		if years[year][month] == nil {
-			years[year][month] = make(Month)
+			// Make a month with the correct number of days.
+			years[year][month] = make([]Day, daysIn(month, year))
 		}
 
 		if years[year][month][day] == nil {
@@ -96,4 +119,10 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	data := &ArchiveData{Years: years, IsAdmin: user.IsAdmin(c)}
 	w.Render("archive", data)
+}
+
+// daysIn returns the number of days in a month for a given year.
+func daysIn(m time.Month, year int) int {
+	// This is equivalent to time.daysIn(m, year).
+	return time.Date(year, m+1, 0, 0, 0, 0, 0, time.UTC).Day()
 }
