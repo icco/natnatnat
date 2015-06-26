@@ -17,7 +17,7 @@
     <link rel="http://webmention.org/" href="/mention" />
   </head>
   <body class="sans-serif pam">
-    <div class="mw7 center">
+    <div class="mw7 center mtm mbxl">
       <header class="lh-title">
       <div class="mw3 center">
         <a href="/"><img src="/img/natwelchlogo.png" class="db" alt="Nat? Nat. Nat!"></a>
