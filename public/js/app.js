@@ -170,4 +170,7 @@ $(document).ready(function() {
     var t = moment($(el).text(), "YYYY-MM-DD HH:mm:ssZ");
     $(el).text(t.utc().format("MMMM Do YYYY"));
   });
+
+  // https://highlightjs.org/usage/
+  hljs.initHighlightingOnLoad();
 });
