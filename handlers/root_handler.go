@@ -89,14 +89,16 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	years := make(map[int]Year)
 
-	oldest := (*entries)[0].Datetime.Year()
-	newest := (*entries)[len(*entries)-1].Datetime.Year()
+	oldest := (*entries)[0].Datetime
+	newest := (*entries)[len(*entries)-1].Datetime
 
-	for year := oldest; year <= newest; year += 1 {
+	for year := oldest.Year(); year <= newest.Year(); year += 1 {
 		years[year] = make(Year)
 
 		for _, month := range months {
-			years[year][month] = make([]Day, daysIn(month, year))
+			if year < newest.Year() || (year == newest.Year() && month <= newest.Month()) {
+				years[year][month] = make([]Day, daysIn(month, year))
+			}
 		}
 	}
 	log.Infof(c, "Archive Data: %+v", years)
