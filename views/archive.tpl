@@ -11,10 +11,10 @@
       {{ range $day, $posts := $days }}
         {{ if $posts }}
         <a href="/day/{{$year}}/{{$month}}/{{$day}}">
-          <div class="w1 h1 dib bg-green" title="{{ $day }}"></div>
+          <div class="w1 h1 dib bg-light-green ba b--lightest-green" title="{{$year}}/{{$month}}/{{$day}} - {{len $posts}} posts"></div>
         </a>
         {{ else }}
-          <div class="w1 h1 dib bg-black" title="{{ $day }}"></div>
+        <div class="w1 h1 dib bg-red ba b--lightest-red" title="{{$year}}/{{$month}}/{{$day}} No Posts"></div>
         {{ end }}
       {{ end }}
     {{ end }}
