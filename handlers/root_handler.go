@@ -88,14 +88,18 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 
 	years := make(map[int]Year)
-	for _, year := range []int{2014, 2015} {
+
+	oldest := (*entries)[0].Datetime.Year()
+	newest := (*entries)[len(*entries)-1].Datetime.Year()
+
+	for year := oldest; year <= newest; year += 1 {
 		years[year] = make(Year)
 
 		for _, month := range months {
 			years[year][month] = make([]Day, daysIn(month, year))
 		}
 	}
-	log.Errorf(c, "Archive Data: %+v", years)
+	log.Infof(c, "Archive Data: %+v", years)
 
 	for _, p := range *entries {
 		year := p.Datetime.Year()
@@ -105,7 +109,6 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		years[year][month][day] = append(years[year][month][day], p)
 	}
 
-	log.Errorf(c, "Archive Data: %+v", years)
 	data := &ArchiveData{Years: years, IsAdmin: user.IsAdmin(c)}
 	w.Render("archive", data)
 }
