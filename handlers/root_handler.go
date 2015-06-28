@@ -95,28 +95,18 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			years[year][month] = make([]Day, daysIn(month, year))
 		}
 	}
+	log.Errorf(c, "Archive Data: %+v", years)
 
 	for _, p := range *entries {
 		year := p.Datetime.Year()
 		month := p.Datetime.Month()
 		day := p.Datetime.Day()
 
-		if years[year] == nil {
-			years[year] = make(Year)
-		}
-
-		if years[year][month] == nil {
-			// Make a month with the correct number of days.
-			years[year][month] = make([]Day, daysIn(month, year))
-		}
-
-		if years[year][month][day] == nil {
-			years[year][month][day] = make(Day, 0)
-		}
-
-		years[year][month][day] = append(years[year][month][day], p)
+		// years[year][month][day] = append(years[year][month][day], p)
+		log.Infof(c, "Post: %v, %v, %v, %v", year, month, day, p)
 	}
 
+	log.Errorf(c, "Archive Data: %+v", years)
 	data := &ArchiveData{Years: years, IsAdmin: user.IsAdmin(c)}
 	w.Render("archive", data)
 }
