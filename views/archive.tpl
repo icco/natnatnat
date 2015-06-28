@@ -3,23 +3,22 @@
 <h1 style="text-align: center;">Archives</h1>
 
 <div id="archives">
-  <ul>
-    {{ range $year, $months := .Years }}
-      <div class="year">{{ $year }}</div>
+  {{ range $year, $months := .Years }}
+    <div class="year">{{ $year }}</div>
 
-      {{ range $month, $days := $months }}
-        <div class="month">{{ $month }}</div>
-        {{ range $day, $posts := $days }}
-          <div class="day">{{ $day }}</div>
-          <div class="days">
-            {{ range $post := $posts }}
-            <li><a href="/post/{{ $post.Id }}">{{ if $post.Title }}{{ $post.Title }}{{ else }}#{{ $post.Id }}{{ end }}</a></li>
-            {{ end }}
-          </div>
+    {{ range $month, $days := $months }}
+      <div class="month">{{ $month }}</div>
+      {{ range $day, $posts := $days }}
+        {{ if $posts }}
+        <a href="/day/{{$year}}/{{$month}}/{{$day}}">
+          <div class="w1 h1 dib bg-green" title="{{ $day }}"></div>
+        </a>
+        {{ else }}
+          <div class="w1 h1 dib bg-black" title="{{ $day }}"></div>
         {{ end }}
       {{ end }}
     {{ end }}
-  </ul>
+  {{ end }}
 </div>
 
 {{ template "includes/footer" }}
