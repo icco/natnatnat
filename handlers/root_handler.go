@@ -111,6 +111,7 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		year := p.Datetime.Year()
 		month := p.Datetime.Month()
 		day := p.Datetime.Day()
+		log.Infof("Trying post id %d", p.Id)
 
 		if years[year] == nil {
 			log.Errorf(c, "%d isn't a valid year.", year)
@@ -119,6 +120,7 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 				log.Errorf(c, "%d/%d isn't a valid month.", year, month)
 			} else {
 				if years[year][month][day] == nil {
+					log.Infof(c, "making %d/%d/%d", year, month, day)
 					years[year][month][day] = make(Day, 0)
 				}
 				years[year][month][day] = append(years[year][month][day], p)
