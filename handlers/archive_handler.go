@@ -57,16 +57,16 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	log.Infof(c, "Oldest: %v, Newest: %v", oldest, newest)
 
-	// for year := oldest.Year(); year <= newest.Year(); year += 1 {
-	// 	years[year] = make(Year)
-	// 	log.Infof(c, "Adding %d.", year)
-	// 	for _, month := range months {
-	// 		if year < newest.Year() || (year == newest.Year() && month <= newest.Month()) {
-	// 			years[year][month] = make([]Day, daysIn(month, year))
-	// 			log.Debugf(c, "Adding %d/%d - %d days.", year, month, len(years[year][month]))
-	// 		}
-	// 	}
-	// }
+	for year := oldest.Year(); year <= newest.Year(); year += 1 {
+		years[year] = make(Year)
+		log.Infof(c, "Adding %d.", year)
+		for _, month := range months {
+			if year < newest.Year() || (year == newest.Year() && month <= newest.Month()) {
+				years[year][month] = make([]Day, daysIn(month, year))
+				log.Debugf(c, "Adding %d/%d - %d days.", year, month, len(years[year][month]))
+			}
+		}
+	}
 
 	q := models.ArchivePageQuery()
 	t := q.Run(c)
