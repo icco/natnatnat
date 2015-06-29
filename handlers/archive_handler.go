@@ -48,12 +48,12 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	log.Infof(c, "Retrieved data: $d.", len(*entries))
+	log.Infof(c, "Retrieved data: %d.", len(*entries))
 
 	years := make(map[int]Year)
 
-	oldest := (*entries)[0].Datetime
-	newest := (*entries)[len(*entries)-1].Datetime
+	oldest := (*entries)[len(*entries)-1].Datetime
+	newest := (*entries)[0].Datetime
 
 	log.Infof(c, "Oldest: %v, Newest: %v", oldest, newest)
 
