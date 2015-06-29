@@ -2,6 +2,8 @@ all: local
 
 PID = tmp/server.pid
 
+GOPATH=/tmp/natnat
+
 local: clean
 	make restart
 	fswatch -0 *.go */*.go sass/*.scss views/* | xargs -0 -n 1 -I {} make restart || make kill
