@@ -102,7 +102,6 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			}
 		}
 	}
-	log.Infof(c, "Archive Data: %+v", years)
 
 	for _, p := range *entries {
 		year := p.Datetime.Year()
