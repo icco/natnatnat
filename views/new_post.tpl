@@ -7,7 +7,7 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
 <form method="post" action="/post/new" class="">
   <input type="text" name="title" placeholder="Title" class="db w-100 pas mvm input-text" />
 
-  <textarea name="text" class="db w-100 pas mvs input-text" style="min-height: 200px;"></textarea>
+  <textarea name="text" class="db w-100 pas mvs input-text" style="min-height: 17rem; resize: vertical;"></textarea>
 
   <input type="hidden" value="{{.Xsrf}}" name="xsrf" />
 

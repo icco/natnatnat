@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="/css/tachyons.min.css?v=20150617" />
     <link rel="stylesheet" href="/css/style.min.css?v=20150617" />
 
+    <!-- For Code highlighting -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css">
+
     <!-- Feeds! -->
     <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.rss" />
     <link rel="alternate" type="application/atom+xml" title="atom" href="/feed.atom" />
@@ -17,7 +20,7 @@
     <link rel="http://webmention.org/" href="/mention" />
   </head>
   <body class="sans-serif pam">
-    <div class="mw7 center">
+    <div class="mw7 center mtm mbxl">
       <header class="lh-title">
       <div class="mw3 center">
         <a href="/"><img src="/img/natwelchlogo.png" class="db" alt="Nat? Nat. Nat!"></a>
