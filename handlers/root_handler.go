@@ -82,7 +82,7 @@ var months = [12]time.Month{
 
 func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	entries, err := models.Posts(c, -1, false)
+	entries, err := models.AllPosts(c)
 	if err != nil {
 		log.Errorf(c, err.Error())
 		http.Error(w, err.Error(), 500)
