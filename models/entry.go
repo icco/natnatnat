@@ -211,7 +211,7 @@ func GetLinksFromContent(c context.Context, content string) ([]string, error) {
 
 func PostsForDay(c context.Context, year, month, day int64) (*[]Entry, error) {
 	entries := new([]Entry)
-	start := time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.UTC)
+	start := time.Date(int(year), time.Month(month), int(day), 0, 0, 0, 0, time.UTC)
 	end := start.AddDate(0, 0, 1)
 	q := datastore.NewQuery("Entry").Order("-Datetime").Filter("Datetime >=", start).Filter("Datetime <", end).Filter("Public =", true)
 	_, err := q.GetAll(c, entries)
