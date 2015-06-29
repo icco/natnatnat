@@ -14,7 +14,7 @@ import (
 )
 
 type ArchiveData struct {
-	Years   map[int]Year
+	Years   *map[int]Year
 	Posts   *[]models.Entry
 	IsAdmin bool
 }
@@ -102,12 +102,12 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			years[year][month][day] = make(Day, 0)
 		}
 
-		log.Infof(c, "Appending %d/%d/%d: %+v", year, month, day, years[year][month][day])
+		// log.Infof(c, "Appending %d/%d/%d: %+v", year, month, day, years[year][month][day])
 		years[year][month][day] = append(years[year][month][day], p.Id)
 	}
 	log.Infof(c, "Added posts.")
 
-	data := &ArchiveData{Years: years, IsAdmin: user.IsAdmin(c), Posts: entries}
+	data := &ArchiveData{Years: &years, IsAdmin: user.IsAdmin(c), Posts: &[]models.Entry{}}
 	w.Render("archive", data)
 }
 
