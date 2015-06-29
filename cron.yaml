@@ -2,3 +2,6 @@ cron:
 - description: Enque Pinboard link grabbing
   url: /link/queue
   schedule: every 15 minutes
+- description: Set up archive data
+  url: /archive/queue
+  schedule: every 30 minutes
