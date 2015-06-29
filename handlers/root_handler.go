@@ -84,6 +84,7 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	entries, err := models.Posts(c, -1, false)
 	if err != nil {
+		log.Errorf(c, err.Error())
 		http.Error(w, err.Error(), 500)
 		return
 	}
