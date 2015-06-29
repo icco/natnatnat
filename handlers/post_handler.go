@@ -48,7 +48,7 @@ func PostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 }
 
 type DayData struct {
-	Entries *[]models.Entry
+	Posts   *[]models.Entry
 	IsAdmin bool
 	Date    time.Time
 }
@@ -78,7 +78,7 @@ func DayHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 
 	responseData := &DayData{
-		Entries: entries,
+		Posts:   entries,
 		IsAdmin: user.IsAdmin(c),
 		Date:    time.Date(int(year), time.Month(month), int(day), 0, 0, 0, 0, time.UTC),
 	}
