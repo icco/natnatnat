@@ -88,6 +88,7 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
+	log.Infof(c, "Retrieved data.")
 
 	years := make(map[int]Year)
 
@@ -103,6 +104,7 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			}
 		}
 	}
+	log.Infof(c, "Built year data.")
 
 	for _, p := range *entries {
 		year := p.Datetime.Year()
@@ -111,6 +113,7 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 		years[year][month][day] = append(years[year][month][day], p)
 	}
+	log.Infof(c, "Added posts.")
 
 	data := &ArchiveData{Years: years, IsAdmin: user.IsAdmin(c), Posts: entries}
 	w.Render("archive", data)
