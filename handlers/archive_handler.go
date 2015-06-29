@@ -131,6 +131,7 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	log.Infof(c, "Retrieved data: %d.", len(*entries))
 
 	// Get the item from the memcache
+	var years
 	if years, err := memcache.Get(c, "archive_data"); err == memcache.ErrCacheMiss {
 		log.Infof(c, "item not in the cache")
 	} else if err != nil {
