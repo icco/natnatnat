@@ -7,6 +7,7 @@ import (
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/log"
+	"google.golang.org/appengine/memcache"
 	"google.golang.org/appengine/user"
 
 	"github.com/icco/natnatnat/models"
@@ -39,7 +40,7 @@ var months = [12]time.Month{
 	time.December,
 }
 
-func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
+func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 
 	entries, err := models.AllPosts(c)
@@ -107,7 +108,36 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 	log.Infof(c, "Added posts.")
 
-	data := &ArchiveData{Years: &years, IsAdmin: user.IsAdmin(c), Posts: entries}
+	item := &memcache.Item{
+		Key:   "archive_data",
+		Value: years,
+	}
+
+	// Set the item, unconditionally
+	if err := memcache.Set(c, item); err != nil {
+		c.Errorf("error setting item: %v", err)
+	}
+}
+
+func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	c := appengine.NewContext(r.Request)
+
+	entries, err := models.AllPosts(c)
+	if err != nil {
+		log.Errorf(c, err.Error())
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	log.Infof(c, "Retrieved data: %d.", len(*entries))
+
+	// Get the item from the memcache
+	if years, err := memcache.Get(c, "archive_data"); err == memcache.ErrCacheMiss {
+		c.Infof("item not in the cache")
+	} else if err != nil {
+		c.Errorf("error getting item: %v", err)
+	}
+
+	data := &ArchiveData{Years: years, IsAdmin: user.IsAdmin(c), Posts: entries}
 	w.Render("archive", data)
 }
 
