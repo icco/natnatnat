@@ -20,7 +20,7 @@ restart:
 	goapp serve & echo $$! > $(PID)
 
 clean:
-	rm -f writing
+	rm -f natnatnat
 	rm -f $(PID)
 	rm -rf $(GOPATH)
 
