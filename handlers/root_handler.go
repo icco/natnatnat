@@ -123,6 +123,7 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 					log.Infof(c, "making %d/%d/%d", year, month, day)
 					years[year][month][day] = make(Day, 0)
 				}
+				log.Infof(c, "Appending %d/%d/%d: %+v", year, month, day, years[year][month][day])
 				years[year][month][day] = append(years[year][month][day], p)
 			}
 		}
