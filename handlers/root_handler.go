@@ -119,10 +119,9 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 				log.Errorf(c, "%d/%d isn't a valid month.", year, month)
 			} else {
 				if years[year][month][day] == nil {
-					log.Errorf(c, "%d/%d/%d isn't a valid day.", year, month, day)
-				} else {
-					years[year][month][day] = append(years[year][month][day], p)
+					years[year][month][day] = make(Day, 0)
 				}
+				years[year][month][day] = append(years[year][month][day], p)
 			}
 		}
 	}
