@@ -209,6 +209,15 @@ func GetLinksFromContent(c context.Context, content string) ([]string, error) {
 	return []string{}, nil
 }
 
+func PostsForDay(c context.Context, year, month, day int) (*[]Entry, error) {
+	entries := new([]Entry)
+	start := time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.UTC)
+	end := start.AddDate(0, 0, 1)
+	q := datastore.NewQuery("Entry").Order("-Datetime").Filter("Datetime >=", start).Filter("Datetime <", end).Filter("Public =", true)
+	_, err := q.GetAll(c, entries)
+	return entries, err
+}
+
 func PostsWithTag(c context.Context, tag string) (*map[int64]Entry, error) {
 	entries := make(map[int64]Entry, 0)
 	aliases := GetTagAliases(c, tag)
