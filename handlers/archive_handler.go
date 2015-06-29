@@ -22,7 +22,7 @@ type ArchiveData struct {
 // TODO(icco): Rewrite to fix map iteration problems.
 type Year map[time.Month]Month
 type Month []Day
-type Day []models.Entry
+type Day []int64
 
 var months = [12]time.Month{
 	time.January,
@@ -99,7 +99,7 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 					years[year][month][day] = make(Day, 0)
 				}
 				log.Infof(c, "Appending %d/%d/%d: %+v", year, month, day, years[year][month][day])
-				years[year][month][day] = append(years[year][month][day], p)
+				years[year][month][day] = append(years[year][month][day], p.Id)
 			}
 		}
 	}
