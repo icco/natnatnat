@@ -57,17 +57,16 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	log.Infof(c, "Oldest: %v, Newest: %v", oldest, newest)
 
-	for year := oldest.Year(); year <= newest.Year(); year += 1 {
-		years[year] = make(Year)
-		log.Infof(c, "Adding %d.", year)
-
-		for _, month := range months {
-			if year < newest.Year() || (year == newest.Year() && month <= newest.Month()) {
-				years[year][month] = make([]Day, daysIn(month, year))
-				log.Debugf(c, "Adding %d/%d - %d days.", year, month, len(years[year][month]))
-			}
-		}
-	}
+	// for year := oldest.Year(); year <= newest.Year(); year += 1 {
+	// 	years[year] = make(Year)
+	// 	log.Infof(c, "Adding %d.", year)
+	// 	for _, month := range months {
+	// 		if year < newest.Year() || (year == newest.Year() && month <= newest.Month()) {
+	// 			years[year][month] = make([]Day, daysIn(month, year))
+	// 			log.Debugf(c, "Adding %d/%d - %d days.", year, month, len(years[year][month]))
+	// 		}
+	// 	}
+	// }
 
 	q := models.ArchivePageQuery()
 	t := q.Run(c)
@@ -89,19 +88,22 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		log.Infof(c, "Trying post id %d", p.Id)
 
 		if years[year] == nil {
+			years[year] = make(Year)
 			log.Errorf(c, "%d isn't a valid year.", year)
-		} else {
-			if years[year][month] == nil {
-				log.Errorf(c, "%d/%d isn't a valid month.", year, month)
-			} else {
-				if years[year][month][day] == nil {
-					log.Infof(c, "Making %d/%d/%d", year, month, day)
-					years[year][month][day] = make(Day, 0)
-				}
-				log.Infof(c, "Appending %d/%d/%d: %+v", year, month, day, years[year][month][day])
-				years[year][month][day] = append(years[year][month][day], p.Id)
-			}
 		}
+
+		if years[year][month] == nil {
+			log.Errorf(c, "%d/%d isn't a valid month.", year, month)
+			years[year][month] = make([]Day, daysIn(month, year))
+		}
+
+		if years[year][month][day] == nil {
+			log.Infof(c, "Making %d/%d/%d", year, month, day)
+			years[year][month][day] = make(Day, 0)
+		}
+
+		log.Infof(c, "Appending %d/%d/%d: %+v", year, month, day, years[year][month][day])
+		years[year][month][day] = append(years[year][month][day], p.Id)
 	}
 	log.Infof(c, "Added posts.")
 
