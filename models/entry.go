@@ -86,6 +86,10 @@ func AllPosts(c context.Context) (*[]Entry, error) {
 	return Posts(c, -1, true)
 }
 
+func ArchivePageQuery() *datastore.Query {
+	return datastore.NewQuery("Entry").Filter("Public =", true).Project("Id", "Datetime").Order("Datetime")
+}
+
 func Posts(c context.Context, limit int, recentFirst bool) (*[]Entry, error) {
 	q := datastore.NewQuery("Entry").Filter("Public =", true)
 
