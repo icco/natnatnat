@@ -56,13 +56,29 @@ func MarkdownHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 type ArchiveData struct {
 	Years   map[int]Year
+	Posts   *[]models.Entry
 	IsAdmin bool
 }
 
 // TODO(icco): Rewrite to fix map iteration problems.
 type Year map[time.Month]Month
-type Month map[int]Day
+type Month []Day
 type Day []models.Entry
+
+var months = [12]time.Month{
+	time.January,
+	time.February,
+	time.March,
+	time.April,
+	time.May,
+	time.June,
+	time.July,
+	time.August,
+	time.September,
+	time.October,
+	time.November,
+	time.December,
+}
 
 func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
@@ -74,26 +90,34 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	years := make(map[int]Year)
 
+	oldest := (*entries)[0].Datetime
+	newest := (*entries)[len(*entries)-1].Datetime
+
+	for year := oldest.Year(); year <= newest.Year(); year += 1 {
+		years[year] = make(Year)
+
+		for _, month := range months {
+			if year < newest.Year() || (year == newest.Year() && month <= newest.Month()) {
+				years[year][month] = make([]Day, daysIn(month, year))
+			}
+		}
+	}
+	log.Infof(c, "Archive Data: %+v", years)
+
 	for _, p := range *entries {
 		year := p.Datetime.Year()
 		month := p.Datetime.Month()
 		day := p.Datetime.Day()
 
-		if years[year] == nil {
-			years[year] = make(Year)
-		}
-
-		if years[year][month] == nil {
-			years[year][month] = make(Month)
-		}
-
-		if years[year][month][day] == nil {
-			years[year][month][day] = make(Day, 0)
-		}
-
 		years[year][month][day] = append(years[year][month][day], p)
 	}
 
-	data := &ArchiveData{Years: years, IsAdmin: user.IsAdmin(c)}
+	data := &ArchiveData{Years: years, IsAdmin: user.IsAdmin(c), Posts: entries}
 	w.Render("archive", data)
+}
+
+// daysIn returns the number of days in a month for a given year.
+func daysIn(m time.Month, year int) int {
+	// This is equivalent to time.daysIn(m, year).
+	return time.Date(year, m+1, 0, 0, 0, 0, 0, time.UTC).Day()
 }

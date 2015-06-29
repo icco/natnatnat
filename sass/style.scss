@@ -122,55 +122,6 @@ li.link {
   margin-top: 30px;
 }
 
-#archives{
-  .day  {
-    font-weight: bold;
-    margin-left: 2em;
-  }
-
-  .days {
-    margin-left: 3em;
-  }
-
-  .month  {
-    font-size: 1.3em;
-    padding: 3px;
-    margin-bottom: 0px;
-    margin-left: 1em;
-  }
-
-  .year  {
-    font-size: 2em;
-    width: 100px;
-  }
-
-  li  {
-    text-align: left;
-    display: inline;
-    list-style: none;
-    display: inline;
-    margin: 0;
-  }
-
-  li:after {
-    content: ", ";
-  }
-
-  li:last-child:after {
-    content: "";
-  }
-
-  li:nth-last-child(2):after {
-    content: " & ";
-  }
-
-  ul  {
-    list-style-type: none;
-    margin: 0 0 0 50px;
-    padding: 5px;
-  }
-}
-
 ul.inline {
   li  {
     text-align: left;
