@@ -56,6 +56,7 @@ func MarkdownHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 type ArchiveData struct {
 	Years   map[int]Year
+	Posts   *[]models.Entry
 	IsAdmin bool
 }
 
@@ -111,7 +112,7 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		years[year][month][day] = append(years[year][month][day], p)
 	}
 
-	data := &ArchiveData{Years: years, IsAdmin: user.IsAdmin(c)}
+	data := &ArchiveData{Years: years, IsAdmin: user.IsAdmin(c), Posts: entries}
 	w.Render("archive", data)
 }
 

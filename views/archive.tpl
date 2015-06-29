@@ -21,4 +21,11 @@
   {{ end }}
 </div>
 
+<div id="archives">
+  <ul>
+    {{ range $post := .Posts }}
+      <li><a href="/post/{{ $post.Id }}">{{ if $post.Title }}{{ $post.Title }}{{ else }}#{{ $post.Id }}{{ end }}</a></li>
+    {{ end }}
+</div>
+
 {{ template "includes/footer" }}
