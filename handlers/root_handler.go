@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"google.golang.org/appengine"
+	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/log"
 	"google.golang.org/appengine/user"
 
@@ -83,6 +84,7 @@ var months = [12]time.Month{
 func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	entries, err := models.AllPosts(c)
+
 	if err != nil {
 		log.Errorf(c, err.Error())
 		http.Error(w, err.Error(), 500)
@@ -107,7 +109,20 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		}
 	}
 
-	for _, p := range *entries {
+	q := models.ArchivePageQuery()
+	t := q.Run(c)
+	for {
+		var p models.Entry
+		k, err := t.Next(&p)
+		if err == datastore.Done {
+			break // No further entities match the query.
+		}
+
+		if err != nil {
+			log.Errorf(c, "Error fetching next Entry: %v", err)
+			break
+		}
+
 		year := p.Datetime.Year()
 		month := p.Datetime.Month()
 		day := p.Datetime.Day()
