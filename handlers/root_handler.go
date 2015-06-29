@@ -113,7 +113,7 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	t := q.Run(c)
 	for {
 		var p models.Entry
-		k, err := t.Next(&p)
+		_, err := t.Next(&p)
 		if err == datastore.Done {
 			break // No further entities match the query.
 		}
