@@ -115,7 +115,7 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	// Set the item, unconditionally
 	if err := memcache.Set(c, item); err != nil {
-		c.Errorf("error setting item: %v", err)
+		log.Errorf(log, "error setting item: %v", err)
 	}
 }
 
@@ -132,9 +132,9 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	// Get the item from the memcache
 	if years, err := memcache.Get(c, "archive_data"); err == memcache.ErrCacheMiss {
-		c.Infof("item not in the cache")
+		log.Infof(c, "item not in the cache")
 	} else if err != nil {
-		c.Errorf("error getting item: %v", err)
+		log.Errorf(c, "error getting item: %v", err)
 	}
 
 	data := &ArchiveData{Years: years, IsAdmin: user.IsAdmin(c), Posts: entries}
