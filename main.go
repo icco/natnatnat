@@ -75,7 +75,7 @@ func init() {
 	router.Get("/tags/:id/?", handlers.TagHandler)
 	router.Get("/tags/?", handlers.TagsHandler)
 
-	router.Get("/day/:year/:month/:day/?", handlers.DayHandler)
+	//router.Get("/day/:year/:month/:day/?", handlers.DayHandler)
 
 	router.Get("/aliases", handlers.TagAliasGetHandler)
 	router.Post("/aliases", handlers.TagAliasPostHandler)
