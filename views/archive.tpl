@@ -17,7 +17,7 @@
             <div class="w1 h1 dib v-mid bg-light-green ba b--lightest-green" title="{{$year}}/{{printf "%02d" $month}}/{{$day}} - {{len $posts}} posts"></div>
           </a>
           {{ else }}
-          <div class="w1 h1 dib v-mid bg-red ba b--lightest-red" title="{{$year}}/{{printf "%02d" $month}}/{{$day}} No Posts"></div>
+          <div class="w1 h1 dib v-mid bg-blue ba b--lightest-blue" title="{{$year}}/{{printf "%02d" $month}}/{{$day}} No Posts"></div>
           {{ end }}
         {{ end }}
       </div>
