@@ -209,7 +209,7 @@ func GetLinksFromContent(c context.Context, content string) ([]string, error) {
 	return []string{}, nil
 }
 
-func PostsForDay(c context.Context, year, month, day int) (*[]Entry, error) {
+func PostsForDay(c context.Context, year, month, day int64) (*[]Entry, error) {
 	entries := new([]Entry)
 	start := time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.UTC)
 	end := start.AddDate(0, 0, 1)

@@ -48,7 +48,7 @@ func PostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 }
 
 type DayData struct {
-	Entries *models.Entry
+	Entries *[]models.Entry
 	IsAdmin bool
 	Date    time.Time
 }
