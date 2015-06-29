@@ -97,13 +97,14 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	for year := oldest.Year(); year <= newest.Year(); year += 1 {
 		years[year] = make(Year)
+		log.Infof(c, "Adding %d.", year)
 
 		for _, month := range months {
 			if year < newest.Year() || (year == newest.Year() && month <= newest.Month()) {
 				years[year][month] = make([]Day, daysIn(month, year))
+				log.Infof(c, "Adding %d/%d - %d days.", year, month, len(years[year][month]))
 			}
 		}
-		log.Infof(c, "Built year data for %d: %+v", year, years[year])
 	}
 
 	for _, p := range *entries {
@@ -114,7 +115,6 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		if years[year] == nil {
 			log.Errorf(c, "%d isn't a valid year.", year)
 		} else {
-
 			if years[year][month] == nil {
 				log.Errorf(c, "%d/%d isn't a valid month.", year, month)
 			} else {
