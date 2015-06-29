@@ -107,7 +107,7 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 	log.Infof(c, "Added posts.")
 
-	data := &ArchiveData{Years: &years, IsAdmin: user.IsAdmin(c), Posts: &[]models.Entry{}}
+	data := &ArchiveData{Years: &years, IsAdmin: user.IsAdmin(c), Posts: entries}
 	w.Render("archive", data)
 }
 
