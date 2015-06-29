@@ -15,12 +15,14 @@ kill:
 restart:
 	make kill
 	npm start
+	make update
 	goapp build # We do this for build checking
 	goapp serve & echo $$! > $(PID)
 
 clean:
 	rm -f writing
 	rm -f $(PID)
+	rm -rf $(GOPATH)
 
 deploy:
 	git push
