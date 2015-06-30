@@ -8,8 +8,9 @@
   {{ range $year, $months := .Years }}
     <div class="f3 lh-title">{{ $year }}</div>
 
-    {{ range $month := .Months }}
-      {{with $days := $months[$month]}}
+    {{ .Months }}
+    {{ range $null, $month := .Months }}
+      {{with $days := index $months $month }}
         <div class="mvs">
           <div class="f4 lh-title dib mrm">{{ $month }}</div>
           {{ range $day, $posts := $days }}

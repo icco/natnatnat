@@ -18,7 +18,7 @@ import (
 
 type ArchiveData struct {
 	Years   *map[string]Year
-	Months  [12]string
+	Months  []string
 	Posts   *[]models.Entry
 	IsAdmin bool
 }
@@ -40,21 +40,6 @@ var months = [12]time.Month{
 	time.October,
 	time.November,
 	time.December,
-}
-
-var monthStrings = [12]string{
-	time.January.String(),
-	time.February.String(),
-	time.March.String(),
-	time.April.String(),
-	time.May.String(),
-	time.June.String(),
-	time.July.String(),
-	time.August.String(),
-	time.September.String(),
-	time.October.String(),
-	time.November.String(),
-	time.December.String(),
 }
 
 func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -173,8 +158,21 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 
 	data := &ArchiveData{
-		Years:   &years,
-		Months:  monthStrings,
+		Years: &years,
+		Months: []string{
+			time.January.String(),
+			time.February.String(),
+			time.March.String(),
+			time.April.String(),
+			time.May.String(),
+			time.June.String(),
+			time.July.String(),
+			time.August.String(),
+			time.September.String(),
+			time.October.String(),
+			time.November.String(),
+			time.December.String(),
+		},
 		IsAdmin: user.IsAdmin(c),
 		Posts:   entries,
 	}
