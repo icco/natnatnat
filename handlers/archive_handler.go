@@ -18,7 +18,7 @@ import (
 
 type ArchiveData struct {
 	Years   *map[string]Year
-	Months  []string
+	Months  *[]string
 	Posts   *[]models.Entry
 	IsAdmin bool
 }
