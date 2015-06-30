@@ -159,7 +159,7 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	data := &ArchiveData{
 		Years: &years,
-		Months: []string{
+		Months: &[]string{
 			time.January.String(),
 			time.February.String(),
 			time.March.String(),

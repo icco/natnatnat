@@ -9,17 +9,18 @@
     <div class="f3 lh-title">{{ $year }}</div>
 
     {{ .Months }}
+
     {{ range $null, $month := .Months }}
       {{with $days := index $months $month }}
         <div class="mvs">
           <div class="f4 lh-title dib mrm">{{ $month }}</div>
           {{ range $day, $posts := $days }}
             {{ if $posts }}
-            <a href="/day/{{$year}}/{{printf "%d" $month}}/{{$day}}" class="none">
-              <div class="w1 h1 dib v-mid bg-light-green ba b--lightest-green" title="{{$year}}/{{printf "%02d" $month}}/{{$day}} - {{len $posts}} posts"></div>
-            </a>
+              <a href="/day/{{$year}}/{{printf "%d" $month}}/{{$day}}" class="none">
+                <div class="w1 h1 dib v-mid bg-light-green ba b--lightest-green" title="{{$year}}/{{printf "%02d" $month}}/{{$day}} - {{len $posts}} posts"></div>
+              </a>
             {{ else }}
-            <div class="w1 h1 dib v-mid bg-blue ba b--lightest-blue" title="{{$year}}/{{printf "%02d" $month}}/{{$day}} No Posts"></div>
+              <div class="w1 h1 dib v-mid bg-blue ba b--lightest-blue" title="{{$year}}/{{printf "%02d" $month}}/{{$day}} No Posts"></div>
             {{ end }}
           {{ end }}
         </div>
