@@ -110,7 +110,7 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	log.Infof(c, "Added posts.")
 
 	// https://blog.golang.org/json-and-go
-	b, err := json.Marshal(m)
+	b, err := json.Marshal(years)
 	if err != nil {
 		log.Errorf(c, err.Error())
 		http.Error(w, err.Error(), 500)
@@ -123,7 +123,7 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	// Set the item, unconditionally
 	if err := memcache.Set(c, item); err != nil {
-		log.Errorf(log, "error setting item: %v", err)
+		log.Errorf(c, "error setting item: %v", err)
 	}
 }
 
@@ -145,7 +145,7 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	} else if err != nil {
 		log.Errorf(c, "error getting item: %v", err)
 	} else {
-		err := json.Unmarshal(year_data, &years)
+		err := json.Unmarshal(year_data.Value, &years)
 		if err != nil {
 			log.Errorf(c, err.Error())
 			http.Error(w, err.Error(), 500)
@@ -153,7 +153,7 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		}
 	}
 
-	data := &ArchiveData{Years: years, IsAdmin: user.IsAdmin(c), Posts: entries}
+	data := &ArchiveData{Years: &years, IsAdmin: user.IsAdmin(c), Posts: entries}
 	w.Render("archive", data)
 }
 
