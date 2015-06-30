@@ -63,7 +63,7 @@ func init() {
 
 	router.Get("/archive(s?)", handlers.ArchiveHandler)
 	router.Get("/archive/queue", handlers.ArchiveQueueHandler)
-	router.Get("/archive/work", handlers.ArchiveTaskHandler)
+	router.Post("/archive/work", handlers.ArchiveTaskHandler)
 
 	router.Post("/md", handlers.MarkdownHandler)
 
