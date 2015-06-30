@@ -86,6 +86,18 @@ func AllPosts(c context.Context) (*[]Entry, error) {
 	return Posts(c, -1, true)
 }
 
+func Pagination(c context.Context, posts, offset int) (*[]Entry, error) {
+	q := datastore.NewQuery("Entry").
+		Filter("Public =", true).
+		Order("-Datetime").
+		Limit(posts).
+		Offset(offset)
+
+	entries := new([]Entry)
+	_, err := q.GetAll(c, entries)
+	return entries, err
+}
+
 func ArchivePageQuery() *datastore.Query {
 	return datastore.NewQuery("Entry").
 		Filter("Public =", true).
