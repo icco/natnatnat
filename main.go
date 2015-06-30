@@ -45,6 +45,16 @@ func markdown(args ...interface{}) template.HTML {
 	return models.Markdown(args...)
 }
 
+func monthToInt(m string) int {
+	for m := range handlers.Months {
+		if m.String() == m {
+			return int(m)
+		}
+	}
+
+	return -1
+}
+
 // init is one of those magic functions that runs once on project create.
 func init() {
 	if !appengine.IsDevAppServer() {
@@ -54,6 +64,7 @@ func init() {
 	traffic.TemplateFunc("fmttime", fmtTime)
 	traffic.TemplateFunc("jsontime", jsonTime)
 	traffic.TemplateFunc("mrkdwn", markdown)
+	traffic.TemplateFunc("m2i", monthToInt)
 
 	router := traffic.New()
 	router.Get("/", handlers.RootHandler)

@@ -29,7 +29,7 @@ type Year map[string]Month
 type Month []Day
 type Day int64
 
-var months = [12]time.Month{
+var Months = [12]time.Month{
 	time.January,
 	time.February,
 	time.March,
@@ -78,7 +78,7 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		ystr := strconv.Itoa(year)
 		years[ystr] = make(Year)
 		log.Infof(c, "Adding %d.", year)
-		for _, month := range months {
+		for _, month := range Months {
 			if year < newest.Year() || (year == newest.Year() && month <= newest.Month()) {
 				mstr := month.String()
 				years[ystr][mstr] = make([]Day, daysIn(month, year))
