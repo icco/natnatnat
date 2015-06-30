@@ -58,10 +58,12 @@ func init() {
 	router := traffic.New()
 	router.Get("/", handlers.RootHandler)
 	router.Get("/about", handlers.AboutHandler)
-	router.Get("/archive(s?)", handlers.ArchiveHandler)
-	router.Get("/archive/queue", handlers.ArchiveTaskHandler)
 	router.Get("/stats", handlers.StatsHandler)
 	router.Get("/posts.json", handlers.StatsHistoryJsonHandler)
+
+	router.Get("/archive(s?)", handlers.ArchiveHandler)
+	router.Get("/archive/queue", handlers.ArchiveQueueHandler)
+	router.Get("/archive/work", handlers.ArchiveTaskHandler)
 
 	router.Post("/md", handlers.MarkdownHandler)
 
