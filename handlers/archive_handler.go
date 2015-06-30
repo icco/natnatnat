@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"encoding/json"
 	"net/http"
 	"time"
 
@@ -108,9 +109,16 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 	log.Infof(c, "Added posts.")
 
+	// https://blog.golang.org/json-and-go
+	b, err := json.Marshal(m)
+	if err != nil {
+		log.Errorf(c, err.Error())
+		http.Error(w, err.Error(), 500)
+	}
+
 	item := &memcache.Item{
 		Key:   "archive_data",
-		Value: years,
+		Value: b,
 	}
 
 	// Set the item, unconditionally
@@ -131,11 +139,18 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	log.Infof(c, "Retrieved data: %d.", len(*entries))
 
 	// Get the item from the memcache
-	var years
-	if years, err := memcache.Get(c, "archive_data"); err == memcache.ErrCacheMiss {
+	var years map[int]Year
+	if year_data, err := memcache.Get(c, "archive_data"); err == memcache.ErrCacheMiss {
 		log.Infof(c, "item not in the cache")
 	} else if err != nil {
 		log.Errorf(c, "error getting item: %v", err)
+	} else {
+		err := json.Unmarshal(year_data, &years)
+		if err != nil {
+			log.Errorf(c, err.Error())
+			http.Error(w, err.Error(), 500)
+			return
+		}
 	}
 
 	data := &ArchiveData{Years: years, IsAdmin: user.IsAdmin(c), Posts: entries}
