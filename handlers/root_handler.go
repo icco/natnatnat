@@ -16,14 +16,21 @@ type RootData struct {
 	IsAdmin bool
 }
 
+const perPage = 50
+
 func RootHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	entries, err := models.AllPosts(c)
+	pg, err := strconv.ParseInt(r.Param("page"), 10, 64)
+	if err != nil {
+		log.Infof(c, "Error parsing: %+v")
+	}
+
+	entries, err := models.Pagination(c, perPage, 0)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	data := &RootData{Posts: entries, IsAdmin: user.IsAdmin(c)}
+	data := &RootData{Posts: entries, IsAdmin: user.IsAdmin(c), Page: 0}
 	w.Render("index", data)
 }
 
