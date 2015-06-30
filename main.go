@@ -46,8 +46,8 @@ func markdown(args ...interface{}) template.HTML {
 }
 
 func monthToInt(m string) int {
-	for _, m := range handlers.Months {
-		if m.String() == m {
+	for _, mnth := range handlers.Months {
+		if mnth.String() == m {
 			return int(m)
 		}
 	}
