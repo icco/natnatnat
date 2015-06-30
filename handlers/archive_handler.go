@@ -91,7 +91,7 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 						http.Error(w, err.Error(), 500)
 						return
 					}
-					years[ystr][mstr][day] = len(*e)
+					years[ystr][mstr][day] = Day(len(*e))
 				}
 			}
 		}
