@@ -3,6 +3,7 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 	"time"
 
 	"google.golang.org/appengine"
@@ -16,7 +17,7 @@ import (
 )
 
 type ArchiveData struct {
-	Years   *map[int]Year
+	Years   *map[string]Year
 	Posts   *[]models.Entry
 	IsAdmin bool
 }
@@ -52,7 +53,7 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 	log.Infof(c, "Retrieved data: %d.", len(*entries))
 
-	years := make(map[int]Year)
+	years := make(map[string]Year)
 
 	oldest := (*entries)[len(*entries)-1].Datetime
 	newest := (*entries)[0].Datetime
@@ -60,12 +61,13 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	log.Infof(c, "Oldest: %v, Newest: %v", oldest, newest)
 
 	for year := oldest.Year(); year <= newest.Year(); year += 1 {
-		years[year] = make(Year)
+		ystr := strconv.Itoa(year)
+		years[ystr] = make(Year)
 		log.Infof(c, "Adding %d.", year)
 		for _, month := range months {
 			if year < newest.Year() || (year == newest.Year() && month <= newest.Month()) {
-				years[year][month] = make([]Day, daysIn(month, year))
-				log.Debugf(c, "Adding %d/%d - %d days.", year, month, len(years[year][month]))
+				years[ystr][month] = make([]Day, daysIn(month, year))
+				log.Debugf(c, "Adding %d/%d - %d days.", year, month, len(years[ystr][month]))
 			}
 		}
 	}
@@ -84,23 +86,23 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			break
 		}
 
-		year := p.Datetime.Year()
+		year := strconv.Itoa(p.Datetime.Year())
 		month := p.Datetime.Month()
 		day := p.Datetime.Day()
 		log.Infof(c, "Trying post id %d", p.Id)
 
 		if years[year] == nil {
 			years[year] = make(Year)
-			log.Errorf(c, "%d isn't a valid year.", year)
+			log.Errorf(c, "%s isn't a valid year.", year)
 		}
 
 		if years[year][month] == nil {
-			log.Errorf(c, "%d/%d isn't a valid month.", year, month)
+			log.Errorf(c, "%s/%d isn't a valid month.", year, month)
 			years[year][month] = make([]Day, daysIn(month, year))
 		}
 
 		if years[year][month][day] == nil {
-			log.Infof(c, "Making %d/%d/%d", year, month, day)
+			log.Infof(c, "Making %s/%d/%d", year, month, day)
 			years[year][month][day] = make(Day, 0)
 		}
 
@@ -139,7 +141,7 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	log.Infof(c, "Retrieved data: %d.", len(*entries))
 
 	// Get the item from the memcache
-	var years map[int]Year
+	var years map[string]Year
 	if year_data, err := memcache.Get(c, "archive_data"); err == memcache.ErrCacheMiss {
 		log.Infof(c, "item not in the cache")
 	} else if err != nil {
