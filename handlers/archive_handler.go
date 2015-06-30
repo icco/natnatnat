@@ -87,6 +87,7 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		}
 
 		year := strconv.Itoa(p.Datetime.Year())
+		yint := p.Datetime.Year()
 		month := p.Datetime.Month()
 		day := p.Datetime.Day()
 		log.Infof(c, "Trying post id %d", p.Id)
@@ -98,7 +99,7 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 		if years[year][month] == nil {
 			log.Errorf(c, "%s/%d isn't a valid month.", year, month)
-			years[year][month] = make([]Day, daysIn(month, year))
+			years[year][month] = make([]Day, daysIn(month, yint))
 		}
 
 		if years[year][month][day] == nil {
