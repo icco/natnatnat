@@ -28,7 +28,7 @@ type ArchiveData struct {
 
 type Year map[string]Month
 type Month []Day
-type Day []int64
+type Day int64
 
 var months = [12]time.Month{
 	time.January,
@@ -84,47 +84,18 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 				mstr := month.String()
 				years[ystr][mstr] = make([]Day, daysIn(month, year))
 				log.Debugf(c, "Adding %d/%d - %d days.", year, month, len(years[ystr][mstr]))
+
+				for day := range years[ystr][mstr] {
+					e, err := models.PostsForDay(c, year, month, day)
+					if err != nil {
+						log.Errorf(c, err.Error())
+						http.Error(w, err.Error(), 500)
+						return
+					}
+					years[year][mstr][day] = len(e)
+				}
 			}
 		}
-	}
-
-	q := models.ArchivePageQuery()
-	t := q.Run(c)
-	for {
-		var p models.Entry
-		_, err := t.Next(&p)
-		if err == datastore.Done {
-			break // No further entities match the query.
-		}
-
-		if err != nil {
-			log.Errorf(c, "Error fetching next Entry: %v", err)
-			break
-		}
-
-		year := strconv.Itoa(p.Datetime.Year())
-		yint := p.Datetime.Year()
-		month := p.Datetime.Month()
-		mstr := month.String()
-		day := p.Datetime.Day()
-		log.Infof(c, "Trying post id %d", p.Id)
-
-		if years[year] == nil {
-			years[year] = make(Year)
-			log.Errorf(c, "%s isn't a valid year.", year)
-		}
-
-		if years[year][mstr] == nil {
-			log.Errorf(c, "%s/%d isn't a valid month.", year, month)
-			years[year][mstr] = make([]Day, daysIn(month, yint))
-		}
-
-		if years[year][mstr][day] == nil {
-			log.Infof(c, "Making %s/%d/%d", year, month, day)
-			years[year][mstr][day] = make(Day, 0)
-		}
-
-		years[year][mstr][day] = append(years[year][mstr][day], p.Id)
 	}
 	log.Infof(c, "Added posts.")
 
