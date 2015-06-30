@@ -22,8 +22,7 @@ type ArchiveData struct {
 	IsAdmin bool
 }
 
-// TODO(icco): Rewrite to fix map iteration problems.
-type Year map[time.Month]Month
+type Year map[string]Month
 type Month []Day
 type Day []int64
 
@@ -66,8 +65,9 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		log.Infof(c, "Adding %d.", year)
 		for _, month := range months {
 			if year < newest.Year() || (year == newest.Year() && month <= newest.Month()) {
-				years[ystr][month] = make([]Day, daysIn(month, year))
-				log.Debugf(c, "Adding %d/%d - %d days.", year, month, len(years[ystr][month]))
+				mstr := month.String()
+				years[ystr][mstr] = make([]Day, daysIn(month, year))
+				log.Debugf(c, "Adding %d/%d - %d days.", year, month, len(years[ystr][mstr]))
 			}
 		}
 	}
@@ -89,6 +89,7 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		year := strconv.Itoa(p.Datetime.Year())
 		yint := p.Datetime.Year()
 		month := p.Datetime.Month()
+		mstr := month.String()
 		day := p.Datetime.Day()
 		log.Infof(c, "Trying post id %d", p.Id)
 
@@ -97,18 +98,17 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			log.Errorf(c, "%s isn't a valid year.", year)
 		}
 
-		if years[year][month] == nil {
+		if years[year][mstr] == nil {
 			log.Errorf(c, "%s/%d isn't a valid month.", year, month)
-			years[year][month] = make([]Day, daysIn(month, yint))
+			years[year][mstr] = make([]Day, daysIn(month, yint))
 		}
 
-		if years[year][month][day] == nil {
+		if years[year][mstr][day] == nil {
 			log.Infof(c, "Making %s/%d/%d", year, month, day)
-			years[year][month][day] = make(Day, 0)
+			years[year][mstr][day] = make(Day, 0)
 		}
 
-		// log.Infof(c, "Appending %d/%d/%d: %+v", year, month, day, years[year][month][day])
-		years[year][month][day] = append(years[year][month][day], p.Id)
+		years[year][mstr][day] = append(years[year][mstr][day], p.Id)
 	}
 	log.Infof(c, "Added posts.")
 
