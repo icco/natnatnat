@@ -28,7 +28,7 @@ func RootHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		pg = 0
 	}
 
-	entries, err := models.Pagination(c, perPage, 0)
+	entries, err := models.Pagination(c, perPage, pg*perPage)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
