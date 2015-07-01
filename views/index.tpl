@@ -29,8 +29,8 @@
 
 <div class="post-nav">
   <ul class="pager">
-    <li class="{{if not .Prev}}disabled{{end}}"><a class="prev" href="/page/{{.Prev}}">&#171;</a></li>
-    <li class="{{if not .Next}}disabled{{end}}"><a class="next" href="/page/{{.Next}}">&#187;</a></li>
+    <li class="{{if not .Next}}disabled{{end}}"><a class="next" href="/page/{{.Next}}">&#171;</a></li>
+    <li class="{{if not .Prev}}disabled{{end}}"><a class="prev" href="/page/{{.Prev}}">&#187;</a></li>
   </ul>
 </div>
 
