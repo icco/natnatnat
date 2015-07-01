@@ -78,25 +78,30 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		ystr := strconv.Itoa(year)
 		years[ystr] = make(Year)
 		log.Infof(c, "Adding %d.", year)
-		for _, month := range Months {
-			notFirstOrLastYear := year < newest.Year() || year > oldest.Year()
-			notMonthsInFuture := year != newest.Year() || month <= newest.Month()
-			notMonthsBeforeOldest := year != oldest.Year() || month >= oldest.Month()
-			if notFirstOrLastYear || (notMonthsInFuture && notMonthsBeforeOldest) {
-				mstr := month.String()
-				years[ystr][mstr] = make([]Day, daysIn(month, year)+1)
-				log.Debugf(c, "Adding %d/%d - %d days.", year, month, len(years[ystr][mstr]))
 
-				for day := range years[ystr][mstr] {
-					if day > 0 {
-						e, err := models.PostsForDay(c, int64(year), int64(month), int64(day))
-						if err != nil {
-							log.Errorf(c, err.Error())
-							http.Error(w, err.Error(), 500)
-							return
-						}
-						years[ystr][mstr][day] = Day(len(*e))
+		startMonth := time.January
+		endMonth := time.December
+		if year == oldest.Year() {
+			startMonth = oldest.Month()
+		}
+		if year == newest.Year() {
+			endMonth = newest.Month()
+		}
+
+		for month := startMonth; month <= endMonth; month += 1 {
+			mstr := month.String()
+			years[ystr][mstr] = make([]Day, daysIn(month, year)+1)
+			log.Debugf(c, "Adding %d/%d - %d days.", year, month, len(years[ystr][mstr]))
+
+			for day := range years[ystr][mstr] {
+				if day > 0 {
+					e, err := models.PostsForDay(c, int64(year), int64(month), int64(day))
+					if err != nil {
+						log.Errorf(c, err.Error())
+						http.Error(w, err.Error(), 500)
+						return
 					}
+					years[ystr][mstr][day] = Day(len(*e))
 				}
 			}
 		}
