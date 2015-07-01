@@ -1,4 +1,8 @@
-{{ template "includes/header" }}
+{{ if .Page }}
+  {{ template "includes/header" printf "Page %d" .Page }}
+{{ else }}
+  {{ template "includes/header" }}
+{{ end }}
 
 {{ range $entry := .Posts }}
   <div class="post">

@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"net/http"
+	"strconv"
 
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/log"
@@ -14,6 +15,7 @@ import (
 type RootData struct {
 	Posts   interface{}
 	IsAdmin bool
+	Page    int
 }
 
 const perPage = 50
@@ -23,6 +25,7 @@ func RootHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	pg, err := strconv.ParseInt(r.Param("page"), 10, 64)
 	if err != nil {
 		log.Infof(c, "Error parsing: %+v")
+		pg = 0
 	}
 
 	entries, err := models.Pagination(c, perPage, 0)
