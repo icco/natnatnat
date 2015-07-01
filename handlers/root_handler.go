@@ -40,10 +40,7 @@ func RootHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		IsAdmin: user.IsAdmin(c),
 		Page:    pg,
 		Next:    pg + 1,
-	}
-
-	if pg > 0 {
-		data.Prev = pg - 1
+		Prev:    pg - 1,
 	}
 
 	w.Render("index", data)
