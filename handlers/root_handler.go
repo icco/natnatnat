@@ -15,7 +15,7 @@ import (
 type RootData struct {
 	Posts   interface{}
 	IsAdmin bool
-	Page    int
+	Page    int64
 }
 
 const perPage = 50
@@ -28,12 +28,12 @@ func RootHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		pg = 0
 	}
 
-	entries, err := models.Pagination(c, perPage, pg*perPage)
+	entries, err := models.Pagination(c, perPage, int(pg*perPage))
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	data := &RootData{Posts: entries, IsAdmin: user.IsAdmin(c), Page: 0}
+	data := &RootData{Posts: entries, IsAdmin: user.IsAdmin(c), Page: pg}
 	w.Render("index", data)
 }
 
