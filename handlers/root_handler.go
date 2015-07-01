@@ -23,6 +23,10 @@ type RootData struct {
 const perPage = 50
 
 func RootHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	if r.Request.URL.Path == "/page/0" {
+		http.Redirect(w, r.Request, "/", 301)
+	}
+
 	c := appengine.NewContext(r.Request)
 	pg, err := strconv.ParseInt(r.Param("page"), 10, 64)
 	if err != nil {
@@ -41,6 +45,10 @@ func RootHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		Page:    pg,
 		Next:    pg + 1,
 		Prev:    pg - 1,
+	}
+
+	if len(*entries) == 0 {
+		data.Next = -1
 	}
 
 	w.Render("index", data)
