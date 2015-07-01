@@ -80,8 +80,8 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		log.Infof(c, "Adding %d.", year)
 		for _, month := range Months {
 			notFirstOrLastYear := year < newest.Year() || year > oldest.Year()
-			notMonthsInFuture := year == newest.Year() && month <= newest.Month()
-			notMonthsBeforeOldest := year == oldest.Year() && month >= oldest.Month()
+			notMonthsInFuture := year != newest.Year() || month <= newest.Month()
+			notMonthsBeforeOldest := year != oldest.Year() || month >= oldest.Month()
 			if notFirstOrLastYear || (notMonthsInFuture && notMonthsBeforeOldest) {
 				mstr := month.String()
 				years[ystr][mstr] = make([]Day, daysIn(month, year)+1)
