@@ -24,7 +24,7 @@ func RootHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	pg, err := strconv.ParseInt(r.Param("page"), 10, 64)
 	if err != nil {
-		log.Infof(c, "Error parsing: %+v")
+		log.Infof(c, "Error parsing: %+v", err)
 		pg = 0
 	}
 
