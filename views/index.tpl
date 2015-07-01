@@ -29,7 +29,7 @@
 
 <div class="post-nav">
   <ul class="pager">
-    {{if gt len .Posts 0}}
+    {{len .Posts | if le 0}}
       {{if ge .Next 0}}
         <li class=""><a class="next" href="/page/{{.Next}}">&#171;</a></li>
       {{end}}
