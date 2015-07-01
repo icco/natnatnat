@@ -88,13 +88,15 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 				log.Debugf(c, "Adding %d/%d - %d days.", year, month, len(years[ystr][mstr]))
 
 				for day := range years[ystr][mstr] {
-					e, err := models.PostsForDay(c, int64(year), int64(month), int64(day))
-					if err != nil {
-						log.Errorf(c, err.Error())
-						http.Error(w, err.Error(), 500)
-						return
+					if day > 0 {
+						e, err := models.PostsForDay(c, int64(year), int64(month), int64(day))
+						if err != nil {
+							log.Errorf(c, err.Error())
+							http.Error(w, err.Error(), 500)
+							return
+						}
+						years[ystr][mstr][day] = Day(len(*e))
 					}
-					years[ystr][mstr][day] = Day(len(*e))
 				}
 			}
 		}

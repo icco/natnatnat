@@ -13,12 +13,14 @@
             <div class="mvs">
               <div class="f4 lh-title dib mrm">{{ $month }}</div>
               {{ range $day, $posts := $days }}
-                {{ if $posts }}
-                  <a href="/day/{{$year}}/{{m2i $month}}/{{$day}}" class="none">
-                    <div class="w1 h1 dib v-mid bg-light-green ba b--lightest-green" title="{{$year}}/{{m2i $month}}/{{$day}} - {{$posts}} posts"></div>
-                  </a>
-                {{ else }}
-                  <div class="w1 h1 dib v-mid ba b--light-gray" title="{{$year}}/{{m2i $month}}/{{$day}} No Posts"></div>
+                {{ if gt $day 0 }}
+                  {{ if $posts }}
+                    <a href="/day/{{$year}}/{{m2i $month}}/{{$day}}" class="none">
+                      <div class="w1 h1 dib v-mid bg-light-green ba b--lightest-green" title="{{$year}}/{{m2i $month}}/{{$day}} - {{$posts}} posts"></div>
+                    </a>
+                  {{ else }}
+                    <div class="w1 h1 dib v-mid ba b--light-gray" title="{{$year}}/{{m2i $month}}/{{$day}} No Posts"></div>
+                  {{ end }}
                 {{ end }}
               {{ end }}
             </div>
