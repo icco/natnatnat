@@ -16,6 +16,8 @@ type RootData struct {
 	Posts   interface{}
 	IsAdmin bool
 	Page    int64
+	Prev    int64
+	Next    int64
 }
 
 const perPage = 50
@@ -33,7 +35,17 @@ func RootHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	data := &RootData{Posts: entries, IsAdmin: user.IsAdmin(c), Page: pg}
+	data := &RootData{
+		Posts:   entries,
+		IsAdmin: user.IsAdmin(c),
+		Page:    pg,
+		Next:    pg + 1,
+	}
+
+	if pg > 0 {
+		data.Prev = pg - 1
+	}
+
 	w.Render("index", data)
 }
 
