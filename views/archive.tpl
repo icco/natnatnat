@@ -11,7 +11,7 @@
         {{ range $null, $month := $data.Months }}
           {{ with $days := index $months $month }}
             <div class="mvs">
-              <div class="f4 lh-title dib mhm w3 tr">{{ $month }}</div>
+              <div class="f4 lh-title dib mhm tr" style="width: 5rem;">{{ $month }}</div>
               {{ range $day, $posts := $days }}
                 {{ if gt $day 0 }}
                   {{ if $posts }}
