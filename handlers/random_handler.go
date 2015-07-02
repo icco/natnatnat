@@ -16,10 +16,10 @@ import (
 )
 
 type ImportStruct struct {
-	Id       int
-	Datetime time.Time
-	Text     string
-	Title    string
+	Id       int       `json:"id"`
+	Datetime time.Time `json:"datetime"`
+	Text     string    `json:"text"`
+	Title    string    `json:"title"`
 }
 
 func ImportTumbleHandler(w traffic.ResponseWriter, r *traffic.Request) {
