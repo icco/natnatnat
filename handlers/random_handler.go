@@ -52,7 +52,7 @@ func ImportTumbleHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 		for _, p := range data {
 			e := models.NewEntry(p.Title, p.Text, p.Datetime, true, []string{})
-			e.Save()
+			e.Save(c)
 		}
 
 		w.WriteText("Finished.")
