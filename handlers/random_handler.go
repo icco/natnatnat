@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"google.golang.org/appengine"
+	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/log"
 	"google.golang.org/appengine/user"
 
@@ -56,9 +57,11 @@ func ImportTumbleHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			id += 1
 			e.Id = id
 			k := datastore.NewIncompleteKey(c, "Entry", nil)
-			tags, err := ParseTags(e.Content)
+			tags, err := models.ParseTags(e.Content)
 			if err != nil {
-				return err
+				log.Warningf(c, "Error writing entry (%v): %+v", e, err)
+				http.Error(w, err.Error(), 500)
+				return
 			}
 			e.Tags = tags
 
