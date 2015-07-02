@@ -26,7 +26,6 @@ type ImportStruct struct {
 func ImportTumbleHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	u := user.Current(c)
-	models.Markdown("test")
 	if u == nil {
 		url, _ := user.LoginURL(c, "/post/new")
 		http.Redirect(w, r.Request, url, 302)
@@ -50,6 +49,11 @@ func ImportTumbleHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		var data []ImportStruct
 		json.Unmarshal(file, &data)
 		log.Debugf(c, "Loaded: %v", data)
+
+		for p := range data {
+			e := models.NewEntry(p.Title, p.Text, p.Datetime, true, []string{})
+			e.Save()
+		}
 
 		w.WriteText("Finished.")
 	}
