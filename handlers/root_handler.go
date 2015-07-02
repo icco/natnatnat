@@ -20,7 +20,7 @@ type RootData struct {
 	Next    int64
 }
 
-const perPage = 50
+const perPage = 30
 
 func RootHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	if r.Request.URL.Path == "/page/0" {
