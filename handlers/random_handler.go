@@ -50,7 +50,7 @@ func ImportTumbleHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		json.Unmarshal(file, &data)
 		log.Debugf(c, "Loaded: %v", data)
 
-		for p := range data {
+		for _, p := range data {
 			e := models.NewEntry(p.Title, p.Text, p.Datetime, true, []string{})
 			e.Save()
 		}
