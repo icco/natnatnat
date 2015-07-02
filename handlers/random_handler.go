@@ -50,9 +50,26 @@ func ImportTumbleHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		json.Unmarshal(file, &data)
 		log.Debugf(c, "Loaded: %v", data)
 
+		id, _ := models.MaxId(c)
 		for _, p := range data {
 			e := models.NewEntry(p.Title, p.Text, p.Datetime, true, []string{})
-			e.Save(c)
+			id += 1
+			e.Id = id
+			k := datastore.NewIncompleteKey(c, "Entry", nil)
+			tags, err := ParseTags(e.Content)
+			if err != nil {
+				return err
+			}
+			e.Tags = tags
+
+			k2, err := datastore.Put(c, k, e)
+			if err == nil {
+				log.Infof(c, "Wrote %+v", e)
+			} else {
+				log.Warningf(c, "Error writing entry (%v): %+v", e, err)
+				http.Error(w, err.Error(), 500)
+				return
+			}
 		}
 
 		w.WriteText("Finished.")
