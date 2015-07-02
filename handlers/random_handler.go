@@ -41,13 +41,14 @@ func ImportTumbleHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		file, err := ioutil.ReadFile("tumbledata.json")
 		if err != nil {
 			e := fmt.Sprintf("File error: %v", err)
+			log.Warnf(c, e)
 			http.Error(w, e, 500)
 			return
 		}
 
 		var data []ImportStruct
 		json.Unmarshal(file, &data)
-		log.Debugf("Loaded: %v", data)
+		log.Debugf(c, "Loaded: %v", data)
 
 		w.WriteText("Finished.")
 	}
