@@ -1,9 +1,9 @@
 package handlers
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"json"
 	"net/http"
 	"os"
 	"strconv"
