@@ -65,7 +65,7 @@ func ImportTumbleHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			}
 			e.Tags = tags
 
-			k2, err := datastore.Put(c, k, e)
+			_, err := datastore.Put(c, k, e)
 			if err == nil {
 				log.Infof(c, "Wrote %+v", e)
 			} else {
