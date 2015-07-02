@@ -112,8 +112,6 @@ func init() {
 	router.Post("/link/work", handlers.LinkWorkHandler)
 	router.Get("/links", handlers.LinkPageGetHandler)
 
-	router.Get("/import", handlers.ImportTumbleHandler)
-
 	router.AddBeforeFilter(HstsMiddleware)
 	router.Use(NewStaticMiddleware(traffic.PublicPath()))
 
