@@ -32,7 +32,7 @@
   </div>
 </div>
 
-<div class="post-nav">
+<div class="post-nav f2">
   <ul class="pager">
     <li class="{{if not .Prev}}disabled{{end}}"><a class="prev" href="{{.Prev}}">&#171;</a></li>
     <li class="{{if not .Next}}disabled{{end}}"><a class="next" href="{{.Next}}">&#187;</a></li>
