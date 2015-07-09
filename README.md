@@ -72,4 +72,4 @@ TODO: Update.
 
 ## Draft Post Idea
 
-TODO: fill out
+When user visits `/post/new`, create a new post, and redirect user to `/edit/123` where 123 is a new private post. As user types, save updates periodically.
