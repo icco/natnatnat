@@ -19,7 +19,7 @@ Docs: [godoc.org/github.com/icco/natnatnat](https://godoc.org/github.com/icco/na
 
 ## Design
 
-This site will be hosted at <http://writing.natwelch.com>. For now, it will use Google App Engine to auth me as an Admin and allow me to post new content. The eventual goal will be to switch to indie auth.
+This site is hosted at <http://writing.natwelch.com>. For now, it will use Google App Engine to auth me as an Admin and allow me to post new content. The eventual goal will be to switch to indie auth.
 
 ### Database
 
@@ -35,9 +35,11 @@ So this system focuses around one gigantic database table for storing all entrie
  >  - tags: optional comma seperated list of tags
  >  - meta: json hash of extra data
 
-The current thought is that tags will filter out what is shown on each domain. So when you visit [tumble.io](http://tumble.io), you'll actually just be getting a view of the RSS feed for the links tag. [pseudoweb.net](http://pseudoweb.net) will be a view of the longform tag.
+This is out of date... TODO: Copy down all tables.
 
 ### Routes
+
+TODO: Update.
 
  * `/` - Welcome page. Contains list of five most recent posts and an about page.
  * `/mention` - http://indiewebcamp.com/webmention
@@ -67,3 +69,7 @@ The current thought is that tags will filter out what is shown on each domain. S
  * Modified: git log --format=%aD -1 main.go
  * ID: filename
  * Tags: Hashtags
+
+## Draft Post Idea
+
+TODO: fill out
