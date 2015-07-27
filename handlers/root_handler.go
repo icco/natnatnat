@@ -96,7 +96,7 @@ func SitemapHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 	data := &SiteMapData{
 		Posts:  entries,
-		Newest: *entries[0].Modified,
+		Newest: (*entries)[0].Modified,
 	}
 
 	w.Render("sitemap", data)
