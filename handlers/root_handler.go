@@ -99,5 +99,6 @@ func SitemapHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		Newest: (*entries)[0].Modified,
 	}
 
+	w.Header().Set("Content-Type", "application/xml; charset=utf-8")
 	w.Render("sitemap", data)
 }
