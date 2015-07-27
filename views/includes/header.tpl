@@ -1,8 +1,16 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="en">
   <head>
     <title>Nat? Nat. Nat! {{.}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+
+    <!-- Meta SEO Shit -->
+    <meta name="description" content="The blog of Nathaniel 'Nat' Welch." />
+    <meta name="author" content="Nat Welch">
+
+    <!-- TODO: Auto add tags from post. -->
+    <meta name="keywords" content="Nat, welch, natwelch, nathaniel, nathanielwelch, dehn, code, student, developer, software, writing" />
 
     <!-- Generated from SCSS -->
     <link rel="stylesheet" href="/css/tachyons.min.css?v=20150617" />
