@@ -3,6 +3,7 @@ package handlers
 import (
 	"net/http"
 	"strconv"
+	"time"
 
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/log"
@@ -13,7 +14,7 @@ import (
 )
 
 type RootData struct {
-	Posts   interface{}
+	Posts   *[]models.Entry
 	IsAdmin bool
 	Page    int64
 	Prev    int64
@@ -78,4 +79,25 @@ func MarkdownHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	log.Infof(c, "Markdown Recieved: %s", in)
 	log.Infof(c, "Markdown Rendered: %s", md)
 	w.WriteText(string(md))
+}
+
+type SiteMapData struct {
+	Posts  *[]models.Entry
+	Newest time.Time
+}
+
+// http://www.sitemaps.org/protocol.html
+func SitemapHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	c := appengine.NewContext(r.Request)
+	entries, err := models.AllPosts(c)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	data := &SiteMapData{
+		Posts:  entries,
+		Newest: entries[0].Modified,
+	}
+
+	w.Render("sitemap", data)
 }

@@ -73,6 +73,7 @@ func init() {
 	router.Get("/about", handlers.AboutHandler)
 	router.Get("/stats", handlers.StatsHandler)
 	router.Get("/posts.json", handlers.StatsHistoryJsonHandler)
+	router.Get("/sitemap.xml", handlers.SitemapHandler)
 
 	router.Get("/archive(s?)", handlers.ArchiveHandler)
 	router.Get("/archive/queue", handlers.ArchiveQueueHandler)
