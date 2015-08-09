@@ -50,7 +50,7 @@ func ImportPseudowebHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		json.Unmarshal(file, &data)
 		log.Debugf(c, "Loaded: %v", data)
 
-		for p := range data {
+		for _, p := range data {
 			p.Text = fmt.Sprintf("Posted originally at %s.\n\n%s", p.Link, p.Text)
 			e := models.NewEntry(p.Title, p.Text, p.Datetime, true, []string{})
 			e.Save()
