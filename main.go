@@ -113,6 +113,9 @@ func init() {
 	router.Post("/link/work", handlers.LinkWorkHandler)
 	router.Get("/links", handlers.LinkPageGetHandler)
 
+	// TODO: REMOVE.
+	router.Get("/import", handlers.ImportPseudowebHandler)
+
 	router.AddBeforeFilter(HstsMiddleware)
 	router.Use(NewStaticMiddleware(traffic.PublicPath()))
 
