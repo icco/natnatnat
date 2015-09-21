@@ -103,24 +103,21 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 }
 
 type LinkPageData struct {
-	Links   map[time.Time]LinkDay
-	IsAdmin bool
-	Days    timeSlice
-}
-type LinkDay []models.Link
-type timeSlice []time.Time
-
-func (p timeSlice) Len() int {
-	return len(p)
+	LinkDays linkDays
+	IsAdmin  bool
 }
 
-func (p timeSlice) Less(i, j int) bool {
-	return p[i].Before(p[j])
+type LinkDay struct {
+	Links []models.Link
+	Day   time.Time
 }
 
-func (p timeSlice) Swap(i, j int) {
-	p[i], p[j] = p[j], p[i]
-}
+type linkDays []LinkDay
+
+// These three functions are needed for Sort.
+func (p linkDays) Len() int           { return len(p) }
+func (p linkDays) Less(i, j int) bool { return p[i].Day.Before(p[j].Day) }
+func (p linkDays) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
 
 func LinkPageGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
@@ -141,12 +138,13 @@ func LinkPageGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		linkBundle[date] = append(linkBundle[date], l)
 	}
 
-	keys := make(timeSlice, 0, len(linkBundle))
+	linkDays := []LinkDay{}
 	for k := range linkBundle {
-		keys = append(keys, k)
+		linkDays = append(linkDays, LinkDay{Day: k, Links: linkBundle[k]})
 	}
-	sort.Reverse(keys)
 
-	data := &LinkPageData{Links: linkBundle, Days: keys, IsAdmin: user.IsAdmin(c)}
+	sort.Reverse(linkDays)
+
+	data := &LinkPageData{LinkDays: linkDays, IsAdmin: user.IsAdmin(c)}
 	w.Render("links", data)
 }
