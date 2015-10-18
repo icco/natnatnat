@@ -33,5 +33,8 @@
     "csslint": "gulp csslint",
     "minify-css": "gulp minify-css",
     "images": "gulp minify-img"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11"
   }
 }
