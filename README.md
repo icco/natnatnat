@@ -11,6 +11,8 @@ Docs: [godoc.org/github.com/icco/natnatnat](https://godoc.org/github.com/icco/na
 
 ## Install
 
+NOTE: Due to some changes in gulp, this whole pipeline is broken. I need to spend some time to fix, but haven't had a chance, sorry.
+
  0. Install Go
  1. Download [the Google Go App Engine SDK](https://cloud.google.com/appengine/downloads#Google_App_Engine_SDK_for_Go).
  2. Extract the SDK into a folder, and assign the location of it to the variable in `GOAPP` in the Makefile
