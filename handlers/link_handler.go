@@ -115,9 +115,9 @@ type LinkDay struct {
 type linkDays []LinkDay
 
 // These three functions are needed for Sort.
-func (p linkDays) Len() int           { return len(p) }
-func (p linkDays) Less(i, j int) bool { return p[i].Day.Before(p[j].Day) }
-func (p linkDays) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
+func (p []LinkDay) Len() int           { return len(p) }
+func (p []LinkDay) Less(i, j int) bool { return p[i].Day.Before(p[j].Day) }
+func (p []LinkDay) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
 
 func LinkPageGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
