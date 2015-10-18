@@ -12,16 +12,19 @@ Docs: [godoc.org/github.com/icco/natnatnat](https://godoc.org/github.com/icco/na
 ## Install
 
  0. Install Go
- 1. `goapp get -v -u ...`
- 2. `curl https://sdk.cloud.google.com | bash`
- 3. `gcloud components update app`
- 4. `make`
+ 1. Download [the Google Go App Engine SDK](https://cloud.google.com/appengine/downloads#Google_App_Engine_SDK_for_Go).
+ 2. Extract the SDK into a folder, and assign the location of it to the variable in `GOAPP` in the Makefile
+ 3. Install `npm`.
+ 4. Run `npm install`.
+ 5. Run `make`
 
 ## Design
 
 This site is hosted at <http://writing.natwelch.com>. For now, it will use Google App Engine to auth me as an Admin and allow me to post new content. The eventual goal will be to switch to indie auth.
 
 ### Database
+
+This is out of date... TODO: Copy down all tables.
 
 So this system focuses around one gigantic database table for storing all entries.
 
@@ -35,8 +38,6 @@ So this system focuses around one gigantic database table for storing all entrie
  >  - tags: optional comma seperated list of tags
  >  - meta: json hash of extra data
 
-This is out of date... TODO: Copy down all tables.
-
 ### Routes
 
 TODO: Update.
@@ -47,6 +48,10 @@ TODO: Update.
  * `/post/:id` - View an individual post and its related webmentions
  * `/feed.atom` - Atom feed of content
  * `/tags/:tag` - List of all posts with this tag
+
+### Visual Design
+
+I wrote posts about some of the process in these posts while I was at RC: [#164](https://writing.natwelch.com/post/164), [#134](https://writing.natwelch.com/post/134) and [#94](https://writing.natwelch.com/post/94).
 
 ## TODO
 
