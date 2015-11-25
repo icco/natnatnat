@@ -2,8 +2,8 @@ window.onload = function() {
   var time = require('./js/time.js');
   time();
 
-  var embed = require('./js/embedly.js');
-  embed();
+  var embeds = require('./js/embeds.js');
+  embeds();
 
   var links = require('./js/link_adder.js');
   links();
