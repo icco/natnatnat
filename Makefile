@@ -2,8 +2,6 @@ all: local
 
 PID = tmp/server.pid
 
-GOPATH=/tmp/natnat
-
 GOAPP=../go_appengine/goapp
 
 local: clean
@@ -24,7 +22,6 @@ restart:
 clean:
 	rm -f natnatnat
 	rm -f $(PID)
-	rm -rf $(GOPATH)
 
 deploy:
 	git push
@@ -35,4 +32,4 @@ update:
 	$(GOAPP) get -u -v github.com/icco/natnatnat/...
 	$(GOAPP) get -u -v ...
 
-.PHONY: serve restart kill clean deploy deploy_alt
+.PHONY: serve restart kill clean deploy
