@@ -4,9 +4,12 @@ PID = tmp/server.pid
 
 GOAPP=../go_appengine/goapp
 
-local: clean
+local: clean assets
 	$(GOAPP) build # We do this for build checking
 	$(GOAPP) serve
+
+assets:
+	webpack -p
 
 clean:
 	rm -f natnatnat
@@ -19,4 +22,4 @@ deploy:
 update:
 	$(GOAPP) get -u -v ...
 
-.PHONY: serve restart kill clean deploy
+.PHONY: serve restart kill clean deploy assets
