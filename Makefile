@@ -17,7 +17,7 @@ clean:
 
 deploy:
 	git push
-	$(GOAPP) deploy -application=natwelch-writing
+	$(GOAPP) deploy -application=natwelch-writing -version=$(shell date +%Y%m%d-%H%M)
 
 update:
 	$(GOAPP) get -u -v ...
