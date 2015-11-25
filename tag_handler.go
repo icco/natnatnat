@@ -1,4 +1,4 @@
-package handlers
+package main
 
 import (
 	"errors"
@@ -10,13 +10,12 @@ import (
 	"google.golang.org/appengine/log"
 	"google.golang.org/appengine/user"
 
-	"github.com/icco/natnatnat/models"
 	"github.com/icco/xsrftoken"
 	"github.com/pilu/traffic"
 )
 
 type TagData struct {
-	Posts   *map[int64]models.Entry
+	Posts   *map[int64]Entry
 	Tag     string
 	Aliases []string
 }
@@ -33,18 +32,18 @@ func TagHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Redirect(w, r.Request, fmt.Sprintf("/tags/%s", strings.ToLower(tag)), 301)
 	}
 
-	isAlias, alias := models.GetAlias(c, tag)
+	isAlias, alias := GetAlias(c, tag)
 	if isAlias {
 		http.Redirect(w, r.Request, fmt.Sprintf("/tags/%s", alias), 301)
 	}
 
-	entries, err := models.PostsWithTag(c, tag)
+	entries, err := PostsWithTag(c, tag)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
 	}
 
-	aliases := models.GetTagAliases(c, tag)
+	aliases := GetTagAliases(c, tag)
 	data := &TagData{Posts: entries, Tag: tag, Aliases: *aliases}
 	w.Render("tag", data)
 }
@@ -55,7 +54,7 @@ type TagsData struct {
 
 func TagsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	w.Render("tags", &TagsData{Tags: models.AllTags(c)})
+	w.Render("tags", &TagsData{Tags: AllTags(c)})
 }
 
 type AliasData struct {
@@ -79,9 +78,9 @@ func TagAliasGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, errors.New("Not a valid user.").Error(), 403)
 		return
 	} else {
-		token := xsrftoken.Generate(models.GetFlagLogError(c, "SESSION_KEY"), u.String(), "/aliases")
+		token := xsrftoken.Generate(GetFlagLogError(c, "SESSION_KEY"), u.String(), "/aliases")
 		w.Render("aliases", &AliasData{
-			Aliases: models.AliasMap(c),
+			Aliases: AliasMap(c),
 			Xsrf:    token,
 			IsAdmin: user.IsAdmin(c),
 		})
@@ -112,9 +111,9 @@ func TagAliasPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		from := r.Request.FormValue("name")
 		to := r.Request.FormValue("tag")
 
-		if xsrftoken.Valid(xsrf, models.GetFlagLogError(c, "SESSION_KEY"), u.String(), r.Request.URL.Path) {
+		if xsrftoken.Valid(xsrf, GetFlagLogError(c, "SESSION_KEY"), u.String(), r.Request.URL.Path) {
 			log.Infof(c, "Valid Token!")
-			a := models.NewAlias(from, to)
+			a := NewAlias(from, to)
 			err = a.Save(c)
 			if err != nil {
 				http.Error(w, err.Error(), 500)

@@ -1,4 +1,4 @@
-package models
+package main
 
 import (
 	"golang.org/x/net/context"

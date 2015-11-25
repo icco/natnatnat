@@ -1,4 +1,4 @@
-package handlers
+package main
 
 import (
 	"net/http"
@@ -9,12 +9,11 @@ import (
 	"google.golang.org/appengine/log"
 	"google.golang.org/appengine/user"
 
-	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 )
 
 type RootData struct {
-	Posts   *[]models.Entry
+	Posts   *[]Entry
 	IsAdmin bool
 	Page    int64
 	Prev    int64
@@ -35,7 +34,7 @@ func RootHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		pg = 0
 	}
 
-	entries, err := models.Pagination(c, perPage, int(pg*perPage))
+	entries, err := Pagination(c, perPage, int(pg*perPage))
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
@@ -74,7 +73,7 @@ func MarkdownHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 
 	in := r.Request.FormValue("text")
-	md := models.Markdown(in)
+	md := Markdown(in)
 
 	log.Infof(c, "Markdown Recieved: %s", in)
 	log.Infof(c, "Markdown Rendered: %s", md)
@@ -82,14 +81,14 @@ func MarkdownHandler(w traffic.ResponseWriter, r *traffic.Request) {
 }
 
 type SiteMapData struct {
-	Posts  *[]models.Entry
+	Posts  *[]Entry
 	Newest time.Time
 }
 
 // http://www.sitemaps.org/protocol.html
 func SitemapHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	entries, err := models.AllPosts(c)
+	entries, err := AllPosts(c)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return

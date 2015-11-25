@@ -1,4 +1,4 @@
-package handlers
+package main
 
 import (
 	"net/http"
@@ -8,7 +8,6 @@ import (
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/user"
 
-	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 )
 
@@ -25,7 +24,7 @@ type StatsData struct {
 
 func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	entries, err := models.AllPosts(c)
+	entries, err := AllPosts(c)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
@@ -40,7 +39,7 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		words += len(strings.Fields(p.Title))
 	}
 
-	links, err := models.AllLinks(c)
+	links, err := AllLinks(c)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
@@ -61,7 +60,7 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 func StatsHistoryJsonHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	entries, err := models.AllPosts(c)
+	entries, err := AllPosts(c)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return

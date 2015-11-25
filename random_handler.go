@@ -1,4 +1,4 @@
-package handlers
+package main
 
 import (
 	"encoding/json"
@@ -12,7 +12,6 @@ import (
 	"google.golang.org/appengine/log"
 	"google.golang.org/appengine/user"
 
-	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 )
 
@@ -52,7 +51,7 @@ func ImportPseudowebHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 		for _, p := range data {
 			p.Text = fmt.Sprintf("Posted originally at %s.\n\n%s", p.Link, p.Text)
-			e := models.NewEntry(p.Title, p.Text, p.Datetime, true, []string{})
+			e := NewEntry(p.Title, p.Text, p.Datetime, true, []string{})
 			e.Save(c)
 		}
 

@@ -1,4 +1,4 @@
-package handlers
+package main
 
 /**
  * From http://indiewebcamp.com/webmention:
@@ -20,7 +20,6 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 
 	"google.golang.org/appengine"
@@ -28,7 +27,7 @@ import (
 
 func WebMentionGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	err := models.WriteVersionKey(c)
+	err := WriteVersionKey(c)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
@@ -37,7 +36,7 @@ func WebMentionGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 func WebMentionPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	err := models.WriteVersionKey(c)
+	err := WriteVersionKey(c)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
