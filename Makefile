@@ -14,7 +14,6 @@ kill:
 
 restart:
 	make kill
-	npm start
 	make update
 	$(GOAPP) build # We do this for build checking
 	$(GOAPP) serve & echo $$! > $(PID)
