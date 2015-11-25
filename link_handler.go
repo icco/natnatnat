@@ -29,7 +29,7 @@ $ curl https://user:passwd@api.pinboard.in/v1/posts/recent
         ...
     </posts>
 */
-type Link struct {
+type LinkXML struct {
 	XMLName xml.Name  `xml:"post"`
 	Url     string    `xml:"href,attr"`
 	Desc    string    `xml:"description,attr"`
@@ -41,9 +41,9 @@ type Link struct {
 	Meta    string    `xml:"meta,attr"`
 }
 
-type Posts struct {
-	XMLName xml.Name `xml:"posts"`
-	Pins    []Link   `xml:"post"`
+type PostsType struct {
+	XMLName xml.Name  `xml:"posts"`
+	Pins    []LinkXML `xml:"post"`
 }
 
 func LinkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -84,7 +84,7 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 
-	posts := new(Posts)
+	posts := new(PostsType)
 	if err = xml.Unmarshal(body, posts); err != nil {
 		http.Error(w, fmt.Sprintf("Error parsing XML: %+v", pb_url, err), http.StatusInternalServerError)
 		return
@@ -107,16 +107,16 @@ type LinkPageData struct {
 }
 
 type LinkDay struct {
-	Links []Link
+	Links []LinkXML
 	Day   time.Time
 }
 
-type linkDays []LinkDay
+type linkDays []*LinkDay
 
 // These three functions are needed for Sort.
-func (p []LinkDay) Len() int           { return len(p) }
-func (p []LinkDay) Less(i, j int) bool { return p[i].Day.Before(p[j].Day) }
-func (p []LinkDay) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
+func (p linkDays) Len() int           { return len(p) }
+func (p linkDays) Less(i, j int) bool { return p[i].Day.Before(p[j].Day) }
+func (p linkDays) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
 
 func LinkPageGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
@@ -126,12 +126,12 @@ func LinkPageGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 
-	linkBundle := make(map[time.Time]LinkDay)
+	linkBundle := make(map[time.Time]linkDays)
 
 	for _, l := range *links {
 		date := l.Posted.Round(time.Hour * 24)
 		if _, ok := linkBundle[date]; !ok {
-			linkBundle[date] = make(LinkDay, 0)
+			linkBundle[date] = make([]*LinkDay, 0)
 		}
 
 		linkBundle[date] = append(linkBundle[date], l)
