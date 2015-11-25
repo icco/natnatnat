@@ -17,7 +17,6 @@
     "email": "nat@natwelch.com"
   },
   "dependencies": {
-    "embedly": "^1.0.4",
     "highlight.js": "^8.9.1",
     "jquery": "^2.1.4",
     "moment": "^2.10.6"

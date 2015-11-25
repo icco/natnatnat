@@ -4,7 +4,8 @@
 // https://wordpress.stackexchange.com/questions/15445/is-there-a-built-in-function-to-see-if-a-urlis-oembed-compatible
 var Embedly = function() {
   var $ = require('jquery');
-  var embedly = require('embedly');
+  var embedly = require('./jquery.embedly.js');
+  embedly($); // Should extend jquery...
 
   // Youtube and Vimeo only
   var videoUrlRe = /https?:\/\/(www\.)?(youtu|vimeo|soundcloud).+/i;
@@ -18,34 +19,28 @@ var Embedly = function() {
     method: $.noop,
     urlRe: videoUrlRe
   };
-  new embedly(defaults, function(err, api) {
-    if (!!err) {
-      console.error('Error creating Embedly api');
-      console.error(err.stack, api);
-      return;
-    }
+  $.embedly.defaults = defaults;
 
-    $('.markdown a').each(function(i, el) {
-      var url = $(el).attr('href');
-      $.embedly.oembed([url]).done(function(results) {
-        // console.log(results[0]);
-        var addon = $('<div/>', {class: "embed pure-u-1", data: url});
-        if (results[0].error) {
-          return;
-        }
+  $('.markdown a').each(function(i, el) {
+    var url = $(el).attr('href');
+    $.embedly.oembed([url]).done(function(results) {
+      // console.log(results[0]);
+      var addon = $('<div/>', {class: "embed pure-u-1", data: url});
+      if (results[0].error) {
+        return;
+      }
 
-        if (results[0].html != undefined) {
-          addon.append(results[0].html);
-          addon.removeClass('embed');
-        } else {
-          title = $('<h1/>').append(results[0].title);
-          desc = $('<p/>').append(results[0].description);
-          addon.append(title);
-          addon.append(desc);
-        }
-        var prent = $(el).parents('.post').children('.addons');
-        prent.append(addon);
-      });
+      if (results[0].html != undefined) {
+        addon.append(results[0].html);
+        addon.removeClass('embed');
+      } else {
+        title = $('<h1/>').append(results[0].title);
+        desc = $('<p/>').append(results[0].description);
+        addon.append(title);
+        addon.append(desc);
+      }
+      var prent = $(el).parents('.post').children('.addons');
+      prent.append(addon);
     });
   });
 };

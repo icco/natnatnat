@@ -1,7 +1,4 @@
-/*globals jQuery:true*/
-
-(function($) {
-
+module.exports = function($) {
   /*
    *  Util Functions
    */
@@ -520,5 +517,4 @@
   $.expr[':'].display = function(elem) {
     return ! none($(elem).data('display'));
   };
-
-}(jQuery, window));
+};
