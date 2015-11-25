@@ -14,9 +14,6 @@
 
     <script src="/js/bundle.js?v=20151125" type="text/javascript"></script>
 
-    <!-- For Code highlighting -->
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css">
-
     <!-- Feeds! -->
     <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.rss" />
     <link rel="alternate" type="application/atom+xml" title="atom" href="/feed.atom" />

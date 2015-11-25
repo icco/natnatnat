@@ -14,6 +14,8 @@ window.onload = function() {
 
 // https://highlightjs.org/usage/
 var hljs = require('highlight.js');
+// highlight css from https://github.com/isagalaev/highlight.js/blob/658226e69491f027b90ad55a73c9c8c4d6c4765b/src/styles/github.css
+require('./scss/github.css');
 hljs.initHighlightingOnLoad();
 
 require('./scss/tachyons.css');
