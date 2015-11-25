@@ -4,6 +4,7 @@
 // https://wordpress.stackexchange.com/questions/15445/is-there-a-built-in-function-to-see-if-a-urlis-oembed-compatible
 var Embedly = function() {
   var $ = require('jquery');
+  require('./jquery.embedly-3.1.1.min.js');
 
   // Youtube and Vimeo only
   var videoUrlRe = /https?:\/\/(www\.)?(youtu|vimeo|soundcloud).+/i;
