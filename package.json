@@ -16,7 +16,12 @@
     "url": "https://github.com/icco/natnatnat/issues",
     "email": "nat@natwelch.com"
   },
-  "dependencies": {},
+  "dependencies": {
+    "d3": "^3.5.9",
+    "highlight.js": "^8.9.1",
+    "jquery": "^2.1.4",
+    "moment": "^2.10.6"
+  },
   "devDependencies": {
     "css-loader": "^0.23.0",
     "file-loader": "^0.8.5",
