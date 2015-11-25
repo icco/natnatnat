@@ -7,7 +7,9 @@ module.exports = {
   devtool: "source-map",
   module: {
     loaders: [
-      { test: /\.scss$/, loaders: ["style", "css?sourceMap", "sass?sourceMap"] }
+      { test: /\.scss$/, loaders: ["style", "css?sourceMap", "sass?sourceMap"] },
+      { test: /\.css$/, loader: 'style-loader!css-loader' },
+      { test: /\.(png|jpg)$/, loader: 'url-loader?limit=8192' }
     ]
   }
 };
