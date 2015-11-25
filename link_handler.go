@@ -107,7 +107,7 @@ type LinkPageData struct {
 }
 
 type LinkDay struct {
-	Links []LinkXML
+	Links []Link
 	Day   time.Time
 }
 
@@ -117,6 +117,14 @@ type linkDays []*LinkDay
 func (p linkDays) Len() int           { return len(p) }
 func (p linkDays) Less(i, j int) bool { return p[i].Day.Before(p[j].Day) }
 func (p linkDays) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
+func (p linkDays) HasDate(day time.Time) int {
+	for i, d := range p {
+		if d.Day == day {
+			return i
+		}
+	}
+	return -1
+}
 
 func LinkPageGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
@@ -126,24 +134,24 @@ func LinkPageGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 
-	linkBundle := make(map[time.Time]linkDays)
+	days := make([]*LinkDay, 0)
 
 	for _, l := range *links {
 		date := l.Posted.Round(time.Hour * 24)
-		if _, ok := linkBundle[date]; !ok {
-			linkBundle[date] = make([]*LinkDay, 0)
+		if linkDays(days).HasDate(date) < 0 {
+			days = append(days, &LinkDay{
+				Day:   date,
+				Links: []Link{l},
+			})
+		} else {
+			i := linkDays(days).HasDate(date)
+			days[i].Links = append(days[i].Links, l)
 		}
-
-		linkBundle[date] = append(linkBundle[date], l)
 	}
 
-	linkDays := []LinkDay{}
-	for k := range linkBundle {
-		linkDays = append(linkDays, LinkDay{Day: k, Links: linkBundle[k]})
-	}
+	lds := linkDays(days)
+	sort.Reverse(lds)
 
-	sort.Reverse(linkDays)
-
-	data := &LinkPageData{LinkDays: linkDays, IsAdmin: user.IsAdmin(c)}
+	data := &LinkPageData{LinkDays: lds, IsAdmin: user.IsAdmin(c)}
 	w.Render("links", data)
 }
