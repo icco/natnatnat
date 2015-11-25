@@ -1,4 +1,4 @@
-package handlers
+package main
 
 import (
 	"encoding/json"
@@ -14,14 +14,13 @@ import (
 	"google.golang.org/appengine/taskqueue"
 	"google.golang.org/appengine/user"
 
-	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 )
 
 type ArchiveData struct {
 	Years   *map[string]Year
 	Months  *[]string
-	Posts   *[]models.Entry
+	Posts   *[]Entry
 	IsAdmin bool
 }
 
@@ -59,7 +58,7 @@ func ArchiveQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 
-	entries, err := models.AllPosts(c)
+	entries, err := AllPosts(c)
 	if err != nil {
 		log.Errorf(c, err.Error())
 		http.Error(w, err.Error(), 500)
@@ -95,7 +94,7 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 			for day := range years[ystr][mstr] {
 				if day > 0 {
-					e, err := models.PostsForDay(c, int64(year), int64(month), int64(day))
+					e, err := PostsForDay(c, int64(year), int64(month), int64(day))
 					if err != nil {
 						log.Errorf(c, err.Error())
 						http.Error(w, err.Error(), 500)
@@ -129,7 +128,7 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 
-	entries, err := models.AllPosts(c)
+	entries, err := AllPosts(c)
 	if err != nil {
 		log.Errorf(c, err.Error())
 		http.Error(w, err.Error(), 500)

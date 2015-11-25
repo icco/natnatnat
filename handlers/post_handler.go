@@ -1,4 +1,4 @@
-package handlers
+package main
 
 import (
 	"errors"
@@ -9,12 +9,11 @@ import (
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/user"
 
-	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 )
 
 type ResponseData struct {
-	Entry   *models.Entry
+	Entry   *Entry
 	IsAdmin bool
 	Next    string
 	Prev    string
@@ -27,7 +26,7 @@ func PostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	entry, err := models.GetEntry(c, id)
+	entry, err := GetEntry(c, id)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
@@ -48,7 +47,7 @@ func PostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 }
 
 type DayData struct {
-	Posts   *[]models.Entry
+	Posts   *[]Entry
 	IsAdmin bool
 	Date    time.Time
 }
@@ -71,7 +70,7 @@ func DayHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 
-	entries, err := models.PostsForDay(c, year, month, day)
+	entries, err := PostsForDay(c, year, month, day)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return

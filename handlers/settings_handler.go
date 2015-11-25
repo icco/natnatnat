@@ -1,4 +1,4 @@
-package handlers
+package main
 
 import (
 	"bytes"
@@ -8,7 +8,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/icco/natnatnat/models"
 	"github.com/icco/xsrftoken"
 	"github.com/pilu/traffic"
 
@@ -48,25 +47,25 @@ func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, errors.New("Not a valid user.").Error(), 403)
 		return
 	} else {
-		err := models.WriteVersionKey(c)
+		err := WriteVersionKey(c)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
 		}
 
 		url, _ := user.LogoutURL(c, "/")
-		token := xsrftoken.Generate(models.GetFlagLogError(c, "SESSION_KEY"), u.String(), "/settings")
+		token := xsrftoken.Generate(GetFlagLogError(c, "SESSION_KEY"), u.String(), "/settings")
 
-		twt_sec := models.GetFlagLogError(c, "TWITTER_SECRET")
-		twt_key := models.GetFlagLogError(c, "TWITTER_KEY")
-		twt_atok := models.GetFlagLogError(c, "TWITTER_ACCESS_TOKEN")
-		twt_asec := models.GetFlagLogError(c, "TWITTER_ACCESS_SECRET")
+		twt_sec := GetFlagLogError(c, "TWITTER_SECRET")
+		twt_key := GetFlagLogError(c, "TWITTER_KEY")
+		twt_atok := GetFlagLogError(c, "TWITTER_ACCESS_TOKEN")
+		twt_asec := GetFlagLogError(c, "TWITTER_ACCESS_SECRET")
 
-		ses := models.GetFlagLogError(c, "SESSION_KEY")
-		ver := models.GetFlagLogError(c, "VERSION")
+		ses := GetFlagLogError(c, "SESSION_KEY")
+		ver := GetFlagLogError(c, "VERSION")
 
-		pb_usr := models.GetFlagLogError(c, "PINBOARD_USER")
-		pb_tok := models.GetFlagLogError(c, "PINBOARD_TOKEN")
+		pb_usr := GetFlagLogError(c, "PINBOARD_USER")
+		pb_tok := GetFlagLogError(c, "PINBOARD_TOKEN")
 
 		if err != nil {
 			http.Error(w, err.Error(), 500)
@@ -110,7 +109,7 @@ func SettingsPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	} else {
 		xsrf := r.Request.FormValue("xsrf")
 
-		if xsrftoken.Valid(xsrf, models.GetFlagLogError(c, "SESSION_KEY"), u.String(), "/settings") {
+		if xsrftoken.Valid(xsrf, GetFlagLogError(c, "SESSION_KEY"), u.String(), "/settings") {
 			log.Infof(c, "Valid Token!")
 		} else {
 			log.Infof(c, "Invalid Token...")
@@ -119,49 +118,49 @@ func SettingsPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		}
 
 		session_key := r.Request.FormValue("session_key")
-		err = models.SetFlag(c, "SESSION_KEY", session_key)
+		err = SetFlag(c, "SESSION_KEY", session_key)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
 		}
 
 		twitter_key := r.Request.FormValue("twitter_key")
-		err = models.SetFlag(c, "TWITTER_KEY", twitter_key)
+		err = SetFlag(c, "TWITTER_KEY", twitter_key)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
 		}
 
 		twitter_sec := r.Request.FormValue("twitter_sec")
-		err = models.SetFlag(c, "TWITTER_SECRET", twitter_sec)
+		err = SetFlag(c, "TWITTER_SECRET", twitter_sec)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
 		}
 
 		twitter_atok := r.Request.FormValue("twitter_atok")
-		err = models.SetFlag(c, "TWITTER_ACCESS_TOKEN", twitter_atok)
+		err = SetFlag(c, "TWITTER_ACCESS_TOKEN", twitter_atok)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
 		}
 
 		twitter_asec := r.Request.FormValue("twitter_asec")
-		err = models.SetFlag(c, "TWITTER_ACCESS_SECRET", twitter_asec)
+		err = SetFlag(c, "TWITTER_ACCESS_SECRET", twitter_asec)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
 		}
 
 		pb_usr := r.Request.FormValue("pb_usr")
-		err = models.SetFlag(c, "PINBOARD_USER", pb_usr)
+		err = SetFlag(c, "PINBOARD_USER", pb_usr)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
 		}
 
 		pb_tok := r.Request.FormValue("pb_tok")
-		err = models.SetFlag(c, "PINBOARD_TOKEN", pb_tok)
+		err = SetFlag(c, "PINBOARD_TOKEN", pb_tok)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return

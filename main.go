@@ -11,8 +11,6 @@ import (
 	"golang.org/x/net/context"
 
 	"github.com/gorilla/sessions"
-	"github.com/icco/natnatnat/handlers"
-	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 )
 
@@ -42,11 +40,11 @@ func jsonTime(t time.Time) string {
 }
 
 func markdown(args ...interface{}) template.HTML {
-	return models.Markdown(args...)
+	return Markdown(args...)
 }
 
 func monthToInt(m string) int {
-	for _, mnth := range handlers.Months {
+	for _, mnth := range Months {
 		if mnth.String() == m {
 			return int(mnth)
 		}
@@ -67,54 +65,54 @@ func init() {
 	traffic.TemplateFunc("m2i", monthToInt)
 
 	router := traffic.New()
-	router.Get("/", handlers.RootHandler)
-	router.Get("/page/:page/?", handlers.RootHandler)
+	router.Get("/", RootHandler)
+	router.Get("/page/:page/?", RootHandler)
 
-	router.Get("/about", handlers.AboutHandler)
-	router.Get("/stats", handlers.StatsHandler)
-	router.Get("/posts.json", handlers.StatsHistoryJsonHandler)
-	router.Get("/sitemap.xml", handlers.SitemapHandler)
+	router.Get("/about", AboutHandler)
+	router.Get("/stats", StatsHandler)
+	router.Get("/posts.json", StatsHistoryJsonHandler)
+	router.Get("/sitemap.xml", SitemapHandler)
 
-	router.Get("/archive(s?)", handlers.ArchiveHandler)
-	router.Get("/archive/queue", handlers.ArchiveQueueHandler)
-	router.Post("/archive/work", handlers.ArchiveTaskHandler)
+	router.Get("/archive(s?)", ArchiveHandler)
+	router.Get("/archive/queue", ArchiveQueueHandler)
+	router.Post("/archive/work", ArchiveTaskHandler)
 
-	router.Post("/md", handlers.MarkdownHandler)
+	router.Post("/md", MarkdownHandler)
 
-	router.Get("/post/new/?", handlers.NewPostGetHandler)
-	router.Post("/post/new/?", handlers.NewPostPostHandler)
+	router.Get("/post/new/?", NewPostGetHandler)
+	router.Post("/post/new/?", NewPostPostHandler)
 
-	router.Get("/post/:id/?", handlers.PostHandler)
+	router.Get("/post/:id/?", PostHandler)
 
-	router.Get("/edit/:id/?", handlers.EditPostGetHandler)
-	router.Post("/edit/:id/?", handlers.EditPostPostHandler)
+	router.Get("/edit/:id/?", EditPostGetHandler)
+	router.Post("/edit/:id/?", EditPostPostHandler)
 
-	router.Get("/tags/:id/?", handlers.TagHandler)
-	router.Get("/tags/?", handlers.TagsHandler)
+	router.Get("/tags/:id/?", TagHandler)
+	router.Get("/tags/?", TagsHandler)
 
-	router.Get("/day/:year/:month/:day/?", handlers.DayHandler)
+	router.Get("/day/:year/:month/:day/?", DayHandler)
 
-	router.Get("/aliases", handlers.TagAliasGetHandler)
-	router.Post("/aliases", handlers.TagAliasPostHandler)
+	router.Get("/aliases", TagAliasGetHandler)
+	router.Post("/aliases", TagAliasPostHandler)
 
-	router.Get("/settings", handlers.SettingsGetHandler)
-	router.Post("/settings", handlers.SettingsPostHandler)
+	router.Get("/settings", SettingsGetHandler)
+	router.Post("/settings", SettingsPostHandler)
 
-	router.Get("/mention", handlers.WebMentionGetHandler)
-	router.Post("/mention", handlers.WebMentionPostHandler)
+	router.Get("/mention", WebMentionGetHandler)
+	router.Post("/mention", WebMentionPostHandler)
 
-	router.Get("/feed.atom", handlers.FeedAtomHandler)
-	router.Get("/feed.rss", handlers.FeedRssHandler)
+	router.Get("/feed.atom", FeedAtomHandler)
+	router.Get("/feed.rss", FeedRssHandler)
 
-	router.Get("/summary.atom", handlers.SummaryAtomHandler)
-	router.Get("/summary.rss", handlers.SummaryRssHandler)
+	router.Get("/summary.atom", SummaryAtomHandler)
+	router.Get("/summary.rss", SummaryRssHandler)
 
-	router.Get("/link/queue", handlers.LinkQueueHandler)
-	router.Post("/link/work", handlers.LinkWorkHandler)
-	router.Get("/links", handlers.LinkPageGetHandler)
+	router.Get("/link/queue", LinkQueueHandler)
+	router.Post("/link/work", LinkWorkHandler)
+	router.Get("/links", LinkPageGetHandler)
 
 	// TODO: REMOVE.
-	router.Get("/import", handlers.ImportPseudowebHandler)
+	router.Get("/import", ImportPseudowebHandler)
 
 	router.AddBeforeFilter(HstsMiddleware)
 	router.Use(NewStaticMiddleware(traffic.PublicPath()))

@@ -1,4 +1,4 @@
-package handlers
+package main
 
 import (
 	"fmt"
@@ -10,13 +10,12 @@ import (
 	"golang.org/x/net/context"
 
 	"github.com/gorilla/feeds"
-	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 )
 
 var baseUrl = "https://writing.natwelch.com"
 
-func buildFeed(c context.Context, entries *[]models.Entry) *feeds.Feed {
+func buildFeed(c context.Context, entries *[]Entry) *feeds.Feed {
 	now := time.Now()
 	me := &feeds.Author{"Nat Welch", "nat@natwelch.com"}
 	feed := &feeds.Feed{
@@ -51,7 +50,7 @@ func buildFeed(c context.Context, entries *[]models.Entry) *feeds.Feed {
 
 func FeedAtomHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	entries, err := models.RecentPosts(c)
+	entries, err := RecentPosts(c)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
@@ -69,7 +68,7 @@ func FeedAtomHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 func FeedRssHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	entries, err := models.RecentPosts(c)
+	entries, err := RecentPosts(c)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return

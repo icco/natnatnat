@@ -1,4 +1,4 @@
-package handlers
+package main
 
 import (
 	"errors"
@@ -10,13 +10,12 @@ import (
 	"google.golang.org/appengine/log"
 	"google.golang.org/appengine/user"
 
-	"github.com/icco/natnatnat/models"
 	"github.com/icco/xsrftoken"
 	"github.com/pilu/traffic"
 )
 
 type EditPostPageData struct {
-	Entry     *models.Entry
+	Entry     *Entry
 	IsAdmin   bool
 	LogoutUrl string
 	User      string
@@ -31,7 +30,7 @@ func EditPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	entry, err := models.GetEntry(c, id)
+	entry, err := GetEntry(c, id)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
@@ -51,7 +50,7 @@ func EditPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	} else {
 		url, _ := user.LogoutURL(c, "/")
-		token := xsrftoken.Generate(models.GetFlagLogError(c, "SESSION_KEY"), u.String(), entry.EditUrl())
+		token := xsrftoken.Generate(GetFlagLogError(c, "SESSION_KEY"), u.String(), entry.EditUrl())
 		responseData := &EditPostPageData{
 			LogoutUrl: url,
 			User:      u.String(),
@@ -70,7 +69,7 @@ func EditPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	entry, err := models.GetEntry(c, id)
+	entry, err := GetEntry(c, id)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
@@ -96,7 +95,7 @@ func EditPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		title := r.Request.FormValue("title")
 		content := r.Request.FormValue("text")
 		xsrf := r.Request.FormValue("xsrf")
-		tags, err := models.ParseTags(content)
+		tags, err := ParseTags(content)
 		public := r.Request.FormValue("private") != "on"
 		if err != nil {
 			log.Warningf(c, "Couldn't parse tags: %v", err)
@@ -105,7 +104,7 @@ func EditPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 		log.Infof(c, "Got POST params: title: %+v, text: %+v, xsrf: %v, private: %v", title, content, xsrf, !public)
 
-		if xsrftoken.Valid(xsrf, models.GetFlagLogError(c, "SESSION_KEY"), u.String(), entry.EditUrl()) {
+		if xsrftoken.Valid(xsrf, GetFlagLogError(c, "SESSION_KEY"), u.String(), entry.EditUrl()) {
 			log.Infof(c, "Valid Token!")
 		} else {
 			log.Infof(c, "Invalid Token...")

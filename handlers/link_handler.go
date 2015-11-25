@@ -1,4 +1,4 @@
-package handlers
+package main
 
 import (
 	"encoding/xml"
@@ -10,7 +10,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/icco/natnatnat/models"
 	"github.com/pilu/traffic"
 
 	"google.golang.org/appengine"
@@ -61,8 +60,8 @@ func LinkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	user := models.GetFlagLogError(c, "PINBOARD_USER")
-	token := models.GetFlagLogError(c, "PINBOARD_TOKEN")
+	user := GetFlagLogError(c, "PINBOARD_USER")
+	token := GetFlagLogError(c, "PINBOARD_TOKEN")
 	params := "count=100"
 	pb_url := fmt.Sprintf("https://api.pinboard.in/v1/%s?auth_token=%s:%s&%s", "posts/recent", user, token, params)
 
@@ -93,7 +92,7 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	for _, pin := range posts.Pins {
 		tags := strings.Fields(pin.Tags)
-		e := models.NewLink(pin.Desc, pin.Url, pin.Notes, tags, pin.Time)
+		e := NewLink(pin.Desc, pin.Url, pin.Notes, tags, pin.Time)
 		err = e.Save(c)
 		if err != nil {
 			http.Error(w, fmt.Sprintf("Error saving link: %+v", pb_url, err), http.StatusInternalServerError)
@@ -108,7 +107,7 @@ type LinkPageData struct {
 }
 
 type LinkDay struct {
-	Links []models.Link
+	Links []Link
 	Day   time.Time
 }
 
@@ -121,7 +120,7 @@ func (p []LinkDay) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
 
 func LinkPageGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	links, err := models.AllLinks(c)
+	links, err := AllLinks(c)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
