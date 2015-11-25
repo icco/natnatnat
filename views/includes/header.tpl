@@ -12,9 +12,7 @@
     <!-- TODO: Auto add tags from post. -->
     <meta name="keywords" content="Nat, welch, natwelch, nathaniel, nathanielwelch, dehn, code, student, developer, software, writing" />
 
-    <!-- Generated from SCSS -->
-    <link rel="stylesheet" href="/css/tachyons.min.css?v=20150617" />
-    <link rel="stylesheet" href="/css/style.min.css?v=20150617" />
+    <script src="/js/bundle.js?v=20151125" type="text/javascript"></script>
 
     <!-- For Code highlighting -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.6/styles/default.min.css">
