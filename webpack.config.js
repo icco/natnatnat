@@ -4,10 +4,9 @@ module.exports = {
     path: "./public/",
     filename: "js/bundle.js"
   },
-  devtool: "source-map",
   module: {
     loaders: [
-      { test: /\.scss$/, loaders: ["style", "css?sourceMap", "sass?sourceMap"] },
+      { test: /\.scss$/, loaders: ["style", "css", "sass"] },
       { test: /\.css$/, loader: "style-loader!css-loader" },
       {
         test: /\.(jpe?g|png|gif|svg)$/i,
