@@ -1,13 +1,13 @@
 module.exports = {
-  entry: "src/entry.js",
+  entry: "./src/entry.js",
   output: {
     path: __dirname,
     filename: "public/js/bundle.js"
   },
+  devtool: "source-map",
   module: {
     loaders: [
-      { test: /\.css$/, loader: "style!css" },
-      { test: /\.scss$/, loaders: ["style", "css", "sass"] }
+      { test: /\.scss$/, loaders: ["style", "css?sourceMap", "sass?sourceMap"] }
     ]
   }
 };
