@@ -25,8 +25,10 @@
   <body class="sans-serif pam">
     <div class="mw7 center mtm mbxl">
       <header class="lh-title">
-      <div class="mw3 center">
-        <a href="/"><img src="/img/natwelchlogo.png" class="db" alt="Nat? Nat. Nat!"></a>
+      <div class="center">
+        <a href="/">
+          <div id="logo" class="w3 h3 cv" alt="Nat? Nat. Nat!"></div>
+        </a>
       </div>
       <div class="center mw5 tc mvm">
         <ul class="f4 list pan man">

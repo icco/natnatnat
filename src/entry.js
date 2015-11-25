@@ -20,4 +20,6 @@ hljs.initHighlightingOnLoad();
 
 require('./scss/tachyons.css');
 require('./scss/style.scss');
-require('./img/natwelchlogo.png');
+
+// scss loader has issues with images, just do it seperatly
+require('./scss/images.css');
