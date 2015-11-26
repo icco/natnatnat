@@ -13,7 +13,6 @@ import (
 	"golang.org/x/net/context"
 
 	"github.com/kennygrant/sanitize"
-	"github.com/russross/blackfriday"
 )
 
 type Entry struct {
@@ -26,9 +25,6 @@ type Entry struct {
 	Tags     []string  `json:"tags"`
 	Public   bool      `json:"-"`
 }
-
-var HashtagRegex *regexp.Regexp = regexp.MustCompile(`(\s)#(\w+)`)
-var TwitterHandleRegex *regexp.Regexp = regexp.MustCompile(`(\s)@([_A-Za-z0-9]+)`)
 
 func NewEntry(title string, content string, datetime time.Time, public bool, tags []string) *Entry {
 	e := new(Entry)
@@ -256,21 +252,4 @@ func PostsWithTag(c context.Context, tag string) (*map[int64]Entry, error) {
 	}
 
 	return &entries, nil
-}
-
-// Markdown.
-func Markdown(args ...interface{}) template.HTML {
-	inc := []byte(fmt.Sprintf("%s", args...))
-	inc = twitterHandleToMarkdown(inc)
-	inc = hashTagsToMarkdown(inc)
-	s := blackfriday.MarkdownCommon(inc)
-	return template.HTML(s)
-}
-
-func twitterHandleToMarkdown(in []byte) []byte {
-	return TwitterHandleRegex.ReplaceAll(in, []byte("$1[@$2](http://twitter.com/$2)"))
-}
-
-func hashTagsToMarkdown(in []byte) []byte {
-	return HashtagRegex.ReplaceAll(in, []byte("$1[#$2](/tags/$2)"))
 }
