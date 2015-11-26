@@ -9,7 +9,7 @@ local: clean assets
 	$(GOAPP) serve
 
 assets:
-	webpack -p
+	./node_modules/webpack/bin/webpack.js -p
 
 clean:
 	rm -f natnatnat
@@ -22,4 +22,4 @@ deploy:
 update:
 	$(GOAPP) get -u -v ...
 
-.PHONY: serve restart kill clean deploy assets
+.PHONY: local assets clean deploy update
