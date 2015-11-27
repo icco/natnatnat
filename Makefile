@@ -22,7 +22,7 @@ deploy:
 	$(GOAPP) deploy -application=natwelch-writing -version=$(shell date +%Y%m%d-%H%M)
 
 update:
-	$(GOAPP) get -u -v ...
+	-$(GOAPP) get -u -v ...
 
 test: update build
 	$(GOAPP) test
