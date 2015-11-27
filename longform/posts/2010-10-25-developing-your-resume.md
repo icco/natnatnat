@@ -1,5 +1,6 @@
 ---
 layout: post
+origin: http://pseudoweb.net/2010/10/25/developing-your-resume/
 title: Developing Your Resume
 location: San Luis Obispo, CA
 time: 15:36:02

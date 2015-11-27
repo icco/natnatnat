@@ -1,5 +1,6 @@
 --- 
 wordpress_id: 103
+origin: http://pseudoweb.net/2008/08/26/advice-for-possible-engineers/
 layout: post
 title: Advice for Possible Engineers
 wordpress_url: http://pseudoweb.net/?p=103

@@ -1,5 +1,6 @@
 --- 
 wordpress_id: 49
+origin: http://pseudoweb.net/2007/02/09/the-new-year-and-internetphobia/
 layout: post
 title: The New Year and Internetphobia
 wordpress_url: http://pseudoweb.net/crypts/2007/02/09/49

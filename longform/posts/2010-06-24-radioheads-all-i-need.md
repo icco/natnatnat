@@ -1,5 +1,6 @@
 ---
 layout: post
+origin: http://pseudoweb.net/2010/06/24/radioheads-all-i-need/
 title: Radiohead's All I Need
 location: San Luis Obispo, CA
 time:  21:39:08

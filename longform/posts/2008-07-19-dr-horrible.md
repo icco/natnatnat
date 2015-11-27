@@ -1,5 +1,6 @@
 --- 
 wordpress_id: 98
+origin: http://pseudoweb.net/2008/07/19/dr-horrible/
 layout: post
 title: Dr. Horrible
 wordpress_url: http://pseudoweb.net/?p=98

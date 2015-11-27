@@ -1,5 +1,6 @@
 --- 
 wordpress_id: 153
+origin: http://pseudoweb.net/2009/01/20/obama-the-speaker/
 layout: post
 title: Obama, the speaker.
 wordpress_url: http://pseudoweb.net/?p=153

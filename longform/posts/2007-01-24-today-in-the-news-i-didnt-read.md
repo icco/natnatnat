@@ -1,5 +1,6 @@
 --- 
 wordpress_id: 44
+origin: http://pseudoweb.net/2007/01/24/today-in-the-news-i-didnt-read/
 layout: post
 title: Today in the news i didn't read
 wordpress_url: http://pseudoweb.net/crypts/2007/01/24/44

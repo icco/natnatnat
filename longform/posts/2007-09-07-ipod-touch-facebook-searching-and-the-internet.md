@@ -1,5 +1,6 @@
 --- 
 wordpress_id: 78
+origin: http://pseudoweb.net/2007/09/07/ipod-touch-facebook-searching-and-the-internet/
 layout: post
 title: iPod Touch, Facebook searching, and the Internet
 wordpress_url: http://pseudoweb.net/crypts/2007/09/78/

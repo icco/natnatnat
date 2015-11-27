@@ -1,5 +1,6 @@
 --- 
 wordpress_id: 126
+origin: http://pseudoweb.net/2008/11/01/the-categorical-plan/
 layout: post
 title: The Categorical Plan
 wordpress_url: http://pseudoweb.net/?p=126

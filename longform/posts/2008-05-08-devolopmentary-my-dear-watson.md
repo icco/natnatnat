@@ -1,5 +1,6 @@
 --- 
 wordpress_id: 82
+origin: http://pseudoweb.net/2008/05/08/devolopmentary-my-dear-watson/
 layout: post
 title: Devolopmentary My Dear Watson
 wordpress_url: http://pseudoweb.net/?p=82

@@ -1,5 +1,6 @@
 --- 
 wordpress_id: 61
+origin: http://pseudoweb.net/2007/07/02/china-debriefing/
 layout: post
 title: China Debriefing
 wordpress_url: http://pseudoweb.net/crypts/2007/07/61/

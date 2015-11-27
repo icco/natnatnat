@@ -1,5 +1,6 @@
 --- 
 wordpress_id: 164
+origin: http://pseudoweb.net/2009/08/13/campus-is-changing/
 layout: post
 title: Campus is Changing
 wordpress_url: http://pseudoweb.net/?p=164

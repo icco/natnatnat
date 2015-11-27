@@ -1,5 +1,6 @@
 --- 
 wordpress_id: 113
+origin: http://pseudoweb.net/2008/09/18/portal-typography/
 layout: post
 title: Portal Typography
 wordpress_url: http://pseudoweb.net/?p=113

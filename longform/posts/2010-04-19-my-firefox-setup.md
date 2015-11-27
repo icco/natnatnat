@@ -1,5 +1,6 @@
 ---
 layout: post
+origin: http://pseudoweb.net/2010/04/19/my-firefox-setup/
 title: My Firefox Setup
 location: San Luis Obispo, CA
 ---

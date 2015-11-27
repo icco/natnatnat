@@ -1,5 +1,6 @@
 ---
 layout: post
+origin: http://pseudoweb.net/2011/02/24/marissa-mayer-at-cal-poly/
 title: Marissa Mayer at Cal Poly
 location: San Luis Obispo, CA
 time: 10:39:23

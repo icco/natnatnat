@@ -1,5 +1,6 @@
 --- 
 wordpress_id: 77
+origin: http://pseudoweb.net/2007/09/04/pax-07-followup/
 layout: post
 title: PAX '07 Followup
 wordpress_url: http://pseudoweb.net/crypts/2007/09/77/

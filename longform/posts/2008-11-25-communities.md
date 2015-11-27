@@ -1,5 +1,6 @@
 --- 
 wordpress_id: 131
+origin: http://pseudoweb.net/2008/11/25/communities/
 layout: post
 title: Communities
 wordpress_url: http://pseudoweb.net/?p=131

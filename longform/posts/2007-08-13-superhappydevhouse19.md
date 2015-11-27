@@ -1,5 +1,6 @@
 --- 
 wordpress_id: 71
+origin: http://pseudoweb.net/2007/08/13/superhappydevhouse19/
 layout: post
 title: SuperHappyDevHouse19
 wordpress_url: http://pseudoweb.net/crypts/2007/08/71/

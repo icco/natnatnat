@@ -1,5 +1,6 @@
 ---
 layout: post
+origin: http://pseudoweb.net/2010/08/14/switching-to-android/
 title: Switching to Android
 location: Los Gatos, CA
 time:  13:31:18

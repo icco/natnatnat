@@ -1,5 +1,6 @@
 --- 
 wordpress_id: 173
+origin: http://pseudoweb.net/2009/08/21/find-and-grep/
 layout: post
 title: Find and Grep
 wordpress_url: http://pseudoweb.net/?p=173

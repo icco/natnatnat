@@ -1,5 +1,6 @@
 ---
 layout: post
+origin: http://pseudoweb.net/2010/04/12/sinatra-heroku-and-you/
 title: Sinatra, Heroku and You
 location: San Luis Obispo, CA
 ---

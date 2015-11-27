@@ -1,5 +1,6 @@
 ---
 layout: post
+origin: http://pseudoweb.net/2010/01/29/delicious-summarizer/
 title: Delicious Summarizer
 location: San Luis Obispo, CA
 ---

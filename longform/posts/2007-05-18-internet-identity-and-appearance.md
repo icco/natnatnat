@@ -1,5 +1,6 @@
 --- 
 wordpress_id: 58
+origin: http://pseudoweb.net/2007/05/18/internet-identity-and-appearance/
 layout: post
 title: Internet Identity And Appearance
 wordpress_url: http://pseudoweb.net/crypts/2007/05/18/58

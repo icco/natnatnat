@@ -1,5 +1,6 @@
 ---
 layout: post
+origin: http://pseudoweb.net/2011/01/24/her-eyes-vs-mine/
 title: Her Eyes vs. Mine
 location: San Luis Obispo, CA
 time: 16:43:16

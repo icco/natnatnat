@@ -1,5 +1,6 @@
 --- 
 wordpress_id: 208
+origin: http://pseudoweb.net/2009/09/13/80-characters-and-you/
 layout: post
 title: 80 Characters and You
 wordpress_url: http://pseudoweb.net/?p=208

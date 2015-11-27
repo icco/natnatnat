@@ -1,5 +1,6 @@
 --- 
 wordpress_id: 75
+origin: http://pseudoweb.net/2007/08/21/barcampblock/
 layout: post
 title: BarCampBlock
 wordpress_url: http://pseudoweb.net/crypts/2007/08/75/

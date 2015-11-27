@@ -1,5 +1,6 @@
 --- 
 wordpress_id: 52
+origin: http://pseudoweb.net/2007/04/06/apple-tv-yargh/
 layout: post
 title: Apple Tv, yargh?
 wordpress_url: http://pseudoweb.net/crypts/2007/04/06/52

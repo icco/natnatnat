@@ -1,5 +1,6 @@
 --- 
 wordpress_id: 68
+origin: http://pseudoweb.net/2007/07/19/wizards-wordcamp-wordie-and-more/
 layout: post
 title: Wizards, WordCamp, Wordie, and More
 wordpress_url: http://pseudoweb.net/crypts/2007/07/68/

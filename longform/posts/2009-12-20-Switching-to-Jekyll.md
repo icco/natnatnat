@@ -1,5 +1,6 @@
 ---
 layout: post
+origin: http://pseudoweb.net/2009/12/20/Switching-to-Jekyll/
 title: Switching to Jekyll
 location: Chester, CA
 ---
