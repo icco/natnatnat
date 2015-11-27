@@ -80,3 +80,9 @@ I wrote posts about some of the process in these posts while I was at RC: [#164]
 ## Draft Post Idea
 
 When user visits `/post/new`, create a new post, and redirect user to `/edit/123` where 123 is a new private post. As user types, save updates periodically.
+
+Build an admin page that shows existing drafts.
+
+## Longform
+
+ - Readfiles from disk, update db periodically from git
