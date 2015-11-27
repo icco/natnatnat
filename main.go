@@ -79,6 +79,8 @@ func init() {
 
 	router.Post("/md", MarkdownHandler)
 
+	router.Get("/admin/?", AdminGetHandler)
+
 	router.Get("/post/new/?", NewPostGetHandler)
 	router.Post("/post/new/?", NewPostPostHandler)
 
