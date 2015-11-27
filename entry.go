@@ -24,6 +24,8 @@ type Entry struct {
 	Modified time.Time `json:"modified"`
 	Tags     []string  `json:"tags"`
 	Public   bool      `json:"-"`
+	Longform string    `json:"-"`
+	Draft    bool      `json:"-"`
 }
 
 func NewEntry(title string, content string, datetime time.Time, public bool, tags []string) *Entry {
@@ -39,6 +41,7 @@ func NewEntry(title string, content string, datetime time.Time, public bool, tag
 	// Computer generated content
 	e.Created = time.Now()
 	e.Modified = time.Now()
+	e.Draft = false
 
 	return e
 }
@@ -103,7 +106,7 @@ func ArchivePageQuery() *datastore.Query {
 }
 
 func Posts(c context.Context, limit int, recentFirst bool) (*[]Entry, error) {
-	q := datastore.NewQuery("Entry").Filter("Public =", true)
+	q := datastore.NewQuery("Entry").Filter("Public =", true).Filter("Draft !=", true)
 
 	if recentFirst {
 		q = q.Order("-Datetime")
@@ -115,6 +118,14 @@ func Posts(c context.Context, limit int, recentFirst bool) (*[]Entry, error) {
 		q = q.Limit(limit)
 	}
 
+	entries := new([]Entry)
+	_, err := q.GetAll(c, entries)
+	return entries, err
+}
+
+func Drafts(c context.Context, limit int, recentFirst bool) (*[]Entry, error) {
+	q := datastore.NewQuery("Entry").Filter("Draft =", true)
+	q = q.Order("-Datetime")
 	entries := new([]Entry)
 	_, err := q.GetAll(c, entries)
 	return entries, err
