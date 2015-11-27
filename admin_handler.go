@@ -15,6 +15,7 @@ type AdminPageData struct {
 	IsAdmin   bool
 	LogoutUrl string
 	User      string
+	Drafts    *[]Entry
 }
 
 func AdminGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -38,10 +39,17 @@ func AdminGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			return
 		}
 
+		drafts, err := Drafts(c)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+
 		responseData := &AdminPageData{
 			LogoutUrl: url,
 			User:      u.String(),
 			IsAdmin:   user.IsAdmin(c),
+			Drafts:    drafts,
 		}
 		w.Render("admin", responseData)
 	}

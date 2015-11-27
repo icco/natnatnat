@@ -123,7 +123,7 @@ func Posts(c context.Context, limit int, recentFirst bool) (*[]Entry, error) {
 	return entries, err
 }
 
-func Drafts(c context.Context, limit int, recentFirst bool) (*[]Entry, error) {
+func Drafts(c context.Context) (*[]Entry, error) {
 	q := datastore.NewQuery("Entry").Filter("Draft =", true)
 	q = q.Order("-Datetime")
 	entries := new([]Entry)
