@@ -16,10 +16,6 @@ Dir.entries(directory).select {|f| f.start_with? "2" }.each do |f|
    origin = "http://pseudoweb.net/#{year}/#{month}/#{day}/#{stub}/"
 
    lines = File.readlines(directory + f)
-   index = lines.index("--- \n")
-   if index.nil?
-     p lines
-   end
-   lines.insert(index, "origin: #{origin}\n")
+   lines.insert(2, "origin: #{origin}\n")
    File.write(directory + f, lines.join)
 end
