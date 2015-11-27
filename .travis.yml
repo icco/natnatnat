@@ -1,6 +1,8 @@
+# https://docs.travis-ci.com/user/languages/go
 language: go
 go:
   - "1.5.1"
+  - tip
 
 # Set it up
 install:
@@ -18,3 +20,6 @@ notifications:
   email:
     on_success: never
     on_failure: change
+
+# Containers
+sudo: false
