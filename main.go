@@ -81,6 +81,9 @@ func init() {
 
 	router.Get("/admin/?", AdminGetHandler)
 
+	router.Get("/longform/queue", LongformQueueHandler)
+	router.Post("/longform/work", LongformWorkHandler)
+
 	router.Get("/post/new/?", NewPostGetHandler)
 	router.Post("/post/new/?", NewPostPostHandler)
 
