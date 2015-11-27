@@ -4,9 +4,11 @@ PID = tmp/server.pid
 
 GOAPP=../go_appengine/goapp
 
-local: clean assets
-	$(GOAPP) build # We do this for build checking
+local: clean assets build
 	$(GOAPP) serve
+
+build:
+	$(GOAPP) build
 
 assets:
 	./node_modules/webpack/bin/webpack.js -p
@@ -22,4 +24,7 @@ deploy:
 update:
 	$(GOAPP) get -u -v ...
 
-.PHONY: local assets clean deploy update
+test: update build
+	$(GOAPP) test
+
+.PHONY: local assets clean deploy update build test
