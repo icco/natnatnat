@@ -15,7 +15,7 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
 <ul>
   {{ range $entry := .Drafts }}
   <li>
-  #{{$entry.Id}}: "{{$entry.Title}} <a href="/post/{{$entry.Id}}"><time datetime="{{$entry.Datetime|jsontime}}">{{$entry.Datetime|fmttime}}</time></a>
+  #{{$entry.Id}}: "{{$entry.Title}}" <a href="/post/{{$entry.Id}}"><time datetime="{{$entry.Datetime|jsontime}}">{{$entry.Datetime|fmttime}}</time></a>
   </li>
   {{ end }}
 </ul>

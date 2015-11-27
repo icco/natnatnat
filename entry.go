@@ -106,7 +106,7 @@ func ArchivePageQuery() *datastore.Query {
 }
 
 func Posts(c context.Context, limit int, recentFirst bool) (*[]Entry, error) {
-	q := datastore.NewQuery("Entry").Filter("Public =", true).Filter("Draft !=", true)
+	q := datastore.NewQuery("Entry").Filter("Public =", true).Filter("Draft ==", false)
 
 	if recentFirst {
 		q = q.Order("-Datetime")
