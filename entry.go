@@ -166,6 +166,7 @@ func (e *Entry) Save(c context.Context) error {
 	}
 
 	// Pull out links
+	// TODO: Do something with the output
 	GetLinksFromContent(c, e.Content)
 
 	// Figure out Tags
@@ -231,19 +232,16 @@ func (e *Entry) NextPost(c context.Context) string {
 	return entry.Url()
 }
 
-// TODO(icco): Actually finish this.
 func GetLinksFromContent(c context.Context, content string) ([]string, error) {
-	httpRegex := regexp.MustCompile(`http:\/\/((\w|\.)+)`)
+	httpRegex := regexp.MustCompile(`https?:\/\/((\w|\.)+)`)
 	matches := httpRegex.FindAllString(content, -1)
 	if matches == nil {
 		return []string{}, nil
 	}
 
-	for _, match := range matches {
-		log.Infof(c, "%+v", match)
-	}
+	log.Infof(c, "URLs Found: %+v", matches)
 
-	return []string{}, nil
+	return matches, nil
 }
 
 func PostsForDay(c context.Context, year, month, day int64) (*[]Entry, error) {
