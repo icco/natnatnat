@@ -64,7 +64,17 @@ func GetEntry(c context.Context, id int64) (*Entry, error) {
 	q := datastore.NewQuery("Entry").Filter("Id =", id).Limit(1)
 	_, err := q.Run(c).Next(&entry)
 	if err != nil {
-		log.Warningf(c, "Error getting entry %d", id)
+		return nil, err
+	}
+
+	return &entry, nil
+}
+
+func GetLongform(c context.Context, longform string) (*Entry, error) {
+	var entry Entry
+	q := datastore.NewQuery("Entry").Filter("Longform =", longform).Limit(1)
+	_, err := q.Run(c).Next(&entry)
+	if err != nil {
 		return nil, err
 	}
 

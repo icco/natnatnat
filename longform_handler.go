@@ -37,12 +37,10 @@ func LongformWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	log.Warningf(c, "Drafts: %+v", drafts)
 
 	// Iterate through
 	for _, file := range drafts {
 		if strings.HasPrefix(file.Name(), "20") && file.Mode().IsRegular() {
-			log.Infof(c, "Draft: %+v", file.Name())
 			f, err := os.Open(dir + file.Name())
 			defer f.Close()
 			if err != nil {
@@ -65,7 +63,15 @@ func LongformWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			}
 
 			// create entries for those that don't exist, update those that do
-			log.Debugf(c, "Opened File: %+v", meta)
+			entry, err := GetLongform(c, file.Name())
+			if entry == nil {
+				// TODO: datetime
+				datetime := time.Date(year, month, day, hour, min, 0, 0, time.UTC)
+
+				entry = NewEntry(meta["title"], p.Content(), datetime, true, []string{})
+			}
+			entry.Draft = true
+			entry.Save(c)
 		}
 	}
 
