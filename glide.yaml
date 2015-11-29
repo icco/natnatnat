@@ -8,23 +8,23 @@ package: main
 
 # Declare your project's dependencies.
 import:
-- package: golang.org/x/net
-- package: github.com/gorilla/context
-- package: google.golang.org/appengine/urlfetch
-- package: github.com/shurcooL/sanitized_anchor_name
 - package: github.com/golang/protobuf
-- package: google.golang.org/appengine
+- package: github.com/gorilla/context
+- package: github.com/gorilla/feeds
+- package: github.com/gorilla/securecookie
 - package: github.com/gorilla/sessions
-- package: google.golang.org/appengine/memcache
-- package: google.golang.org/appengine/taskqueue
-- package: google.golang.org/appengine/internal
+- package: github.com/icco/xsrftoken
+- package: github.com/kennygrant/sanitize
 - package: github.com/pilu/config
 - package: github.com/pilu/traffic
-- package: google.golang.org/appengine/user
-- package: google.golang.org/appengine/datastore
-- package: github.com/kennygrant/sanitize
-- package: github.com/icco/xsrftoken
 - package: github.com/russross/blackfriday
-- package: github.com/gorilla/securecookie
+- package: github.com/shurcooL/sanitized_anchor_name
+- package: golang.org/x/net
+- package: google.golang.org/appengine
+- package: google.golang.org/appengine/datastore
+- package: google.golang.org/appengine/internal
 - package: google.golang.org/appengine/log
-- package: github.com/gorilla/feeds
+- package: google.golang.org/appengine/memcache
+- package: google.golang.org/appengine/taskqueue
+- package: google.golang.org/appengine/urlfetch
+- package: google.golang.org/appengine/user
