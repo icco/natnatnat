@@ -25,7 +25,7 @@ deploy:
 update:
 	rm -rf node_modules
 	npm install
-	-$(GOAPP) get -u -v ./...
+	-$(GOAPP) get -u -v ...
 
 test: update build
 	$(GOAPP) test
