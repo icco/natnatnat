@@ -3,9 +3,10 @@ all: local
 PID = tmp/server.pid
 
 GOAPP=../go_appengine/goapp
+DEVAPPSERVER=../go_appengine/dev_appserver.py
 
 local: clean assets build
-	$(GOAPP) serve
+	$(DEVAPPSERVER) --log_level=debug app.yaml
 
 build:
 	$(GOAPP) build
@@ -22,7 +23,9 @@ deploy:
 	$(GOAPP) deploy -application=natwelch-writing -version=$(shell date +%Y%m%d-%H%M)
 
 update:
-	-$(GOAPP) get -u -v ...
+	rm -rf node_modules
+	npm install
+	-$(GOAPP) get -u -v ./...
 
 test: update build
 	$(GOAPP) test
