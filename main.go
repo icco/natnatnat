@@ -39,8 +39,8 @@ func jsonTime(t time.Time) string {
 	return string(b)
 }
 
-func markdown(args ...interface{}) template.HTML {
-	return Markdown(args...)
+func markdown(str string) template.HTML {
+	return Markdown(str)
 }
 
 func monthToInt(m string) int {

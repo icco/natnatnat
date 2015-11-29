@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"regexp"
 
@@ -12,8 +11,8 @@ var HashtagRegex *regexp.Regexp = regexp.MustCompile(`(\s)#(\w+)`)
 var TwitterHandleRegex *regexp.Regexp = regexp.MustCompile(`(\s)@([_A-Za-z0-9]+)`)
 
 // Markdown generator.
-func Markdown(args ...interface{}) template.HTML {
-	inc := []byte(fmt.Sprintf("%s", args...))
+func Markdown(str string) template.HTML {
+	inc := []byte(str)
 	inc = twitterHandleToMarkdown(inc)
 	inc = hashTagsToMarkdown(inc)
 	s := blackfriday.MarkdownCommon(inc)
