@@ -6,7 +6,7 @@ GOAPP=../go_appengine/goapp
 DEVAPPSERVER=../go_appengine/dev_appserver.py
 
 local: clean assets build
-	$(DEVAPPSERVER) --log_level=debug app.yaml
+	$(DEVAPPSERVER) --log_level=debug --clear_datastore=true app.yaml
 
 build:
 	$(GOAPP) build
