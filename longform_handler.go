@@ -23,6 +23,22 @@ func PseudowebHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	http.Redirect(w, r.Request, fmt.Sprintf("http://pseudoweb.net%s", r.Request.URL.Path), 301)
 }
 
+func LongformJsonHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	c := appengine.NewContext(r.Request)
+	entries, err := LongformPosts(c)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	data := map[string]int64{}
+	for _, e := range *entries {
+		data[e.Longform] = e.Id
+	}
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.WriteJSON(data)
+}
+
 func LongformQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	t := taskqueue.NewPOSTTask("/longform/work", url.Values{})

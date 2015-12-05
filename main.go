@@ -65,10 +65,6 @@ func init() {
 	traffic.TemplateFunc("m2i", monthToInt)
 
 	router := traffic.New()
-
-	// Old Pseudoweb urls
-	router.Get("/images/:year/:month/:file", PseudowebHandler)
-
 	router.Get("/", RootHandler)
 	router.Get("/page/:page/?", RootHandler)
 
@@ -85,8 +81,11 @@ func init() {
 
 	router.Get("/admin/?", AdminGetHandler)
 
+	// Old Pseudoweb urls
+	router.Get("/images/:year/:month/:file", PseudowebHandler)
 	router.Get("/longform/queue", LongformQueueHandler)
 	router.Post("/longform/work", LongformWorkHandler)
+	router.Get("/longform.json", LongformJsonHandler)
 
 	router.Get("/post/new/?", NewPostGetHandler)
 	router.Post("/post/new/?", NewPostPostHandler)
