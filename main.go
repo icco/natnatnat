@@ -67,7 +67,7 @@ func init() {
 	router := traffic.New()
 
 	// Old Pseudoweb urls
-	router.Get("/images.+", PseudowebHandler)
+	router.Get("/images/:year/:month/:file", PseudowebHandler)
 
 	router.Get("/", RootHandler)
 	router.Get("/page/:page/?", RootHandler)
