@@ -166,11 +166,15 @@ func (e *Entry) Save(c context.Context) error {
 			}
 		}
 
-		//cnt, err = datastore.NewQuery("Entry").Filter("Id =", e.Id).Count(tc)
-		//if cnt >= 2 {
-		//	id, _ := MaxId(tc)
-		//	e.Id = id + 1
-		//}
+		cnt, err := datastore.NewQuery("Entry").Filter("Id =", e.Id).Count(tc)
+		if err != nil {
+			return err
+		}
+		log.Infof(c, "ID: %v: %v", e.Id, cnt)
+		if cnt >= 2 {
+			id, _ := MaxId(tc)
+			e.Id = id + 1
+		}
 
 		// Pull out links
 		// TODO: Do something with the output
@@ -194,6 +198,7 @@ func (e *Entry) Save(c context.Context) error {
 		// If not nil, nothing happens
 		return err
 	}, nil)
+
 	return err
 }
 

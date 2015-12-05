@@ -106,7 +106,12 @@ func LongformWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			}
 			entry.Draft = true
 			entry.Longform = file.Name()
-			entry.Save(c)
+			err = entry.Save(c)
+			if err != nil {
+				log.Errorf(c, "Error saving entry: %v", err.Error())
+				http.Error(w, err.Error(), 500)
+				return
+			}
 		}
 	}
 
