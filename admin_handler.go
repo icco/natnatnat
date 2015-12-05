@@ -16,6 +16,7 @@ type AdminPageData struct {
 	LogoutUrl string
 	User      string
 	Drafts    *[]Entry
+	Longform  *[]Entry
 }
 
 func AdminGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -45,11 +46,18 @@ func AdminGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			return
 		}
 
+		lngfrm, err := LongformPosts(c)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+
 		responseData := &AdminPageData{
 			LogoutUrl: url,
 			User:      u.String(),
 			IsAdmin:   user.IsAdmin(c),
 			Drafts:    drafts,
+			Longform:  lngfrm,
 		}
 		w.Render("admin", responseData)
 	}

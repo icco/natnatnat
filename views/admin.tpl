@@ -20,4 +20,13 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
   {{ end }}
 </ul>
 
+<h2>Longform</h2>
+<ul>
+  {{ range $entry := .Longform}}
+  <li>
+  #{{$entry.Id}}: "{{$entry.Title}}" <a href="/post/{{$entry.Id}}"><time datetime="{{$entry.Datetime|jsontime}}">{{$entry.Datetime|fmttime}}</time></a>
+  </li>
+  {{ end }}
+</ul>
+
 {{ template "includes/footer" }}
