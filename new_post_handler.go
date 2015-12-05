@@ -77,7 +77,6 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		content := r.Request.FormValue("text")
 		xsrf := r.Request.FormValue("xsrf")
 		tags, err := ParseTags(content)
-		public := true
 		draft := r.Request.FormValue("draft") == "on"
 		if err != nil {
 			log.Warningf(c, "Couldn't parse tags: %v", err)
@@ -94,7 +93,7 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			return
 		}
 
-		e := NewEntry(title, content, time.Now(), public, tags)
+		e := NewEntry(title, content, time.Now(), tags)
 		e.Draft = draft
 		err = e.Save(c)
 		if err != nil {

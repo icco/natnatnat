@@ -23,12 +23,11 @@ type Entry struct {
 	Created  time.Time `json:"created"`
 	Modified time.Time `json:"modified"`
 	Tags     []string  `json:"tags"`
-	Public   bool      `json:"-"`
 	Longform string    `json:"-"`
 	Draft    bool      `json:"-"`
 }
 
-func NewEntry(title string, content string, datetime time.Time, public bool, tags []string) *Entry {
+func NewEntry(title string, content string, datetime time.Time, tags []string) *Entry {
 	e := new(Entry)
 
 	// User supplied content
@@ -36,7 +35,6 @@ func NewEntry(title string, content string, datetime time.Time, public bool, tag
 	e.Content = content
 	e.Datetime = datetime
 	e.Tags = tags
-	e.Public = public
 
 	// Computer generated content
 	e.Created = time.Now()
@@ -97,7 +95,7 @@ func AllPosts(c context.Context) (*[]Entry, error) {
 
 func Pagination(c context.Context, posts, offset int) (*[]Entry, error) {
 	q := datastore.NewQuery("Entry").
-		Filter("Public =", true).
+		Filter("Draft =", false).
 		Order("-Datetime").
 		Limit(posts).
 		Offset(offset)
@@ -109,14 +107,14 @@ func Pagination(c context.Context, posts, offset int) (*[]Entry, error) {
 
 func ArchivePageQuery() *datastore.Query {
 	return datastore.NewQuery("Entry").
-		Filter("Public =", true).
+		Filter("Draft =", false).
 		Project("Id", "Datetime").
 		Order("-Datetime").
 		Limit(50)
 }
 
 func Posts(c context.Context, limit int, recentFirst bool) (*[]Entry, error) {
-	q := datastore.NewQuery("Entry").Filter("Public =", true).Filter("Draft ==", false)
+	q := datastore.NewQuery("Entry").Filter("Draft =", false)
 
 	if recentFirst {
 		q = q.Order("-Datetime")
@@ -259,7 +257,7 @@ func PostsForDay(c context.Context, year, month, day int64) (*[]Entry, error) {
 	entries := new([]Entry)
 	start := time.Date(int(year), time.Month(month), int(day), 0, 0, 0, 0, time.UTC)
 	end := start.AddDate(0, 0, 1)
-	q := datastore.NewQuery("Entry").Order("-Datetime").Filter("Datetime >=", start).Filter("Datetime <", end).Filter("Public =", true)
+	q := datastore.NewQuery("Entry").Order("-Datetime").Filter("Datetime >=", start).Filter("Datetime <", end).Filter("Draft =", false)
 	_, err := q.GetAll(c, entries)
 	return entries, err
 }

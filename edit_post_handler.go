@@ -96,13 +96,13 @@ func EditPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		content := r.Request.FormValue("text")
 		xsrf := r.Request.FormValue("xsrf")
 		tags, err := ParseTags(content)
-		public := r.Request.FormValue("private") != "on"
+		draft := r.Request.FormValue("draft") == "on"
 		if err != nil {
 			log.Warningf(c, "Couldn't parse tags: %v", err)
 			tags = []string{}
 		}
 
-		log.Infof(c, "Got POST params: title: %+v, text: %+v, xsrf: %v, private: %v", title, content, xsrf, !public)
+		log.Infof(c, "Got POST params: title: %+v, text: %+v, xsrf: %v, draft: %v", title, content, xsrf, draft)
 
 		if xsrftoken.Valid(xsrf, GetFlagLogError(c, "SESSION_KEY"), u.String(), entry.EditUrl()) {
 			log.Infof(c, "Valid Token!")
@@ -116,7 +116,7 @@ func EditPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		entry.Title = title
 		entry.Tags = tags
 		entry.Content = content
-		entry.Public = public
+		entry.Draft = draft
 
 		err = entry.Save(c)
 		if err != nil {
