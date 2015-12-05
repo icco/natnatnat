@@ -15,7 +15,7 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
 <ul>
   {{ range $entry := .Drafts }}
   <li>
-  #{{$entry.Id}}: "{{$entry.Title}}" <a href="/post/{{$entry.Id}}"><time datetime="{{$entry.Datetime|jsontime}}">{{$entry.Datetime|fmttime}}</time></a>
+  #{{$entry.Id}}: "{{$entry.Title}}" <a href="/post/{{$entry.Id}}"><time datetime="{{$entry.Datetime|jsontime}}">{{$entry.Datetime|fmttime}}</time></a>, <a href="/edit/{{$entry.Id}}">EDIT</a>
   </li>
   {{ end }}
 </ul>
@@ -24,7 +24,7 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
 <ul>
   {{ range $entry := .Longform}}
   <li>
-  #{{$entry.Id}}: "{{$entry.Title}}" <a href="/post/{{$entry.Id}}"><time datetime="{{$entry.Datetime|jsontime}}">{{$entry.Datetime|fmttime}}</time></a>
+  #{{$entry.Id}}: "{{$entry.Title}}" <a href="/post/{{$entry.Id}}"><time datetime="{{$entry.Datetime|jsontime}}">{{$entry.Datetime|fmttime}}</time></a>, <a href="/edit/{{$entry.Id}}">EDIT</a>
   </li>
   {{ end }}
 </ul>
