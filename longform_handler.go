@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 
@@ -73,14 +74,38 @@ func LongformWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 			// create entries for those that don't exist, update those that do
 			entry, err := GetLongform(c, file.Name())
+			if err != nil {
+				log.Warningf(c, "Error getting longform %v: %v", file.Name(), err.Error())
+			}
+
 			if entry == nil {
-				// TODO: datetime
 				log.Debugf(c, "Meta: %+v", meta)
-				posted_at := time.Now()
-				datetime := time.Date(posted_at.Year(), posted_at.Month(), posted_at.Day(), posted_at.Hour(), posted_at.Minute(), 0, 0, time.UTC)
+				now := time.Now()
+
+				year := now.Year()
+				mnth := now.Month()
+				day := now.Day()
+				hour := now.Hour()
+				min := now.Minute()
+
+				// TODO: Don't throw away errors
+				if meta["time"] != "" {
+					split := strings.Split(meta["time"], ":")
+					hour, _ = strconv.Atoi(split[0])
+					min, _ = strconv.Atoi(split[1])
+				}
+
+				split := strings.Split(file.Name(), "-")
+				year, _ = strconv.Atoi(split[0])
+				m, _ := strconv.Atoi(split[1])
+				mnth = time.Month(m)
+				day, _ = strconv.Atoi(split[2])
+
+				datetime := time.Date(year, mnth, day, hour, min, 0, 0, time.UTC)
 				entry = NewEntry(meta["title"], string(p.Content()), datetime, true, []string{})
 			}
 			entry.Draft = true
+			entry.Longform = file.Name()
 			entry.Save(c)
 		}
 	}
