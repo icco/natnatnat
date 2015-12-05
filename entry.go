@@ -7,12 +7,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/kennygrant/sanitize"
+	"golang.org/x/net/context"
 	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/log"
-
-	"golang.org/x/net/context"
-
-	"github.com/kennygrant/sanitize"
 )
 
 type Entry struct {
