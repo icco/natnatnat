@@ -19,6 +19,10 @@ import (
 	"google.golang.org/appengine/taskqueue"
 )
 
+func PseudowebHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	http.Redirect(w, r.Request, fmt.Sprintf("http://pseudoweb.net%s", r.Request.URL.Path), 301)
+}
+
 func LongformQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	t := taskqueue.NewPOSTTask("/longform/work", url.Values{})

@@ -65,6 +65,10 @@ func init() {
 	traffic.TemplateFunc("m2i", monthToInt)
 
 	router := traffic.New()
+
+	// Old Pseudoweb urls
+	router.Get("/images.+", PseudowebHandler)
+
 	router.Get("/", RootHandler)
 	router.Get("/page/:page/?", RootHandler)
 
