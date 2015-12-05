@@ -194,9 +194,6 @@ func (e *Entry) Save(c context.Context) error {
 		log.Warningf(c, "Error writing entry: %v", e)
 	}
 
-	// If not nil, nothing happens
-	return err
-
 	return err
 }
 
