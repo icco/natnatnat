@@ -150,39 +150,50 @@ func (e *Entry) HasId() bool {
 }
 
 func (e *Entry) Save(c context.Context) error {
-	var k *datastore.Key
-	if !e.HasId() {
-		id, _ := MaxId(c)
-		e.Id = id + 1
-		k = datastore.NewIncompleteKey(c, "Entry", nil)
-	} else {
-		// Find the key
-		var err error
-		q := datastore.NewQuery("Entry").Filter("Id =", e.Id).Limit(1).KeysOnly()
-		k, err = q.Run(c).Next(nil)
+	err := datastore.RunInTransaction(c, func(tc context.Context) error {
+		var k *datastore.Key
+		if !e.HasId() {
+			id, _ := MaxId(tc)
+			e.Id = id + 1
+			k = datastore.NewIncompleteKey(c, "Entry", nil)
+		} else {
+			// Find the key
+			var err error
+			q := datastore.NewQuery("Entry").Filter("Id =", e.Id).Limit(1).KeysOnly()
+			k, err = q.Run(tc).Next(nil)
+			if err != nil {
+				return err
+			}
+		}
+
+		//cnt, err = datastore.NewQuery("Entry").Filter("Id =", e.Id).Count(tc)
+		//if cnt >= 2 {
+		//	id, _ := MaxId(tc)
+		//	e.Id = id + 1
+		//}
+
+		// Pull out links
+		// TODO: Do something with the output
+		GetLinksFromContent(c, e.Content)
+
+		// Figure out Tags
+		tags, err := ParseTags(e.Content)
 		if err != nil {
 			return err
 		}
-	}
+		e.Tags = tags
 
-	// Pull out links
-	// TODO: Do something with the output
-	GetLinksFromContent(c, e.Content)
+		k2, err := datastore.Put(tc, k, e)
+		if err == nil {
+			log.Infof(c, "Wrote %+v", e)
+			log.Infof(c, "Old key: %+v; New Key: %+v", k, k2)
+		} else {
+			log.Warningf(c, "Error writing entry: %v", e)
+		}
 
-	// Figure out Tags
-	tags, err := ParseTags(e.Content)
-	if err != nil {
+		// If not nil, nothing happens
 		return err
-	}
-	e.Tags = tags
-
-	k2, err := datastore.Put(c, k, e)
-	if err == nil {
-		log.Infof(c, "Wrote %+v", e)
-		log.Infof(c, "Old key: %+v; New Key: %+v", k, k2)
-	} else {
-		log.Warningf(c, "Error writing entry: %v", e)
-	}
+	}, nil)
 	return err
 }
 
