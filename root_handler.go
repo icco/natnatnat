@@ -5,11 +5,10 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/pilu/traffic"
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/log"
 	"google.golang.org/appengine/user"
-
-	"github.com/pilu/traffic"
 )
 
 type RootData struct {
@@ -60,24 +59,6 @@ func AboutHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 func UnimplementedHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	http.Error(w, "Sorry, I haven't implemented this yet", 500)
-}
-
-func MarkdownHandler(w traffic.ResponseWriter, r *traffic.Request) {
-	c := appengine.NewContext(r.Request)
-
-	err := r.ParseForm()
-	if err != nil {
-		log.Warningf(c, "Couldn't parse form: %v", r)
-		http.Error(w, "Unable to parse request.", 500)
-		return
-	}
-
-	in := r.Request.FormValue("text")
-	md := Markdown(in)
-
-	log.Infof(c, "Markdown Recieved: %s", in)
-	log.Infof(c, "Markdown Rendered: %s", md)
-	w.WriteText(string(md))
 }
 
 type SiteMapData struct {

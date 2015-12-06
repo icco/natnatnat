@@ -2,9 +2,13 @@ package main
 
 import (
 	"html/template"
+	"net/http"
 	"regexp"
 
+	"github.com/pilu/traffic"
 	"github.com/russross/blackfriday"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/log"
 )
 
 var HashtagRegex *regexp.Regexp = regexp.MustCompile(`(\s)#(\w+)`)
@@ -25,4 +29,26 @@ func twitterHandleToMarkdown(in []byte) []byte {
 
 func hashTagsToMarkdown(in []byte) []byte {
 	return HashtagRegex.ReplaceAll(in, []byte("$1[#$2](/tags/$2)"))
+}
+
+type MarkdownHandlerData struct {
+	Text template.HTML
+}
+
+func MarkdownHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	c := appengine.NewContext(r.Request)
+
+	err := r.ParseForm()
+	if err != nil {
+		log.Warningf(c, "Couldn't parse form: %v", r)
+		http.Error(w, "Unable to parse request.", 500)
+		return
+	}
+
+	in := r.Request.FormValue("text")
+	md := Markdown(in)
+
+	log.Infof(c, "Markdown Recieved: %s", in)
+	log.Infof(c, "Markdown Rendered: %s", md)
+	w.Render("blank", &MarkdownHandlerData{Text: md})
 }
