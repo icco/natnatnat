@@ -74,6 +74,8 @@ func GetLongform(c context.Context, longform string) (*Entry, error) {
 		return nil, err
 	}
 
+	log.Infof(c, "Attempted to find %v. %+v %+v", longform, entry, err)
+
 	return &entry, nil
 }
 
@@ -137,7 +139,7 @@ func Drafts(c context.Context) (*[]Entry, error) {
 }
 
 func LongformPosts(c context.Context) (*[]Entry, error) {
-	q := datastore.NewQuery("Entry").Filter("Longform >", "")
+	q := datastore.NewQuery("Entry").Filter("Longform >", "").Order("-Longform")
 	entries := new([]Entry)
 	_, err := q.GetAll(c, entries)
 	return entries, err
@@ -190,7 +192,7 @@ func (e *Entry) Save(c context.Context) error {
 
 	k2, err := datastore.Put(c, k, e)
 	if err == nil {
-		log.Infof(c, "Wrote %+v", e)
+		// log.Infof(c, "Wrote %+v", e)
 		log.Infof(c, "Old key: %+v; New Key: %+v", k, k2)
 	} else {
 		log.Warningf(c, "Error writing entry: %v", e)
