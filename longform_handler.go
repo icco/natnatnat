@@ -107,6 +107,7 @@ func createPostFromLongformFile(c context.Context, dir string, file os.FileInfo,
 		log.Errorf(c, "Error reading file: %v", err.Error())
 		return err
 	}
+
 	// get the page from file
 	p, err := parser.ReadFrom(f)
 	if err != nil {
@@ -132,33 +133,39 @@ func createPostFromLongformFile(c context.Context, dir string, file os.FileInfo,
 	}
 
 	if entry == nil {
-		log.Debugf(c, "Meta: %+v", meta)
-		now := time.Now()
-
-		year := now.Year()
-		mnth := now.Month()
-		day := now.Day()
-		hour := now.Hour()
-		min := now.Minute()
-
-		// TODO: Don't throw away errors
-		if meta["time"] != "" {
-			split := strings.Split(meta["time"], ":")
-			hour, _ = strconv.Atoi(split[0])
-			min, _ = strconv.Atoi(split[1])
-		}
-
-		split := strings.Split(file.Name(), "-")
-		year, _ = strconv.Atoi(split[0])
-		m, _ := strconv.Atoi(split[1])
-		mnth = time.Month(m)
-		day, _ = strconv.Atoi(split[2])
-
-		datetime := time.Date(year, mnth, day, hour, min, 0, 0, time.UTC)
-		entry = NewEntry(meta["title"], string(p.Content()), datetime, []string{})
+		entry = new(Entry)
+		entry.Created = time.Now()
 	}
+
+	now := time.Now()
+
+	year := now.Year()
+	mnth := now.Month()
+	day := now.Day()
+	hour := now.Hour()
+	min := now.Minute()
+
+	// TODO: Don't throw away errors
+	if meta["time"] != "" {
+		split := strings.Split(meta["time"], ":")
+		hour, _ = strconv.Atoi(split[0])
+		min, _ = strconv.Atoi(split[1])
+	}
+
+	split := strings.Split(file.Name(), "-")
+	year, _ = strconv.Atoi(split[0])
+	m, _ := strconv.Atoi(split[1])
+	mnth = time.Month(m)
+	day, _ = strconv.Atoi(split[2])
+
+	datetime := time.Date(year, mnth, day, hour, min, 0, 0, time.UTC)
+	entry.Title = meta["title"]
+	entry.Content = string(p.Content())
+	entry.Datetime = datetime
+	entry.Modified = time.Now()
 	entry.Draft = draft
 	entry.Longform = file.Name()
+
 	err = entry.Save(c)
 	if err != nil {
 		log.Errorf(c, "Error saving entry: %v", err.Error())
