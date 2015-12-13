@@ -19,6 +19,7 @@ import (
 	"google.golang.org/appengine/taskqueue"
 )
 
+// For old urls still hosted in github pages.
 func PseudowebHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	http.Redirect(w, r.Request, fmt.Sprintf("http://pseudoweb.net%s", r.Request.URL.Path), 301)
 }
@@ -27,6 +28,7 @@ func LongformJsonHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	entries, err := LongformPosts(c)
 	if err != nil {
+		log.Errorf(c, "Error getting posts: %v", err.Error())
 		http.Error(w, err.Error(), 500)
 		return
 	}
@@ -45,6 +47,7 @@ func LongformQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	_, err := taskqueue.Add(c, t, "")
 
 	if err != nil {
+		log.Errorf(c, "Error queueing work: %v", err.Error())
 		http.Error(w, err.Error(), 500)
 	} else {
 		fmt.Fprint(w, "success.\n")
@@ -58,6 +61,7 @@ func LongformWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	dir := "./longform/drafts/"
 	drafts, err := ioutil.ReadDir(dir)
 	if err != nil {
+		log.Errorf(c, "Error opening directory: %v", err.Error())
 		http.Error(w, err.Error(), 500)
 		return
 	}
@@ -78,6 +82,7 @@ func LongformWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	dir = "./longform/posts/"
 	posts, err := ioutil.ReadDir(dir)
 	if err != nil {
+		log.Errorf(c, "Error opening directory: %v", err.Error())
 		http.Error(w, err.Error(), 500)
 		return
 	}
