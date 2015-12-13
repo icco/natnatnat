@@ -31,7 +31,7 @@ framework lets you do all kinds of fun HTML5 canvas stuff in a nice abstract
 way. Before I walk you through it, I figured I would dump a bunch of it in
 front of you.
 
-{% highlight js %}
+```javascript
    <script type="application/processing">
       Line[] lines;
       int count, radius, offsetx, offsety;
@@ -177,7 +177,7 @@ front of you.
          lastActive.draw();
       }
    </script>
-{% endhighlight %}
+ ```
 
 Cool right? There are some interesting things to notice about this code. First
 of all, when the page is loaded, the setup function is called. This function
@@ -203,7 +203,7 @@ script to insert your processing code into a canvas element. The file is called
 init.js in the archive you can download, but I've also included it here, just
 in case.
 
-{% highlight js %}
+```
 /*
  * This code searches for all the <script type="application/processing" target="canvasid">
  * in your page and loads each script in the target canvas with the proper id.
@@ -233,7 +233,7 @@ if ( window.addEventListener ) {
       }
    }, false);
 }
-{% endhighlight %}
+```
 
 In reality, that's all you need to know. I've found processing.js a really fun
 language to code in, because it works well when using mooTools or jquery or any
