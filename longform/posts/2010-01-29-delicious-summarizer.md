@@ -48,20 +48,21 @@ XML, but that is kind of a pain to read normally.
 I found writing XSLT files a pain. But basically this is how they work. First
 you define that this is a XSLT file.
 
-{% highlight xml %}
+```xml
 <xsl:stylesheet
    version="1.0"
    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
    xmlns:str="http://exslt.org/strings"
    extension-element-prefixes="str"
    exclude-result-prefixes="str" >
-{% endhighlight %}
+```
 
 Then you need to define how to turn the XML into plain text (or what ever
 format of text you want...). Note how we do matching in a similar structure to
 the actual XML.
 
-{% highlight xml %}
+
+```xml
 <xsl:output method="html" />
 
 <xsl:template match="post">
@@ -73,16 +74,15 @@ the actual XML.
    URL: <xsl:value-of select="@href" />
    When: <xsl:value-of select="@time" />
 </xsl:template>
-{% endhighlight %}
+```
 
 ## Cron
 
 The following is the cron command I have set up.
 
-{% highlight bash %}
-42 7 * * 6 re-delicious.sh uname pwd |
-    mail -s "Links for `date +"Week %V of %G"`" you@email.com
-{% endhighlight %}
+```
+42 7 * * 6 re-delicious.sh uname pwd | mail -s "Links for `date +"Week %V of %G"`" you@email.com
+```
 
 ## Conclusion
 
@@ -95,4 +95,3 @@ Anyway, hope you found this interesting.
 
 Adios,  
 /Nat 
-

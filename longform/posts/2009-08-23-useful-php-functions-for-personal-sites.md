@@ -13,7 +13,7 @@ I've decided to post some basic, but fun little snippets of PHP I've used on my 
 
 First and foremost is the age function. Given a birthdate,  it returns a formated age.
 
-{% highlight php %}
+```php
 <?php
 function age() {
    // Your Birthday...
@@ -23,14 +23,13 @@ function age() {
    return sprintf("%2.2f",$diff);;
 }
 ?>
-{% endhighlight %}
-
+```
 
 Of course this would be better if it was written so your birthday was passed in via a variable, but meh, I wrote it awhile ago.
 
 This next piece of code is from <a href="http://binarybonsai.com/code/timesince.txt">Michael Heilemann</a> but I've modified it a little, and I use it a lot, so I'll post it here as well. It prints the time since a specified date in a kind way.
 
-{% highlight php %}
+```php
 <?php
 function time_since($original) {
    // array of time period chunks
@@ -73,11 +72,11 @@ function time_since($original) {
    return $print . " ago";
 }
 ?>
-{% endhighlight %}
+```
 
 And here is my favorite function that I wrote to parse twitter messages. It turns hashtags, urls, and replies into proper links using regex.
 
-{% highlight php %}
+```php
 <?php
 function twitterParse($in) {
    $pieces = explode(" ", $in);
@@ -101,7 +100,7 @@ function twitterParse($in) {
    return implode(" ", $pieces);
 }
 ?>
-{% endhighlight %}
+```
 
 Anyway, I hope these tidbits are useful. Sorry about the bad indentation, I haven't quite gotten the hang of the wordpress plugin, <a href="http://wordpress.org/extend/plugins/syntaxhighlighter/">Syntax Highlighter Evolved</a> yet.
 

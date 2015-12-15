@@ -87,7 +87,7 @@ know how to do.
 You can also add the following to your Rakefile, so you would type
 `rake deploy` instead of `git push heroku master`.
 
-{% highlight ruby %}
+```ruby
 desc "Deploy to Heroku."
 task :deploy do
    require 'heroku'
@@ -108,7 +108,7 @@ task :deploy do
 
    heroku.restart(app)
 end
-{% endhighlight %}
+```
 
 Anyway, I kind of rushed this, because I wrote most of the post about a month
 ago and then forgot about it. Once I am happy with [theStack][6], I'll write

@@ -17,7 +17,7 @@ and code is awesome in my book.
 
 Without further ado, the "Black Perl" by Author Unkown.
 
-{% highlight perl %}
+```perl
 BEFOREHAND: close door, each window & exit; wait until time.
     open spellbook, study, read (scan, select, tell us);
 write it, print the hex while each watches,
@@ -43,7 +43,7 @@ AFTERWORDS: tell nobody.
         sleep, sleep, die yourself,
         die at last
 # Larry Wall
-{% endhighlight %}
+```
 
 Hasta,  
 /Nat
