@@ -65,6 +65,9 @@ func LongformQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 func LongformWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 
+	// Disabled for now.
+	return
+
 	// Read drafts from disk
 	dir := "./longform/drafts/"
 	drafts, err := ioutil.ReadDir(dir)
