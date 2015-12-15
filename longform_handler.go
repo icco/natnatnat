@@ -51,8 +51,8 @@ func LongformQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, err.Error(), 500)
 	}
 
-	t := taskqueue.NewPOSTTask("/clean/work", url.Values{})
-	_, err := taskqueue.Add(c, t, "")
+	t = taskqueue.NewPOSTTask("/clean/work", url.Values{})
+	_, err = taskqueue.Add(c, t, "")
 
 	if err != nil {
 		log.Errorf(c, "Error queueing work: %v", err.Error())

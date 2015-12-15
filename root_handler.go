@@ -7,6 +7,7 @@ import (
 
 	"github.com/pilu/traffic"
 	"google.golang.org/appengine"
+	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/log"
 	"google.golang.org/appengine/user"
 )
@@ -71,11 +72,11 @@ func CleanWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 
-	for i, p := range entries {
-		if p.Draft == nil {
+	for _, p := range *entries {
+		if &p.Draft == nil {
 			p.Draft = false
 		}
-		p.Save()
+		p.Save(c)
 	}
 }
 
