@@ -14,8 +14,8 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
   <div class="cf">
     <input type="submit" class="btn pas mrm btn--blue" />
     <label for="option-one" class="tr pas fr">
-      <input id="option-one" type="checkbox" name="private" {{if not .Entry.Public}}checked{{end}}>
-      Private?
+      <input id="option-one" type="checkbox" name="draft" {{if .Entry.Draft}}checked{{end}}>
+      Draft?
     </label>
   </div>
 </form>

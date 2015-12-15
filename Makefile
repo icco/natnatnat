@@ -3,10 +3,13 @@ all: local
 PID = tmp/server.pid
 
 GOAPP=../go_appengine/goapp
+DEVAPPSERVER=../go_appengine/dev_appserver.py
 
-local: clean assets
-	$(GOAPP) build # We do this for build checking
-	$(GOAPP) serve
+local: clean assets build
+	$(DEVAPPSERVER) --log_level=debug --clear_datastore=true app.yaml
+
+build:
+	$(GOAPP) build
 
 assets:
 	./node_modules/webpack/bin/webpack.js -p
@@ -20,6 +23,11 @@ deploy:
 	$(GOAPP) deploy -application=natwelch-writing -version=$(shell date +%Y%m%d-%H%M)
 
 update:
-	$(GOAPP) get -u -v ...
+	rm -rf node_modules
+	-npm install
+	-$(GOAPP) get -d -u -v ...
 
-.PHONY: local assets clean deploy update
+test: update build
+	$(GOAPP) test
+
+.PHONY: local assets clean deploy update build test

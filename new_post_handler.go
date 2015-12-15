@@ -77,13 +77,13 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		content := r.Request.FormValue("text")
 		xsrf := r.Request.FormValue("xsrf")
 		tags, err := ParseTags(content)
-		public := r.Request.FormValue("private") != "on"
+		draft := r.Request.FormValue("draft") == "on"
 		if err != nil {
 			log.Warningf(c, "Couldn't parse tags: %v", err)
 			tags = []string{}
 		}
 
-		log.Infof(c, "Got POST params: title: %+v, text: %+v, xsrf: %v, private: %v", title, content, xsrf, !public)
+		log.Infof(c, "Got POST params: title: %+v, text: %+v, xsrf: %v, draft: %v", title, content, xsrf, draft)
 
 		if xsrftoken.Valid(xsrf, GetFlagLogError(c, "SESSION_KEY"), u.String(), "/post/new") {
 			log.Infof(c, "Valid Token!")
@@ -93,7 +93,8 @@ func NewPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			return
 		}
 
-		e := NewEntry(title, content, time.Now(), public, tags)
+		e := NewEntry(title, content, time.Now(), tags)
+		e.Draft = draft
 		err = e.Save(c)
 		if err != nil {
 			http.Error(w, err.Error(), 500)

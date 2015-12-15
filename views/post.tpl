@@ -15,8 +15,8 @@
   </div>
 
   <div class="post-content">
-    {{ if not .Entry.Public }}
-      <h2 style="color: red; font-weight: 800;">POST IS NOT PUBLIC.</h2>
+    {{ if .Entry.Draft }}
+      <h2 class="mvm" style="color: red; font-weight: 800;">POST IS A DRAFT.</h2>
     {{ end }}
 
     {{ if .Entry.Title }}

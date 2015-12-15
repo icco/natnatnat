@@ -39,8 +39,8 @@ func jsonTime(t time.Time) string {
 	return string(b)
 }
 
-func markdown(args ...interface{}) template.HTML {
-	return Markdown(args...)
+func markdown(str string) template.HTML {
+	return Markdown(str)
 }
 
 func monthToInt(m string) int {
@@ -79,6 +79,14 @@ func init() {
 
 	router.Post("/md", MarkdownHandler)
 
+	router.Get("/admin/?", AdminGetHandler)
+
+	// Old Pseudoweb urls
+	router.Get("/images/:year/:month/:file", PseudowebHandler)
+	router.Get("/longform/queue", LongformQueueHandler)
+	router.Post("/longform/work", LongformWorkHandler)
+	router.Get("/longform.json", LongformJsonHandler)
+
 	router.Get("/post/new/?", NewPostGetHandler)
 	router.Post("/post/new/?", NewPostPostHandler)
 
@@ -110,9 +118,6 @@ func init() {
 	router.Get("/link/queue", LinkQueueHandler)
 	router.Post("/link/work", LinkWorkHandler)
 	router.Get("/links", LinkPageGetHandler)
-
-	// TODO: REMOVE.
-	router.Get("/import", ImportPseudowebHandler)
 
 	router.AddBeforeFilter(HstsMiddleware)
 	router.Use(NewStaticMiddleware(traffic.PublicPath()))

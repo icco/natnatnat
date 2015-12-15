@@ -28,7 +28,7 @@ func buildFeed(c context.Context, entries *[]Entry) *feeds.Feed {
 
 	feed.Items = []*feeds.Item{}
 	for _, v := range *entries {
-		if v.Public {
+		if !v.Draft {
 			title := fmt.Sprintf("Nat? Nat. Nat! #%d", v.Id)
 			if v.Title != "" {
 				title = v.Title

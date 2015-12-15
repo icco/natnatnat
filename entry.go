@@ -7,12 +7,10 @@ import (
 	"strings"
 	"time"
 
+	"github.com/kennygrant/sanitize"
+	"golang.org/x/net/context"
 	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/log"
-
-	"golang.org/x/net/context"
-
-	"github.com/kennygrant/sanitize"
 )
 
 type Entry struct {
@@ -23,10 +21,11 @@ type Entry struct {
 	Created  time.Time `json:"created"`
 	Modified time.Time `json:"modified"`
 	Tags     []string  `json:"tags"`
-	Public   bool      `json:"-"`
+	Longform string    `json:"-"`
+	Draft    bool      `json:"-"`
 }
 
-func NewEntry(title string, content string, datetime time.Time, public bool, tags []string) *Entry {
+func NewEntry(title string, content string, datetime time.Time, tags []string) *Entry {
 	e := new(Entry)
 
 	// User supplied content
@@ -34,11 +33,11 @@ func NewEntry(title string, content string, datetime time.Time, public bool, tag
 	e.Content = content
 	e.Datetime = datetime
 	e.Tags = tags
-	e.Public = public
 
 	// Computer generated content
 	e.Created = time.Now()
 	e.Modified = time.Now()
+	e.Draft = false
 
 	return e
 }
@@ -61,9 +60,21 @@ func GetEntry(c context.Context, id int64) (*Entry, error) {
 	q := datastore.NewQuery("Entry").Filter("Id =", id).Limit(1)
 	_, err := q.Run(c).Next(&entry)
 	if err != nil {
-		log.Warningf(c, "Error getting entry %d", id)
 		return nil, err
 	}
+
+	return &entry, nil
+}
+
+func GetLongform(c context.Context, longform string) (*Entry, error) {
+	var entry Entry
+	q := datastore.NewQuery("Entry").Filter("Longform =", longform).Limit(1)
+	_, err := q.Run(c).Next(&entry)
+	if err != nil {
+		return nil, err
+	}
+
+	log.Infof(c, "Attempted to find %v. %+v %+v", longform, entry, err)
 
 	return &entry, nil
 }
@@ -84,7 +95,7 @@ func AllPosts(c context.Context) (*[]Entry, error) {
 
 func Pagination(c context.Context, posts, offset int) (*[]Entry, error) {
 	q := datastore.NewQuery("Entry").
-		Filter("Public =", true).
+		Filter("Draft =", false).
 		Order("-Datetime").
 		Limit(posts).
 		Offset(offset)
@@ -96,14 +107,14 @@ func Pagination(c context.Context, posts, offset int) (*[]Entry, error) {
 
 func ArchivePageQuery() *datastore.Query {
 	return datastore.NewQuery("Entry").
-		Filter("Public =", true).
+		Filter("Draft =", false).
 		Project("Id", "Datetime").
 		Order("-Datetime").
 		Limit(50)
 }
 
 func Posts(c context.Context, limit int, recentFirst bool) (*[]Entry, error) {
-	q := datastore.NewQuery("Entry").Filter("Public =", true)
+	q := datastore.NewQuery("Entry").Filter("Draft =", false)
 
 	if recentFirst {
 		q = q.Order("-Datetime")
@@ -115,6 +126,20 @@ func Posts(c context.Context, limit int, recentFirst bool) (*[]Entry, error) {
 		q = q.Limit(limit)
 	}
 
+	entries := new([]Entry)
+	_, err := q.GetAll(c, entries)
+	return entries, err
+}
+
+func Drafts(c context.Context) (*[]Entry, error) {
+	q := datastore.NewQuery("Entry").Filter("Draft =", true).Order("-Datetime")
+	entries := new([]Entry)
+	_, err := q.GetAll(c, entries)
+	return entries, err
+}
+
+func LongformPosts(c context.Context) (*[]Entry, error) {
+	q := datastore.NewQuery("Entry").Filter("Longform >", "").Order("-Longform")
 	entries := new([]Entry)
 	_, err := q.GetAll(c, entries)
 	return entries, err
@@ -144,7 +169,18 @@ func (e *Entry) Save(c context.Context) error {
 		}
 	}
 
+	cnt, err := datastore.NewQuery("Entry").Filter("Id =", e.Id).Count(c)
+	if err != nil {
+		return err
+	}
+	log.Infof(c, "ID: %v: %v", e.Id, cnt)
+	if cnt >= 2 {
+		id, _ := MaxId(c)
+		e.Id = id + 1
+	}
+
 	// Pull out links
+	// TODO: Do something with the output
 	GetLinksFromContent(c, e.Content)
 
 	// Figure out Tags
@@ -156,11 +192,12 @@ func (e *Entry) Save(c context.Context) error {
 
 	k2, err := datastore.Put(c, k, e)
 	if err == nil {
-		log.Infof(c, "Wrote %+v", e)
+		// log.Infof(c, "Wrote %+v", e)
 		log.Infof(c, "Old key: %+v; New Key: %+v", k, k2)
 	} else {
 		log.Warningf(c, "Error writing entry: %v", e)
 	}
+
 	return err
 }
 
@@ -210,26 +247,23 @@ func (e *Entry) NextPost(c context.Context) string {
 	return entry.Url()
 }
 
-// TODO(icco): Actually finish this.
 func GetLinksFromContent(c context.Context, content string) ([]string, error) {
-	httpRegex := regexp.MustCompile(`http:\/\/((\w|\.)+)`)
+	httpRegex := regexp.MustCompile(`https?:\/\/((\w|\.)+)`)
 	matches := httpRegex.FindAllString(content, -1)
 	if matches == nil {
 		return []string{}, nil
 	}
 
-	for _, match := range matches {
-		log.Infof(c, "%+v", match)
-	}
+	log.Infof(c, "URLs Found: %+v", matches)
 
-	return []string{}, nil
+	return matches, nil
 }
 
 func PostsForDay(c context.Context, year, month, day int64) (*[]Entry, error) {
 	entries := new([]Entry)
 	start := time.Date(int(year), time.Month(month), int(day), 0, 0, 0, 0, time.UTC)
 	end := start.AddDate(0, 0, 1)
-	q := datastore.NewQuery("Entry").Order("-Datetime").Filter("Datetime >=", start).Filter("Datetime <", end).Filter("Public =", true)
+	q := datastore.NewQuery("Entry").Order("-Datetime").Filter("Datetime >=", start).Filter("Datetime <", end).Filter("Draft =", false)
 	_, err := q.GetAll(c, entries)
 	return entries, err
 }
