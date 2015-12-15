@@ -49,9 +49,17 @@ func LongformQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	if err != nil {
 		log.Errorf(c, "Error queueing work: %v", err.Error())
 		http.Error(w, err.Error(), 500)
-	} else {
-		fmt.Fprint(w, "success.\n")
 	}
+
+	t := taskqueue.NewPOSTTask("/clean/work", url.Values{})
+	_, err := taskqueue.Add(c, t, "")
+
+	if err != nil {
+		log.Errorf(c, "Error queueing work: %v", err.Error())
+		http.Error(w, err.Error(), 500)
+	}
+
+	fmt.Fprint(w, "success.\n")
 }
 
 func LongformWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {

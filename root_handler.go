@@ -61,6 +61,24 @@ func UnimplementedHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	http.Error(w, "Sorry, I haven't implemented this yet", 500)
 }
 
+func CleanWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	c := appengine.NewContext(r.Request)
+	q := datastore.NewQuery("Entry")
+	entries := new([]Entry)
+	_, err := q.GetAll(c, entries)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	for i, p := range entries {
+		if p.Draft == nil {
+			p.Draft = false
+		}
+		p.Save()
+	}
+}
+
 type SiteMapData struct {
 	Posts  *[]Entry
 	Newest time.Time
