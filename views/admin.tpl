@@ -11,7 +11,7 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
   <li><a href="/settings">Edit Settings?</a></li>
 </ul>
 
-<h2>Drafts</h2>
+<h2>Longform Drafts</h2>
 <ul>
   {{ range $entry := .Drafts }}
   <li>
@@ -20,12 +20,14 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
   {{ end }}
 </ul>
 
-<h2>Longform</h2>
+<h2>Longform Published</h2>
 <ul>
   {{ range $entry := .Longform}}
-  <li>
-  #{{$entry.Id}}: "{{$entry.Title}}" <a href="/post/{{$entry.Id}}"><time datetime="{{$entry.Datetime|jsontime}}">{{$entry.Datetime|fmttime}}</time></a>, <a href="/edit/{{$entry.Id}}">EDIT</a>
-  </li>
+    {{ if ! $entry.Draft }}
+      <li>
+      #{{$entry.Id}}: "{{$entry.Title}}" <a href="/post/{{$entry.Id}}"><time datetime="{{$entry.Datetime|jsontime}}">{{$entry.Datetime|fmttime}}</time></a>, <a href="/edit/{{$entry.Id}}">EDIT</a>
+      </li>
+    {{ end }}
   {{ end }}
 </ul>
 
