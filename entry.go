@@ -22,6 +22,7 @@ type Entry struct {
 	Modified time.Time `json:"modified"`
 	Tags     []string  `json:"tags"`
 	Longform string    `json:"-"`
+	Public   bool      `json:"-"`
 	Draft    bool      `json:"-"`
 }
 
