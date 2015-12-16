@@ -23,7 +23,8 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
 <h2>Longform Published</h2>
 <ul>
   {{ range $entry := .Longform}}
-    {{ if ! $entry.Draft }}
+    {{ if $entry.Draft }}
+    {{ else }}
       <li>
       #{{$entry.Id}}: "{{$entry.Title}}" <a href="/post/{{$entry.Id}}"><time datetime="{{$entry.Datetime|jsontime}}">{{$entry.Datetime|fmttime}}</time></a>, <a href="/edit/{{$entry.Id}}">EDIT</a>
       </li>
