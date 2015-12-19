@@ -5,14 +5,12 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"net/url"
 	"sort"
 	"strings"
 	"time"
 
 	"github.com/pilu/traffic"
 	"google.golang.org/appengine"
-	"google.golang.org/appengine/taskqueue"
 	"google.golang.org/appengine/urlfetch"
 	"google.golang.org/appengine/user"
 )

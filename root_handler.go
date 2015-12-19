@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
+	"net/url"
 	"strconv"
 	"time"
 
@@ -119,7 +121,7 @@ func WorkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	// Download all the links.
 	t = taskqueue.NewPOSTTask("/link/work", url.Values{})
-	_, err := taskqueue.Add(c, t, "")
+	_, err = taskqueue.Add(c, t, "")
 
 	if err != nil {
 		log.Errorf(c, "Error queueing work: %v", err.Error())
@@ -129,7 +131,7 @@ func WorkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	// Update the longform data.
 	t = taskqueue.NewPOSTTask("/longform/work", url.Values{})
-	_, err := taskqueue.Add(c, t, "")
+	_, err = taskqueue.Add(c, t, "")
 
 	if err != nil {
 		log.Errorf(c, "Error queueing work: %v", err.Error())
