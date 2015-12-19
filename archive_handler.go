@@ -8,13 +8,11 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/pilu/traffic"
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/log"
 	"google.golang.org/appengine/memcache"
-	"google.golang.org/appengine/taskqueue"
 	"google.golang.org/appengine/user"
-
-	"github.com/pilu/traffic"
 )
 
 type ArchiveData struct {
@@ -41,18 +39,6 @@ var Months = [12]time.Month{
 	time.October,
 	time.November,
 	time.December,
-}
-
-func ArchiveQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
-	c := appengine.NewContext(r.Request)
-	t := taskqueue.NewPOSTTask("/archive/work", url.Values{})
-	_, err := taskqueue.Add(c, t, "")
-
-	if err != nil {
-		http.Error(w, err.Error(), 500)
-	} else {
-		fmt.Fprint(w, "success.\n")
-	}
 }
 
 func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {

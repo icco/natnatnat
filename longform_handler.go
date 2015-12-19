@@ -16,7 +16,6 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/log"
-	"google.golang.org/appengine/taskqueue"
 )
 
 // For old urls still hosted in github pages.
@@ -39,27 +38,6 @@ func LongformJsonHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.WriteJSON(data)
-}
-
-func LongformQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
-	c := appengine.NewContext(r.Request)
-	t := taskqueue.NewPOSTTask("/longform/work", url.Values{})
-	_, err := taskqueue.Add(c, t, "")
-
-	if err != nil {
-		log.Errorf(c, "Error queueing work: %v", err.Error())
-		http.Error(w, err.Error(), 500)
-	}
-
-	t = taskqueue.NewPOSTTask("/clean/work", url.Values{})
-	_, err = taskqueue.Add(c, t, "")
-
-	if err != nil {
-		log.Errorf(c, "Error queueing work: %v", err.Error())
-		http.Error(w, err.Error(), 500)
-	}
-
-	fmt.Fprint(w, "success.\n")
 }
 
 func LongformWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {

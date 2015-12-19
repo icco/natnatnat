@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/pilu/traffic"
-
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/taskqueue"
 	"google.golang.org/appengine/urlfetch"
@@ -44,18 +43,6 @@ type LinkXML struct {
 type PostsType struct {
 	XMLName xml.Name  `xml:"posts"`
 	Pins    []LinkXML `xml:"post"`
-}
-
-func LinkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
-	c := appengine.NewContext(r.Request)
-	t := taskqueue.NewPOSTTask("/link/work", url.Values{})
-	_, err := taskqueue.Add(c, t, "")
-
-	if err != nil {
-		http.Error(w, err.Error(), 500)
-	} else {
-		fmt.Fprint(w, "success.\n")
-	}
 }
 
 func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {

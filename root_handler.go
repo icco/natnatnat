@@ -9,6 +9,7 @@ import (
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/log"
+	"google.golang.org/appengine/taskqueue"
 	"google.golang.org/appengine/user"
 )
 
@@ -100,4 +101,51 @@ func SitemapHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	w.Header().Set("Content-Type", "application/xml; charset=utf-8")
 	w.Render("sitemap", data)
+}
+
+// This queues lots of work every fifteen minutes.
+func WorkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	c := appengine.NewContext(r.Request)
+
+	// Build data for the Archive Page
+	t := taskqueue.NewPOSTTask("/archive/work", url.Values{})
+	_, err := taskqueue.Add(c, t, "")
+
+	if err != nil {
+		log.Errorf(c, "Error queueing work: %v", err.Error())
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	// Download all the links.
+	t = taskqueue.NewPOSTTask("/link/work", url.Values{})
+	_, err := taskqueue.Add(c, t, "")
+
+	if err != nil {
+		log.Errorf(c, "Error queueing work: %v", err.Error())
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	// Update the longform data.
+	t = taskqueue.NewPOSTTask("/longform/work", url.Values{})
+	_, err := taskqueue.Add(c, t, "")
+
+	if err != nil {
+		log.Errorf(c, "Error queueing work: %v", err.Error())
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	// Clean the database
+	t = taskqueue.NewPOSTTask("/clean/work", url.Values{})
+	_, err = taskqueue.Add(c, t, "")
+
+	if err != nil {
+		log.Errorf(c, "Error queueing work: %v", err.Error())
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	fmt.Fprint(w, "success.\n")
 }

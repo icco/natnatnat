@@ -74,7 +74,6 @@ func init() {
 	router.Get("/sitemap.xml", SitemapHandler)
 
 	router.Get("/archive(s?)", ArchiveHandler)
-	router.Get("/archive/queue", ArchiveQueueHandler)
 	router.Post("/archive/work", ArchiveTaskHandler)
 
 	router.Post("/md", MarkdownHandler)
@@ -83,7 +82,6 @@ func init() {
 
 	// Old Pseudoweb urls
 	router.Get("/images/:year/:month/:file", PseudowebHandler)
-	router.Get("/longform/queue", LongformQueueHandler)
 	router.Post("/longform/work", LongformWorkHandler)
 	router.Get("/longform.json", LongformJsonHandler)
 
@@ -115,11 +113,11 @@ func init() {
 	router.Get("/summary.atom", SummaryAtomHandler)
 	router.Get("/summary.rss", SummaryRssHandler)
 
-	router.Get("/link/queue", LinkQueueHandler)
 	router.Post("/link/work", LinkWorkHandler)
 	router.Get("/links", LinkPageGetHandler)
 
 	router.Post("/clean/work", CleanWorkHandler)
+	router.Get("/work/queue", WorkQueueHandler)
 
 	router.AddBeforeFilter(HstsMiddleware)
 	router.Use(NewStaticMiddleware(traffic.PublicPath()))
