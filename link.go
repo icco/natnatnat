@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sort"
 	"strings"
 	"time"
 
@@ -79,4 +80,54 @@ func Links(c context.Context, limit int, recentFirst bool) (*[]Link, error) {
 	links := new([]Link)
 	_, err := q.GetAll(c, links)
 	return links, err
+}
+
+// Data for building a list of links by day.
+type LinkDay struct {
+	Links []Link
+	Day   time.Time
+}
+
+type linkDays []*LinkDay
+
+// These three functions are needed for Sort.
+func (p linkDays) Len() int           { return len(p) }
+func (p linkDays) Less(i, j int) bool { return p[i].Day.Before(p[j].Day) }
+func (p linkDays) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
+func (p linkDays) HasDate(day time.Time) int {
+	for i, d := range p {
+		if d.Day == day {
+			return i
+		}
+	}
+	return -1
+}
+
+func LinksByDay(c context.Context, days int) (*linkDays, error) {
+	links, err := AllLinks(c)
+	if err != nil {
+		return nil, err
+	}
+
+	ds := make([]*LinkDay, 0)
+
+	for _, l := range *links {
+		date := l.Posted.Round(time.Hour * 24)
+		if linkDays(ds).HasDate(date) < 0 {
+			ds = append(ds, &LinkDay{
+				Day:   date,
+				Links: []Link{l},
+			})
+		} else {
+			i := linkDays(ds).HasDate(date)
+			ds[i].Links = append(ds[i].Links, l)
+		}
+	}
+
+	lds := linkDays(ds)
+	sort.Reverse(lds)
+
+	subset := lds[0:days]
+
+	return &subset, nil
 }

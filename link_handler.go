@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
-	"sort"
 	"strings"
 	"time"
 
@@ -91,52 +90,13 @@ type LinkPageData struct {
 	IsAdmin  bool
 }
 
-type LinkDay struct {
-	Links []Link
-	Day   time.Time
-}
-
-type linkDays []*LinkDay
-
-// These three functions are needed for Sort.
-func (p linkDays) Len() int           { return len(p) }
-func (p linkDays) Less(i, j int) bool { return p[i].Day.Before(p[j].Day) }
-func (p linkDays) Swap(i, j int)      { p[i], p[j] = p[j], p[i] }
-func (p linkDays) HasDate(day time.Time) int {
-	for i, d := range p {
-		if d.Day == day {
-			return i
-		}
-	}
-	return -1
-}
-
 func LinkPageGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	links, err := AllLinks(c)
+	lds, err := LinksByDay(c, 120)
 	if err != nil {
-		http.Error(w, err.Error(), 500)
-		return
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
-	days := make([]*LinkDay, 0)
-
-	for _, l := range *links {
-		date := l.Posted.Round(time.Hour * 24)
-		if linkDays(days).HasDate(date) < 0 {
-			days = append(days, &LinkDay{
-				Day:   date,
-				Links: []Link{l},
-			})
-		} else {
-			i := linkDays(days).HasDate(date)
-			days[i].Links = append(days[i].Links, l)
-		}
-	}
-
-	lds := linkDays(days)
-	sort.Reverse(lds)
-
-	data := &LinkPageData{LinkDays: lds, IsAdmin: user.IsAdmin(c)}
-	w.Render("links", data)
+	data := &LinkPageData{LinkDays: *lds, IsAdmin: user.IsAdmin(c)}
+	w.Render("links", *data)
 }
