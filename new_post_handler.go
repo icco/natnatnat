@@ -18,7 +18,7 @@ type NewPostPageData struct {
 	LogoutUrl string
 	User      string
 	Xsrf      string
-	Links     *[]Link
+	Links     linkDays
 }
 
 func NewPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -38,7 +38,7 @@ func NewPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	} else {
 		url, _ := user.LogoutURL(c, "/")
 		token := xsrftoken.Generate(GetFlagLogError(c, "SESSION_KEY"), u.String(), "/post/new")
-		links, err := Links(c, 250, true)
+		links, err := LinksByDay(c, 10)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
@@ -49,7 +49,8 @@ func NewPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			User:      u.String(),
 			Xsrf:      token,
 			IsAdmin:   user.IsAdmin(c),
-			Links:     links}
+			Links:     *links,
+		}
 		w.Render("new_post", responseData)
 	}
 }
