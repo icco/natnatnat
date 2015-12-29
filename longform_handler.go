@@ -105,10 +105,13 @@ func createPostFromLongformFile(c context.Context, dir string, file os.FileInfo,
 		return err
 	}
 
-	meta, err := cast.ToStringMapStringE(meta_uncast)
-	if err != nil {
-		log.Errorf(c, "Error casting metadata for %v: %v. Metadata: %+v", file.Name(), err.Error(), meta_uncast)
-		return err
+	meta := map[string]string{}
+	if meta_uncast != nil {
+		meta, err = cast.ToStringMapStringE(meta_uncast)
+		if err != nil {
+			log.Errorf(c, "Error casting metadata for %v: %v. Metadata: %+v", file.Name(), err.Error(), meta_uncast)
+			return err
+		}
 	}
 
 	// create entries for those that don't exist, update those that do
