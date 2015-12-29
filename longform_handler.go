@@ -92,7 +92,7 @@ func LongformWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		}
 		if _, err := os.Stat(dir + e.Longform); os.IsNotExist(err) {
 			log.Infof(c, "Post no longer exists: %v", e.Longform)
-			e.Delete()
+			e.Delete(c)
 		}
 	}
 }
