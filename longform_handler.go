@@ -89,25 +89,25 @@ func createPostFromLongformFile(c context.Context, dir string, file os.FileInfo,
 	f, err := os.Open(dir + file.Name())
 	defer f.Close()
 	if err != nil {
-		log.Errorf(c, "Error reading file: %v", err.Error())
+		log.Errorf(c, "Error opening file %v: %v", file.Name(), err.Error())
 		return err
 	}
 
 	// get the page from file
 	p, err := parser.ReadFrom(f)
 	if err != nil {
-		log.Errorf(c, "Error reading file: %v", err.Error())
+		log.Errorf(c, "Error parsing file %v: %v", file.Name(), err.Error())
 		return err
 	}
 	meta_uncast, err := p.Metadata()
 	if err != nil {
-		log.Errorf(c, "Error reading file: %v", err.Error())
+		log.Errorf(c, "Error getting metadata from %v: %v", file.Name(), err.Error())
 		return err
 	}
 
 	meta, err := cast.ToStringMapStringE(meta_uncast)
 	if err != nil {
-		log.Errorf(c, "Error reading file: %v", err.Error())
+		log.Errorf(c, "Error casting metadata for %v: %v. Metadata: %+v", file.Name(), err.Error(), meta_uncast)
 		return err
 	}
 
