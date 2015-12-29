@@ -83,6 +83,18 @@ func LongformWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			}
 		}
 	}
+
+	all_posts, err := LongformPosts(c)
+	for _, e := range all_posts {
+		dir := "./longform/posts/"
+		if e.Draft {
+			dir = "./longform/drafts/"
+		}
+		if _, err := os.Stat(dir + e.Longform); os.IsNotExist(err) {
+			log.Infof(c, "Post no longer exists: %v", e.Longform)
+			e.Delete()
+		}
+	}
 }
 
 func createPostFromLongformFile(c context.Context, dir string, file os.FileInfo, draft bool) error {
@@ -99,6 +111,7 @@ func createPostFromLongformFile(c context.Context, dir string, file os.FileInfo,
 		log.Errorf(c, "Error parsing file %v: %v", file.Name(), err.Error())
 		return err
 	}
+
 	meta_uncast, err := p.Metadata()
 	if err != nil {
 		log.Errorf(c, "Error getting metadata from %v: %v", file.Name(), err.Error())
