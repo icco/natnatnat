@@ -85,7 +85,7 @@ func LongformWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 
 	all_posts, err := LongformPosts(c)
-	for _, e := range all_posts {
+	for _, e := range *all_posts {
 		dir := "./longform/posts/"
 		if e.Draft {
 			dir = "./longform/drafts/"

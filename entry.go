@@ -158,7 +158,7 @@ func (e *Entry) Delete(c context.Context) error {
 	// Find the key
 	var err error
 	q := datastore.NewQuery("Entry").Filter("Id =", e.Id).Limit(1).KeysOnly()
-	k, err = q.Run(c).Next(nil)
+	k, err := q.Run(c).Next(nil)
 	if err != nil {
 		return err
 	}
