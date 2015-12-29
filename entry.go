@@ -154,6 +154,18 @@ func (e *Entry) HasId() bool {
 	return (e.Id > 0)
 }
 
+func (e *Entry) Delete(c context.Context) error {
+	// Find the key
+	var err error
+	q := datastore.NewQuery("Entry").Filter("Id =", e.Id).Limit(1).KeysOnly()
+	k, err = q.Run(c).Next(nil)
+	if err != nil {
+		return err
+	}
+
+	return datastore.Delete(c, k)
+}
+
 func (e *Entry) Save(c context.Context) error {
 	var k *datastore.Key
 	if !e.HasId() {
