@@ -106,13 +106,13 @@ func PostMarkdownHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 
 	// Define a template.
-	const md = `
----
+	const md = `---
 
 id: {{.Id}}
 datetime: {{.Datetime}}
-{{if .Longform}}longform: {{.Longform}}{{end}}
 title: {{if .Title}}{{.Title}}{{else}}#{{.Id}}{{end}}
+draft: {{.Draft}}
+{{if .Longform}}longform: {{.Longform}}{{end}}
 
 ---
 
