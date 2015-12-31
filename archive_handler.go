@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
 	"time"
@@ -161,7 +162,7 @@ func daysIn(m time.Month, year int) int {
 	return time.Date(year, m+1, 0, 0, 0, 0, 0, time.UTC).Day()
 }
 
-func PostsHandler(w traffic.ResponseWriter, r *traffic.Request) {
+func PostsJsonHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	urls := []string{}
 
@@ -177,4 +178,5 @@ func PostsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 
 	w.WriteJSON(urls)
+	return
 }

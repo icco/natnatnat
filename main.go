@@ -92,7 +92,7 @@ func init() {
 	router.Get("/post/:id.json", PostJsonHandler)
 	router.Get("/post/:id.md", PostMarkdownHandler)
 
-	router.Get("/posts.json", PostsJsonHandler)
+	router.Get("/posts.md.json", PostsJsonHandler)
 
 	router.Get("/edit/:id/?", EditPostGetHandler)
 	router.Post("/edit/:id/?", EditPostPostHandler)
