@@ -127,7 +127,9 @@ func LinksByDay(c context.Context, days int) (*linkDays, error) {
 	lds := linkDays(ds)
 	sort.Reverse(lds)
 
-	subset := lds[0:days]
+	if days > 0 && len(lds) > 0 {
+		lds = lds[0:days]
+	}
 
-	return &subset, nil
+	return &lds, nil
 }
