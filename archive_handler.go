@@ -48,7 +48,6 @@ func ArchiveTaskHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	log.Infof(c, "Retrieved data: %d.", len(*entries))
 
 	years := make(map[string]Year)
 
@@ -118,7 +117,6 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-	log.Infof(c, "Retrieved data: %d.", len(*entries))
 
 	// Get the item from the memcache
 	var years map[string]Year
@@ -161,4 +159,22 @@ func ArchiveHandler(w traffic.ResponseWriter, r *traffic.Request) {
 func daysIn(m time.Month, year int) int {
 	// This is equivalent to time.daysIn(m, year).
 	return time.Date(year, m+1, 0, 0, 0, 0, 0, time.UTC).Day()
+}
+
+func PostsHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	c := appengine.NewContext(r.Request)
+	urls := []string{}
+
+	entries, err := AllPosts(c)
+	if err != nil {
+		log.Errorf(c, err.Error())
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	for _, e := range *entries {
+		urls = append(urls, fmt.Sprintf("/post/%d", e.Id))
+	}
+
+	w.WriteJSON(urls)
 }
