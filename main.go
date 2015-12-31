@@ -89,6 +89,10 @@ func init() {
 	router.Post("/post/new/?", NewPostPostHandler)
 
 	router.Get("/post/:id/?", PostHandler)
+	router.Get("/post/:id.json", PostJsonHandler)
+	router.Get("/post/:id.md", PostMarkdownHandler)
+
+	router.Get("/posts.json", PostsJsonHandler)
 
 	router.Get("/edit/:id/?", EditPostGetHandler)
 	router.Post("/edit/:id/?", EditPostPostHandler)

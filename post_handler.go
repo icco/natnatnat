@@ -84,3 +84,28 @@ func DayHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	w.Render("day", responseData)
 	return
 }
+
+func PostMarkdownHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	c := appengine.NewContext(r.Request)
+	id, err := strconv.ParseInt(r.Param("id"), 10, 64)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	entry, err := GetEntry(c, id)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	if entry.Draft && !user.IsAdmin(c) {
+		http.Error(w, errors.New("Post is not public").Error(), 403)
+		return
+	} else {
+		w.WriteText(entry.Content)
+		return
+	}
+}
+
+func PostJsonHandler(w traffic.ResponseWriter, r *traffic.Request) {
+}
