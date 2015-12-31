@@ -9,6 +9,20 @@ time: 18:29:28
 
 https://zulip.com/#narrow/stream/programming/topic/writing.20bug-free.20code
 
+https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/32583.pdf
+
+https://www.blacksintechnology.net/google-site-reliability-engineering-reasoning-about-systems/
+
+http://www.oreilly.com/pub/e/2712
+
+http://sigops.org/sosp/sosp15/current/2015-Monterey/008-tang-online.pdf
+
+https://www.youtube.com/watch?v=4fFDFbi3toc
+
+https://plus.google.com/+MarcBevand/posts/fBfCsaXReH5
+
+
+
 Hey, this is a fantastic thread, lots of amazing discussion in here. I started writing this, and it turned into a bit of a rant... sorry about that... Everything below is my opinion based on my experience, but it jives with a lot of what’s above
 
 
