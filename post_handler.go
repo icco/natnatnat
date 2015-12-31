@@ -110,7 +110,7 @@ func PostMarkdownHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 id: {{.Id}}
 datetime: {{.Datetime}}
-title: {{if .Title}}{{.Title}}{{else}}#{{.Id}}{{end}}
+title: "{{if .Title}}{{.Title}}{{else}}#{{.Id}}{{end}}"
 draft: {{.Draft}}
 {{if .Longform}}longform: {{.Longform}}{{end}}
 
