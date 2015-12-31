@@ -174,7 +174,7 @@ func PostsJsonHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 
 	for _, e := range *entries {
-		urls = append(urls, fmt.Sprintf("/post/%d", e.Id))
+		urls = append(urls, fmt.Sprintf("/post/%d.md", e.Id))
 	}
 
 	w.WriteJSON(urls)

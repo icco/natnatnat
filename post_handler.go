@@ -1,9 +1,11 @@
 package main
 
 import (
+	"bytes"
 	"errors"
 	"net/http"
 	"strconv"
+	"text/template"
 	"time"
 
 	"google.golang.org/appengine"
@@ -101,10 +103,34 @@ func PostMarkdownHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	if entry.Draft && !user.IsAdmin(c) {
 		http.Error(w, errors.New("Post is not public").Error(), 403)
 		return
-	} else {
-		w.WriteText(entry.Content)
+	}
+
+	// Define a template.
+	const md = `
+---
+
+id: {{.Id}}
+datetime: {{.Datetime}}
+{{if .Longform}}longform: {{.Longform}}{{end}}
+title: {{if .Title}}{{.Title}}{{else}}#{{.Id}}{{end}}
+
+---
+
+{{.Content}}
+`
+
+	// Create a new template and parse the letter into it.
+	t := template.Must(template.New("post_md").Parse(md))
+
+	buf := new(bytes.Buffer)
+	err = t.Execute(buf, entry)
+	if err != nil {
+		http.Error(w, err.Error(), 500)
 		return
 	}
+
+	w.WriteText(buf.String())
+	return
 }
 
 func PostJsonHandler(w traffic.ResponseWriter, r *traffic.Request) {
