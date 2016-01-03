@@ -28,7 +28,7 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
   <div id="rendered"></div>
 </div>
 
-<div class="links">
+<div id="links" class="links">
   {{ range $pair := .Links}}
     <h2>{{$pair.Day}}</h2>
     <ul>
