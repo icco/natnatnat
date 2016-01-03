@@ -21,7 +21,9 @@
       {{ end }}
 
       <div class="markdown">
-        {{$entry.Content|mrkdwn}}
+        {{ $entry.Content|summary }}
+
+        <p><a href="/post/{{$entry.Id}}">more...</a></p>
       </div>
     </div>
   </div>
