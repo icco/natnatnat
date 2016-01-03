@@ -30,4 +30,13 @@ update:
 test: update build
 	$(GOAPP) test
 
-.PHONY: local assets clean deploy update build test
+new:
+	./longform/new_post.sh
+
+publish:
+	./longform/publish.sh
+
+drafts:
+	@ls longform/drafts/* | grep '-'
+
+.PHONY: local assets clean deploy update build test drafts publish new

@@ -3,7 +3,9 @@
 # Lists the posts to publish, then updates them and sends them live
 # @author Nat Welch 2011
 
-POSTS=$(ls drafts/* | grep '-' && echo 'exit');
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+POSTS=$(ls $SCRIPT_DIR/drafts/* | grep '-' && echo 'exit');
 
 echo "Publish which file?"
 
@@ -26,7 +28,7 @@ select opt in $POSTS; do
    else
      NEWT=`date +%Y-%m-%d`-`grep -P '^title: (.+)$' $opt | tr "[:upper:]" "[:lower:]" | sed 's/^title: //' | sed 's/ /-/g' | sed 's/[^A-Za-z0-9\-]//g'`
    fi
-   NEWT="posts/$NEWT.md"
+   NEWT="$SCRIPT_DIR/posts/$NEWT.md"
 
    echo "Publishing: $opt.";
 
