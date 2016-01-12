@@ -38,7 +38,7 @@ func NewPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	} else {
 		url, _ := user.LogoutURL(c, "/")
 		token := xsrftoken.Generate(GetFlagLogError(c, "SESSION_KEY"), u.String(), "/post/new")
-		links, err := LinksByDay(c, 10)
+		links, err := LinksByDay(c, 15)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
 			return
