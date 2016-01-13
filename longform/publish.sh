@@ -46,7 +46,7 @@ select opt in $POSTS; do
 
    # Commit Like a boss.
    echo "git ci $opt $NEWT -m \"Publishing $(basename $NEWT).\"";
-   git ci $opt $NEWT -m "Publishing $NEWT."
+   git ci $opt $NEWT -m "Publishing $(basename $NEWT)."
 
    exit 0;
 done;
