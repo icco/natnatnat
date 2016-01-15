@@ -238,7 +238,7 @@ func (e *Entry) Summary() string {
 
 func (e *Entry) PrevPost(c context.Context) string {
 	var entry Entry
-	q := datastore.NewQuery("Entry").Order("-Datetime").Filter("Datetime <", e.Datetime).Limit(1)
+	q := datastore.NewQuery("Entry").Order("-Datetime").Filter("Datetime <", e.Datetime).Filter("Draft =", false).Limit(1)
 	_, err := q.Run(c).Next(&entry)
 	if err != nil {
 		log.Infof(c, "Error getting previous post for %d.", e.Id)
@@ -250,7 +250,7 @@ func (e *Entry) PrevPost(c context.Context) string {
 
 func (e *Entry) NextPost(c context.Context) string {
 	var entry Entry
-	q := datastore.NewQuery("Entry").Order("Datetime").Filter("Datetime >", e.Datetime).Limit(1)
+	q := datastore.NewQuery("Entry").Order("Datetime").Filter("Datetime >", e.Datetime).Filter("Draft =", false).Limit(1)
 	_, err := q.Run(c).Next(&entry)
 	if err != nil {
 		log.Infof(c, "Error getting next post for %d.", e.Id)
