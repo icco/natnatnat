@@ -1,11 +1,13 @@
 #!/bin/bash
 # Creates a new post in the Jekyll format.
 
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
 read -p "Post title? " -e TITLE;
 DTITLE=`echo -n $TITLE | sed 's/ /-/g' | sed 's/[^A-Za-z0-9\-]//g' | tr "[:upper:]" "[:lower:]"`;
 DATE=`date +%Y-%m-%d`;
 TIME=`date +%H:%M:%S`;
-FILENAME=drafts/$DATE-$DTITLE.md
+FILENAME=$SCRIPT_DIR/drafts/$DATE-$DTITLE.md
 
 if [ -f $FILENAME ]; then
    echo "Editing \"" $TITLE "\"";

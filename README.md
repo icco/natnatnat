@@ -11,14 +11,14 @@ Docs: [godoc.org/github.com/icco/natnatnat](https://godoc.org/github.com/icco/na
 
 ## Install
 
-NOTE: Due to some changes in gulp, this whole pipeline is broken. I need to spend some time to fix, but haven't had a chance, sorry.
+These directions are for OSX and assume you have [homebrew](http://brew.sh/) installed. 
 
- 0. Install Go
  1. Download [the Google Go App Engine SDK](https://cloud.google.com/appengine/downloads#Google_App_Engine_SDK_for_Go).
  2. Extract the SDK into a folder, and assign the location of it to the variable in `GOAPP` in the Makefile
- 3. Install `npm`.
- 4. Run `npm install`.
- 5. Run `make`
+ 3. Run `brew bundle`
+ 3. Run `make update`
+ 5. Run `make` to run locally
+ 6. Run `make deploy` to deploy to Google App Engine.
 
 ## Design
 
@@ -66,9 +66,9 @@ I wrote posts about some of the process in these posts while I was at RC: [#164]
 ### IRC Convos
 
  * http://indiewebcamp.com/irc/2014-10-09/line/1412887317947
-   * http://indiewebcamp.com/irc/2014-10-09/line/1412888630804
-   * http://indiewebcamp.com/irc/2014-10-09/line/1412888100522
-   * http://indiewebcamp.com/irc/2014-10-09/line/1412887481931
+ * http://indiewebcamp.com/irc/2014-10-09/line/1412888630804
+ * http://indiewebcamp.com/irc/2014-10-09/line/1412888100522
+ * http://indiewebcamp.com/irc/2014-10-09/line/1412887481931
 
 ## Git DB Idea
 
@@ -82,7 +82,3 @@ I wrote posts about some of the process in these posts while I was at RC: [#164]
 When user visits `/post/new`, create a new post, and redirect user to `/edit/123` where 123 is a new private post. As user types, save updates periodically.
 
 Build an admin page that shows existing drafts.
-
-## Longform
-
- - Readfiles from disk, update db periodically from git

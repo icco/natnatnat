@@ -3,7 +3,9 @@
 # Lists the posts to publish, then updates them and sends them live
 # @author Nat Welch 2011
 
-POSTS=$(ls drafts/* | grep '-' && echo 'exit');
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+POSTS=$(ls $SCRIPT_DIR/drafts/* | grep '-' && echo 'exit');
 
 echo "Publish which file?"
 
@@ -26,7 +28,7 @@ select opt in $POSTS; do
    else
      NEWT=`date +%Y-%m-%d`-`grep -P '^title: (.+)$' $opt | tr "[:upper:]" "[:lower:]" | sed 's/^title: //' | sed 's/ /-/g' | sed 's/[^A-Za-z0-9\-]//g'`
    fi
-   NEWT="posts/$NEWT.md"
+   NEWT="$SCRIPT_DIR/posts/$NEWT.md"
 
    echo "Publishing: $opt.";
 
@@ -43,8 +45,8 @@ select opt in $POSTS; do
    sed -e "s/^time: .*$/time: `date +%H:%M:%S`/g" -i '' "$NEWT"
 
    # Commit Like a boss.
-   echo "git ci $opt $NEWT -m \"Publishing $NEWT.\"";
-   git ci $opt $NEWT -m "Publishing $NEWT."
+   echo "git ci $opt $NEWT -m \"Publishing $(basename $NEWT).\"";
+   git ci $opt $NEWT -m "Publishing $(basename $NEWT)."
 
    exit 0;
 done;
