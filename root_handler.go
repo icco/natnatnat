@@ -65,6 +65,10 @@ func UnimplementedHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	http.Error(w, "Sorry, I haven't implemented this yet", 500)
 }
 
+func RedirectHomeHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	http.Redirect(w, r.Request, "/", 302)
+}
+
 func CleanWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	q := datastore.NewQuery("Entry")

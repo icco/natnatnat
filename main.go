@@ -90,6 +90,7 @@ func init() {
 	router.Post("/longform/work", LongformWorkHandler)
 	router.Get("/longform.json", LongformJsonHandler)
 
+	router.Get("/post/?", RedirectHomeHandler)
 	router.Get("/post/new/?", NewPostGetHandler)
 	router.Post("/post/new/?", NewPostPostHandler)
 
