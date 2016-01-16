@@ -43,6 +43,10 @@ func markdown(str string) template.HTML {
 	return Markdown(str)
 }
 
+func summary(str string) template.HTML {
+	return Markdown(SummarizeText(str))
+}
+
 func monthToInt(m string) int {
 	for _, mnth := range Months {
 		if mnth.String() == m {
@@ -61,8 +65,9 @@ func init() {
 
 	traffic.TemplateFunc("fmttime", fmtTime)
 	traffic.TemplateFunc("jsontime", jsonTime)
-	traffic.TemplateFunc("mrkdwn", markdown)
 	traffic.TemplateFunc("m2i", monthToInt)
+	traffic.TemplateFunc("mrkdwn", markdown)
+	traffic.TemplateFunc("summary", summary)
 
 	router := traffic.New()
 	router.Get("/", RootHandler)

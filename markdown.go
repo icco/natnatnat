@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"net/http"
 	"regexp"
+	"strings"
 
 	"github.com/pilu/traffic"
 	"github.com/russross/blackfriday"
@@ -21,6 +22,12 @@ func Markdown(str string) template.HTML {
 	inc = hashTagsToMarkdown(inc)
 	s := blackfriday.MarkdownCommon(inc)
 	return template.HTML(s)
+}
+
+// Takes a chunk of markdown and just returns the first paragraph.
+func SummarizeText(str string) string {
+	out := strings.Split(str, "\n")
+	return out[0]
 }
 
 func twitterHandleToMarkdown(in []byte) []byte {
