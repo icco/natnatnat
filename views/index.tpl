@@ -23,7 +23,7 @@
       <div class="markdown">
         {{ $entry.Content|summary }}
 
-        <p><a href="/post/{{$entry.Id}}">more...</a></p>
+        <p><a href="/post/{{$entry.Id}}">Continue Reading...</a></p>
       </div>
     </div>
   </div>
