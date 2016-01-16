@@ -5,6 +5,7 @@ origin: http://pseudoweb.net/2008/09/18/portal-typography/
 layout: post
 title: Portal Typography
 wordpress_url: http://pseudoweb.net/?p=113
+time: 10:42:12
 
 ---
 I don't want to turn this into a favorite video's blog, but I really liked this one:

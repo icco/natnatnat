@@ -1,8 +1,11 @@
 ---
+
 layout: post
 title: On becoming a programmer
 location: San Luis Obispo, CA
 published: false
+time: 10:42:12
+
 ---
 
 I was digging around on an old hard drive of mine, and I found this quote. Not sure where it's from, besides the fact that the file was last written to on January 16th, 2010.

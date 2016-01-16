@@ -4,6 +4,7 @@ layout: post
 origin: http://pseudoweb.net/2010/01/30/the-black-perl/
 title: The Black Perl
 location: Linnaea's Cafe, San Luis Obispo, CA
+time: 10:42:12
 
 ---
 

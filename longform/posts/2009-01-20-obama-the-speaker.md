@@ -5,6 +5,7 @@ origin: http://pseudoweb.net/2009/01/20/obama-the-speaker/
 layout: post
 title: Obama, the speaker.
 wordpress_url: http://pseudoweb.net/?p=153
+time: 10:42:12
 
 ---
 <img src="http://farm4.static.flickr.com/3426/3212450709_4623ef1a43.jpg" alt="From Flickr" />

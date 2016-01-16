@@ -4,6 +4,7 @@ layout: post
 origin: http://pseudoweb.net/2010/02/14/learning-processing.js/
 title: Learning Processing.js
 location: San Luis Obispo, CA
+time: 10:42:12
 
 ---
 

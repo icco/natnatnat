@@ -5,6 +5,7 @@ origin: http://pseudoweb.net/2008/07/19/dr-horrible/
 layout: post
 title: Dr. Horrible
 wordpress_url: http://pseudoweb.net/?p=98
+time: 10:42:12
 
 ---
 <a href="/images/2008/07/picture-1.png"><img title="TopTVShows" src="/images/2008/07/picture-1.png" alt="The Top TV Shows on iTunes as of 7/19" width="204" height="259" /></a>

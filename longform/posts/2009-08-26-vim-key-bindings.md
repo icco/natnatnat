@@ -6,6 +6,7 @@ layout: post
 title: Vim Key Bindings
 wordpress_url: http://pseudoweb.net/?p=195
 location: San Luis Obipos, CA
+time: 10:42:12
 
 ---
 Hey there kiddos,

@@ -5,6 +5,7 @@ origin: http://pseudoweb.net/2008/07/18/techno-crack-lastfm/
 layout: post
 title: Music + Techno-Crack = Last.FM
 wordpress_url: http://pseudoweb.net/?p=95
+time: 10:42:12
 
 ---
 So you know what my favorite web 2.0 website is? <a title="Last.FM" href="http://last.fm" target="_blank">Last.FM</a> of course.

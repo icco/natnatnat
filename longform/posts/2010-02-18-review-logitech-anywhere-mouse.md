@@ -4,6 +4,7 @@ layout: post
 origin: http://pseudoweb.net/2010/02/18/review-logitech-anywhere-mouse/
 title: Review of the Logitech Anywhere Mouse
 location: San Luis Obispo, CA
+time: 10:42:12
 
 ---
 

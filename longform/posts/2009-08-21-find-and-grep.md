@@ -6,6 +6,7 @@ layout: post
 title: Find and Grep
 wordpress_url: http://pseudoweb.net/?p=173
 location: San Luis Obispo, CA
+time: 10:42:12
 
 ---
 My good friend <a href="http://www.prenticew.com">Prentice</a> posted a <a href="http://www.incognitomind.com/?p=339">blog entry about using grep recursively</a>. While I agree, this is pretty cool, I've recently fallen in love with using find to find things (what a crazy concept) in my code.

@@ -5,6 +5,7 @@ origin: http://pseudoweb.net/2008/11/25/communities/
 layout: post
 title: Communities
 wordpress_url: http://pseudoweb.net/?p=131
+time: 10:42:12
 
 ---
 I just read an amazing article on <a href="http://kotaku.com/">Kotaku </a>titled <a href="http://kotaku.com/5097355/i-gamer">"I,Gamer"</a>.

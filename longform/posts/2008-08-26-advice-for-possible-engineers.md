@@ -5,6 +5,7 @@ origin: http://pseudoweb.net/2008/08/26/advice-for-possible-engineers/
 layout: post
 title: Advice for Possible Engineers
 wordpress_url: http://pseudoweb.net/?p=103
+time: 10:42:12
 
 ---
 Ok so a friend sent me a message asking to help her brother decide if he wanted to go into engineering.

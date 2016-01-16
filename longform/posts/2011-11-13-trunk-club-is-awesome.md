@@ -5,6 +5,7 @@ layout: post
 title: Trunk Club is Awesome.
 location: San Francisco, CA
 published: true
+time: 10:42:12
 
 ---
 

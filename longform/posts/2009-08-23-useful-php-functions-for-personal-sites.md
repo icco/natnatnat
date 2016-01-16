@@ -5,6 +5,7 @@ origin: http://pseudoweb.net/2009/08/23/useful-php-functions-for-personal-sites/
 layout: post
 title: Useful PHP functions for personal sites
 wordpress_url: http://pseudoweb.net/?p=182
+time: 10:42:12
 
 ---
 I got the last two of my wisdom teeth pulled yesterday, and as such, I spent the day taking drugs, watching movies, and finally redoing <a href="http://natwelch.com">natwelch.com</a>.

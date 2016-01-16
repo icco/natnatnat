@@ -5,6 +5,7 @@ origin: http://pseudoweb.net/2007/07/30/the-future-of-the-bird/
 layout: post
 title: The Future of the Bird
 wordpress_url: http://pseudoweb.net/crypts/2007/07/70/
+time: 10:42:12
 
 ---
 

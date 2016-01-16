@@ -5,6 +5,7 @@ layout: post
 title: Advertising and the Heart
 location: San Francisco, CA
 published: true
+time: 10:42:12
 
 ---
 
