@@ -21,6 +21,7 @@ type EditPostPageData struct {
 	User      string
 	Xsrf      string
 	EditUrl   string
+	Links     linkDays
 }
 
 func EditPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -51,13 +52,21 @@ func EditPostGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	} else {
 		url, _ := user.LogoutURL(c, "/")
 		token := xsrftoken.Generate(GetFlagLogError(c, "SESSION_KEY"), u.String(), entry.EditUrl())
+		links, err := LinksByDay(c, 15)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+
 		responseData := &EditPostPageData{
 			LogoutUrl: url,
 			User:      u.String(),
 			Xsrf:      token,
+			Links:     *links,
 			IsAdmin:   user.IsAdmin(c),
 			EditUrl:   entry.EditUrl(),
-			Entry:     entry}
+			Entry:     entry,
+		}
 		w.Render("edit_post", responseData)
 	}
 }

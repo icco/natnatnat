@@ -28,4 +28,15 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
   <div id="rendered"></div>
 </div>
 
+<div id="links" class="links">
+  {{ range $pair := .Links}}
+    <h2>{{$pair.Day}}</h2>
+    <ul>
+      {{ range $l := (index $pair.Links)}}
+        <li class="link"><a class="adder" data-tags="{{$l.TagString}}">&plus;</a> &ndash; <a class="actual" href="{{$l.Url}}">{{$l.Title}}</a></li>
+      {{ end }}
+    </ul>
+  {{ end }}
+</div>
+
 {{ template "includes/footer" }}
