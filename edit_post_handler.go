@@ -106,6 +106,8 @@ func EditPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		xsrf := r.Request.FormValue("xsrf")
 		tags, err := ParseTags(content)
 		draft := r.Request.FormValue("draft") == "on"
+		date := r.Request.FormValue("date")
+
 		if err != nil {
 			log.Warningf(c, "Couldn't parse tags: %v", err)
 			tags = []string{}
@@ -126,6 +128,16 @@ func EditPostPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		entry.Tags = tags
 		entry.Content = content
 		entry.Draft = draft
+
+		// Mon Jan 2 15:04:05 -0700 MST 2006 is the required template time.
+		const longform = "2006-01-02 15:04:05.000000 -0700 MST"
+		datetime, err := time.Parse(longform, date)
+		if err != nil {
+			http.Error(w, err.Error(), 500)
+			return
+		}
+
+		entry.Datetime = datetime
 
 		err = entry.Save(c)
 		if err != nil {
