@@ -1,11 +1,30 @@
 ---
 
 layout: post
-title: Promoting Reliability
+title: Promoting Reliability in Web Software Companies
 location: Chester, CA
 time: 18:29:28
 
 ---
+
+The Internet is a really big and scary place. I have a drunken rant I sometimes go on, which is "how does the Internet even work?!?". I do this rant, because I am constantly surprised that societies second largest decision to work together (seconded only to fiat money and the World Bank) has worked for so long. 
+
+There are a lot of protocols that we as a society have agreed to, and if you follow them, things for the most part, just work. DNS, NAT, TCP, HTML, HTTP, BGP and SMTP are all examples of protocols that we have agreed to that just work, but are also easily taken advantage of by "bad actors". For example, in 2013, [large network traffic hijacks](http://research.dyn.com/2013/11/mitm-internet- hijacking/) happened to many cities in the US. Compare the red routes to the green route in this fun picture:
+
+![hijack](http://research.dyn.com/wp-content/uploads/2013/11/jim_blog_nov_2013_path1_wired-01-1024x496.jpg)
+
+The Dyn Research post has a lot more diagrams like this and an explanation as to what's happening. The best part about this is that [l0pht told congress about this vulnerability in 1993](https://www.youtube.com/watch?v=VVJldn_MmMY).
+
+
+## REASEARCH:
+
+https://www.technologyreview.com/s/540056/the-seemingly-unfixable-crack-in-the-internets-backbone/
+
+https://www.youtube.com/watch?v=y1OJlJ9COg0
+
+https://web.stanford.edu/class/msande91si/www-spr04/readings/week1/InternetWhitepaper.htm
+
+http://www.site-reliability-engineering.info/2014/04/what-is-site-reliability-engineering.html
 
 https://zulip.com/#narrow/stream/programming/topic/writing.20bug-free.20code
 
