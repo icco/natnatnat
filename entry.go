@@ -11,6 +11,7 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/log"
+	"google.golang.org/appengine/search"
 )
 
 type Entry struct {
@@ -22,8 +23,16 @@ type Entry struct {
 	Modified time.Time `json:"modified"`
 	Tags     []string  `json:"tags"`
 	Longform string    `json:"-"`
-	Public   bool      `json:"-"`
+	Public   bool      `json:"-"` // Deprecated
 	Draft    bool      `json:"-"`
+}
+
+type EntrySearch struct {
+	Id       float64
+	Title    string
+	Content  search.HTML
+	Datetime time.Time
+	Tags     string
 }
 
 func NewEntry(title string, content string, datetime time.Time, tags []string) *Entry {
@@ -148,6 +157,16 @@ func LongformPosts(c context.Context) (*[]Entry, error) {
 
 func RecentPosts(c context.Context) (*[]Entry, error) {
 	return Posts(c, 20, true)
+}
+
+func (e *Entry) SearchDoc() *EntrySearch {
+	return &EntrySearch{
+		Id:       float64(e.Id),
+		Title:    e.Title,
+		Content:  search.HTML(e.Html()),
+		Datetime: e.Datetime,
+		Tags:     strings.Join(e.Tags, ","),
+	}
 }
 
 func (e *Entry) HasId() bool {

@@ -129,6 +129,9 @@ func init() {
 	router.Post("/clean/work", CleanWorkHandler)
 	router.Get("/work/queue", WorkQueueHandler)
 
+	router.Get("/search", SearchHandler)
+	router.Post("/search/work", SearchWorkHandler)
+
 	router.AddBeforeFilter(HstsMiddleware)
 	router.Use(NewStaticMiddleware(traffic.PublicPath()))
 
