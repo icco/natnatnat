@@ -153,5 +153,14 @@ func WorkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 
+	// Delete some caches
+	hour, min, _ = time.Now().Clock()
+	if hour == 0 && (min > 0 && min < 20) {
+		err = memcache.Delete(c, "stats_data")
+		if err != nil {
+			log.Errorf(c, "Error cleaning stats cache: %v", err.Error())
+		}
+	}
+
 	fmt.Fprint(w, "success.\n")
 }
