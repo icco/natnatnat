@@ -8,16 +8,23 @@ import (
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/log"
 	"google.golang.org/appengine/search"
+	"google.golang.org/appengine/user"
 )
 
 // https://cloud.google.com/appengine/docs/go/search/query_strings
 // https://godoc.org/google.golang.org/appengine/search
 // https://cloud.google.com/appengine/docs/go/search
 
+type SearchData struct {
+	Count   int
+	IsAdmin bool
+}
+
 func SearchHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	s_val := r.Request.FormValue("s")
 
+	count := 0
 	if s_val != "" {
 		index, err := search.Open("entries")
 		if err != nil {
@@ -25,10 +32,14 @@ func SearchHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			return
 		}
 		iter := index.Search(c, s_val, nil)
-		log.Infof(c, "Search Results: %+v", iter)
+		count = iter.Count()
+		log.Infof(c, "Search Results for %+v: %+v", s_val, iter)
 	}
 
-	w.Render("search", nil)
+	w.Render("search", &SearchData{
+		Count:   count,
+		IsAdmin: user.IsAdmin(c),
+	})
 }
 
 func SearchWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
