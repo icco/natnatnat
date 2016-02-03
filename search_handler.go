@@ -2,6 +2,7 @@ package main
 
 import (
 	"net/http"
+	"strconv"
 
 	"github.com/pilu/traffic"
 	"google.golang.org/appengine"
@@ -41,13 +42,16 @@ func SearchWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	index, err := search.Open("entries")
 	if err != nil {
+		log.Errorf(c, err.Error())
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	for _, v := range *entries {
-		_, err = index.Put(c, string(v.Id), v)
+		_, err = index.Put(c, strconv.FormatInt(v.Id, 10), v.SearchDoc())
+		log.Infof(c, "Trying to put %+v: %+v", v.Id, strconv.FormatInt(v.Id, 10))
 		if err != nil {
+			log.Errorf(c, err.Error())
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
