@@ -154,6 +154,16 @@ func WorkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 
+	// Update the Search Index
+	t = taskqueue.NewPOSTTask("/search/work", url.Values{})
+	_, err = taskqueue.Add(c, t, "")
+
+	if err != nil {
+		log.Errorf(c, "Error queueing work: %v", err.Error())
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
 	// Delete some caches
 	hour, min, _ := time.Now().Clock()
 	if hour == 0 && (min > 0 && min < 20) {
