@@ -11,6 +11,7 @@ import (
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/log"
+	"google.golang.org/appengine/memcache"
 	"google.golang.org/appengine/taskqueue"
 	"google.golang.org/appengine/user"
 )
@@ -154,7 +155,7 @@ func WorkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 
 	// Delete some caches
-	hour, min, _ = time.Now().Clock()
+	hour, min, _ := time.Now().Clock()
 	if hour == 0 && (min > 0 && min < 20) {
 		err = memcache.Delete(c, "stats_data")
 		if err != nil {
