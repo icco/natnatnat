@@ -6,7 +6,7 @@
     <meta charset="utf-8">
 
     <!-- Meta SEO Shit -->
-    <meta name="description" content="The blog of Nathaniel 'Nat' Welch." />
+    <meta name="description" content="The blog of Nat Welch." />
     <meta name="author" content="Nat Welch">
 
     <!-- TODO: Auto add tags from post. -->
