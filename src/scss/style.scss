@@ -126,7 +126,7 @@ li.link {
   margin-top: 30px;
 }
 
-ul.inline {
+ul.inline, ul.sentence {
   li  {
     text-align: left;
     display: inline;
@@ -143,12 +143,14 @@ ul.inline {
     content: "";
   }
 
-  li:nth-last-child(2):after {
-    content: " & ";
-  }
-
   display: inline;
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+
+ul.sentence {
+  li:nth-last-child(2):after {
+    content: " & ";
+  }
 }
