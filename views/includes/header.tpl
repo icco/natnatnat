@@ -30,7 +30,7 @@
           <img src="/img/dots.png" class="v-mid mhn dib-ns phn w3" alt="Nat? Nat. Nat!">
           <div class="dib v-mid pan">
             <h1 class="man normal f2">Nat? Nat. Nat!</h1>
-            <div class="normal f3 man">
+            <div class="normal man">
               <ul class="inline">
                 <li class=""><a href="/about">About</a></li>
                 <li class=""><a href="/archives">Archives</a></li>
