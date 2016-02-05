@@ -8,15 +8,12 @@
   <div class="post">
     <div class="cf">
       <div class="fl dib tl">
-        #{{$entry.Id}} / <time datetime="{{$entry.Datetime|jsontime}}">{{$entry.Datetime|fmttime}}</time>
+        <h1 class="f1 mvn"><a href="/post/{{$entry.Id}}">{{$entry.Title}}</a></h1>
+        #{{ $entry.Id }} / <time datetime="{{ $entry.Datetime|jsontime }}">{{ $entry.Datetime|fmttime }}</time>
       </div>
     </div>
 
     <div class="post-content">
-      {{ if $entry.Title }}
-        <h1><a href="/post/{{$entry.Id}}">{{$entry.Title}}</a></h1>
-      {{ end }}
-
       <div class="markdown">
         {{ $entry.Content|summary }}
 

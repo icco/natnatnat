@@ -4,24 +4,19 @@
   {{ template "includes/header" printf "#%d" .Entry.Id }}
 {{ end }}
 
+{{ if .Entry.Draft }}
+<h2 class="mvm" style="color: red; font-weight: 800;">POST IS A DRAFT.</h2>
+{{ end }}
+
 <div class="post">
   <div class="cf">
     <div class="fl dib tl">
-      #{{.Entry.Id}}
-    </div>
-    <div class="fr dib tr">
-      <a href="/post/{{.Entry.Id}}"><time datetime="{{.Entry.Datetime|jsontime}}">{{.Entry.Datetime|fmttime}}</time></a>
+      <h1 class="f1 mvn"><a href="/post/{{.Entry.Id}}">{{.Entry.Title}}</a></h1>
+      #{{ .Entry.Id }} / <time datetime="{{ .Entry.Datetime|jsontime }}">{{ .Entry.Datetime|fmttime }}</time>
     </div>
   </div>
 
   <div class="post-content">
-    {{ if .Entry.Draft }}
-      <h2 class="mvm" style="color: red; font-weight: 800;">POST IS A DRAFT.</h2>
-    {{ end }}
-
-    {{ if .Entry.Title }}
-      <h1>{{.Entry.Title}}</h1>
-    {{ end }}
 
     <div class="markdown">
       {{.Entry.Content|mrkdwn}}

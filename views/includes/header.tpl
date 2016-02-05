@@ -23,14 +23,14 @@
     <link rel="http://webmention.org/" href="/mention" />
   </head>
   <body class="sans-serif pam">
-    <div class="mw7 mtm mbxl">
-      <header class="pas lh-title oh pos-rel">
+    <div class="mw7 mtm mbxl mlm">
+      <header class="pvxl oh pos-rel">
       <div class="dt wi-100">
         <div class="dtc wi-50 v-mid">
-          <img src="/img/dots.png" class="v-mid mhn dib-ns phn w3" alt="Nat? Nat. Nat!">
+          <img src="/img/dots.png" class="v-mid mhn dib-ns phn w4-ns w3" alt="Nat? Nat. Nat!">
           <div class="dib v-mid pan">
-            <h1 class="man normal f2">Nat? Nat. Nat!</h1>
-            <div class="normal man">
+            <h1 class="normal measure lh-copy man">Nat? Nat. Nat!</h1>
+            <div class="normal f4 man">
               <ul class="inline">
                 <li class=""><a href="/about">About</a></li>
                 <li class=""><a href="/archives">Archives</a></li>
