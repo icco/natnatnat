@@ -81,8 +81,12 @@ func CleanWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 
 	for _, p := range *entries {
+		// TODO: Figure out how to unset all public.
 		if &p.Draft == nil {
 			p.Draft = false
+		}
+		if len(p.Title) == 0 {
+			p.Title = fmt.Sprintf("Untitled #%d", p.Id)
 		}
 		p.Save(c)
 	}
