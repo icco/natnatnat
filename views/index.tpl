@@ -8,10 +8,7 @@
   <div class="post">
     <div class="cf">
       <div class="fl dib tl">
-        #{{$entry.Id}}
-      </div>
-      <div class="fr dib tr">
-        <a href="/post/{{$entry.Id}}"><time datetime="{{$entry.Datetime|jsontime}}">{{$entry.Datetime|fmttime}}</time></a>
+        #{{$entry.Id}} / <time datetime="{{$entry.Datetime|jsontime}}">{{$entry.Datetime|fmttime}}</time>
       </div>
     </div>
 
