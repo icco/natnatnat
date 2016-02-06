@@ -51,7 +51,18 @@ func RootHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		Prev:    pg - 1,
 	}
 
+	// If there are no posts left, don't show next button.
 	if len(*entries) == 0 {
+		data.Next = -1
+	}
+
+	// Get next page's posts so we don't show the next page if there is none.
+	nxt_entr, err := Pagination(c, perPage, int((pg+1)*perPage))
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	if len(*nxt_entr) == 0 {
 		data.Next = -1
 	}
 
