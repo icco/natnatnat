@@ -1,6 +1,6 @@
 {{ template "includes/header" }}
 
-<h1>About</h1>
+<h1 class="mtn">About</h1>
 
 <p><strong>Nat? Nat. Nat!</strong> is a blog by <a href="http://natwelch.com">Nat Welch</a> on topics of life, programming and popular culture. </p>
 
@@ -13,7 +13,7 @@
   <li><a href="http://tumble.io">http://tumble.io</a></li>
 </ul>
 
-<p>This blog is an artisinal <a href="https://golang.org/">Go</a> application hosted on <a href="https://cloud.google.com/appengine/">Google App Engine</a>. The source code can be found at https://github.com/icco/natnatnat.</p>
+<p>This blog is an artisanal <a href="https://golang.org/">Go</a> application hosted on <a href="https://cloud.google.com/appengine/">Google App Engine</a>. The source code can be found at https://github.com/icco/natnatnat.</p>
 
 <p>For commentary on the content of this blog, please either tweet at <a href="https://twitter.com/icco">@icco</a> or email <a href="mailto:nat@natwelch.com">nat@natwelch.com</a>.</p>
 
