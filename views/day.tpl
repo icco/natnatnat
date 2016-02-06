@@ -6,12 +6,7 @@
 
 {{ range $entry := .Posts }}
   <div class="post">
-    <div class="cf">
-      <div class="fl dib tl">
-        <h1 class="f1 mvn"><a href="/post/{{$entry.Id}}">{{$entry.Title}}</a></h1>
-        #{{ $entry.Id }} / <time datetime="{{ $entry.Datetime|jsontime }}">{{ $entry.Datetime|fmttime }}</time>
-      </div>
-    </div>
+    {{ template "includes/post_meta" $entry }}
 
     <div class="post-content">
       <div class="markdown">

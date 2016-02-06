@@ -9,15 +9,9 @@
 {{ end }}
 
 <div class="post">
-  <div class="cf">
-    <div class="fl dib tl">
-      <h1 class="f1 mvn"><a href="/post/{{.Entry.Id}}">{{.Entry.Title}}</a></h1>
-      #{{ .Entry.Id }} / <time datetime="{{ .Entry.Datetime|jsontime }}">{{ .Entry.Datetime|fmttime }}</time>
-    </div>
-  </div>
+  {{ template "includes/post_meta" .Entry }}
 
   <div class="post-content">
-
     <div class="markdown">
       {{.Entry.Content|mrkdwn}}
     </div>
