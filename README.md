@@ -11,7 +11,7 @@ Docs: [godoc.org/github.com/icco/natnatnat](https://godoc.org/github.com/icco/na
 
 ## Install
 
-These directions are for OSX and assume you have [homebrew](http://brew.sh/) installed. 
+These directions are for OSX and assume you have [homebrew](http://brew.sh/) installed.
 
  1. Download [the Google Go App Engine SDK](https://cloud.google.com/appengine/downloads#Google_App_Engine_SDK_for_Go).
  2. Extract the SDK into a folder, and assign the location of it to the variable in `GOAPP` in the Makefile
@@ -26,30 +26,53 @@ This site is hosted at <http://writing.natwelch.com>. For now, it will use Googl
 
 ### Database
 
-This is out of date... TODO: Copy down all tables.
+This uses Google Datastore to store structs. This makes it so you can only add columns and never remove them. We also write simpler versions of objects into the search indexes to that we can do full text search.
 
-So this system focuses around one gigantic database table for storing all entries.
-
- > Table Name: entries
- >  - id: unique id (integer...)
- >  - title: optional string
- >  - content: required string, markdown
- >  - datetime: required datetime
- >  - created: required datetime
- >  - modified: required datetime
- >  - tags: optional comma seperated list of tags
- >  - meta: json hash of extra data
+ - https://cloud.google.com/appengine/docs/go/datastore/reference
+ - https://cloud.google.com/appengine/docs/go/datastore/queries
+ - https://cloud.google.com/appengine/docs/go/search/
 
 ### Routes
 
 TODO: Update.
 
- * `/` - Welcome page. Contains list of five most recent posts and an about page.
- * `/mention` - http://indiewebcamp.com/webmention
- * `/post/new` - Special admin only page to create a new post
- * `/post/:id` - View an individual post and its related webmentions
+ * `/` -
+ * `/about` -
+ * `/admin/?` -
+ * `/aliases` -
+ * `/archive(s?)` -
+ * `/archive/work` -
+ * `/clean/work` -
+ * `/day/:year/:month/:day/?` -
+ * `/edit/:id/?` -
+ * `/edit/:id/?` -
  * `/feed.atom` - Atom feed of content
- * `/tags/:tag` - List of all posts with this tag
+ * `/feed.rss` - RSS feed of content
+ * `/images/:year/:month/:file` -
+ * `/link/work` -
+ * `/links` -
+ * `/longform.json` -
+ * `/longform/work` -
+ * `/md` -
+ * `/mention` - http://indiewebcamp.com/webmention
+ * `/page/:page/?` -
+ * `/post/:id/?` - View an individual post and its related webmentions
+ * `/post/:id/json` -
+ * `/post/:id/md` -
+ * `/post/?` -
+ * `/post/new/?` - Special admin only page to create a new post
+ * `/posts.json` -
+ * `/posts.md.json` -
+ * `/search/work` -
+ * `/search` -
+ * `/settings` -
+ * `/sitemap.xml` -
+ * `/stats` -
+ * `/summary.atom` -
+ * `/summary.rss` -
+ * `/tags/:id/?` - List of all posts with this tag
+ * `/tags/?` -
+ * `/work/queue` -
 
 ### Visual Design
 
@@ -69,16 +92,3 @@ I wrote posts about some of the process in these posts while I was at RC: [#164]
  * http://indiewebcamp.com/irc/2014-10-09/line/1412888630804
  * http://indiewebcamp.com/irc/2014-10-09/line/1412888100522
  * http://indiewebcamp.com/irc/2014-10-09/line/1412887481931
-
-## Git DB Idea
-
- * Creation: git log --diff-filter=A --follow --format=%aD -- main.go
- * Modified: git log --format=%aD -1 main.go
- * ID: filename
- * Tags: Hashtags
-
-## Draft Post Idea
-
-When user visits `/post/new`, create a new post, and redirect user to `/edit/123` where 123 is a new private post. As user types, save updates periodically.
-
-Build an admin page that shows existing drafts.

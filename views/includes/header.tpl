@@ -6,7 +6,7 @@
     <meta charset="utf-8">
 
     <!-- Meta SEO Shit -->
-    <meta name="description" content="The blog of Nathaniel 'Nat' Welch." />
+    <meta name="description" content="The blog of Nat Welch." />
     <meta name="author" content="Nat Welch">
 
     <!-- TODO: Auto add tags from post. -->
@@ -23,21 +23,26 @@
     <link rel="http://webmention.org/" href="/mention" />
   </head>
   <body class="sans-serif pam">
-    <div class="mw7 center mtm mbxl">
-      <header class="lh-title">
-      <div class="mw3 center">
-        <a href="/"><img src="/img/natwelchlogo.png" class="db" alt="Nat? Nat. Nat!"></a>
-      </div>
-      <div class="center mw5 tc mvm">
-        <ul class="f4 list pan man">
-          <li class="dib mas"><a href="/about">About</a></li>
-          <li class="dib mas"><a href="/archives">Archives</a></li>
-          <li class="dib mas"><a href="/stats">Stats</a></li>
-          <br /> <!-- Is there a better way to break this list? -->
-          <li class="dib mas"><a href="/tags">Tags</a></li>
-          <li class="dib mas"><a href="/links">Links</a></li>
-        </ul>
+    <div class="mw7 mtm mbxl mlm">
+      <header class="pbxl ptl oh pos-rel">
+      <div class="dt wi-100">
+        <div class="dtc wi-50 v-mid">
+          <a href="/"><img src="/img/dots.png" class="v-mid mhn dib-ns phn w4-ns w3" alt="Nat? Nat. Nat!"></a>
+          <div class="dib v-mid pan">
+            <a href="/" class="no-underline black"><h1 class="black normal measure lh-copy man">Nat? Nat. Nat!</h1></a>
+            <div class="normal f4 man">
+              <ul class="inline">
+                <li class=""><a href="/about">About</a></li>
+                <li class=""><a href="/archives">Archives</a></li>
+                <li class=""><a href="/stats">Stats</a></li>
+                <li class=""><a href="/tags">Tags</a></li>
+                <li class=""><a href="/links">Links</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
       </header>
+
       <div class="lh-copy">
         <div class="l-box">
