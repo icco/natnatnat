@@ -4,4 +4,3 @@
     #{{ .Id }} / <time datetime="{{ .Entry.Datetime|jsontime }}">{{ .Datetime|fmttime }}</time> / <a href="http://natwelch.com">Nat Welch</a>
   </div>
 </div>
-  {{ template "includes/post_meta" .Entry }}
