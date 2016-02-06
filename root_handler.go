@@ -70,7 +70,7 @@ func RootHandler(w traffic.ResponseWriter, r *traffic.Request) {
 }
 
 func AboutHandler(w traffic.ResponseWriter, r *traffic.Request) {
-	http.Redirect(w, r.Request, "http://natwelch.com", 301)
+	w.Render("about", nil)
 }
 
 func UnimplementedHandler(w traffic.ResponseWriter, r *traffic.Request) {
