@@ -4,7 +4,7 @@
 
 <p><strong>Nat? Nat. Nat!</strong> is a blog by <a href="http://natwelch.com">Nat Welch</a> on topics of life, programming and popular culture. </p>
 
-<p>Nat has been blogging since 2003 (discovered by looking at the whois records for the first website he built and wrote content for, <a href="http://lydiadehn.com">lydiadehn.com</a>), and has continuously brought forward his favorite posts. This domain, <a href="https://writing.natwelch.com">writing.natwelch.com</a> is the fifth iteration of his blog technology. The previous domains, in chronological order, were:</p>
+<p>Nat has been blogging since 2003 (discovered by looking at the whois records for the first website he built and wrote content for, <a href="http://lydiadehn.com">lydiadehn.com</a>), and has continuously brought forward his favorite posts. This domain, <a href="https://writing.natwelch.com">writing.natwelch.com</a>, is the fifth iteration of his blog technology. The previous domains, in chronological order, were:</p>
 
 <ul>
   <li><a href="http://icco.lydiadehn.com">icco.lydiadehn.com</a></li>
