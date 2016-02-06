@@ -24,7 +24,7 @@
   </head>
   <body class="sans-serif pam">
     <div class="mw7 mtm mbxl mlm">
-      <header class="pvxl oh pos-rel">
+      <header class="pbxl ptl oh pos-rel">
       <div class="dt wi-100">
         <div class="dtc wi-50 v-mid">
           <a href="/"><img src="/img/dots.png" class="v-mid mhn dib-ns phn w4-ns w3" alt="Nat? Nat. Nat!"></a>
