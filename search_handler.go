@@ -34,7 +34,6 @@ func SearchHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			return
 		}
 		iter := index.Search(c, s_val, nil)
-		log.Infof(c, "Search Results for %+v: %+v", s_val, iter)
 
 		for t := iter; ; {
 			var doc EntrySearch
@@ -48,7 +47,7 @@ func SearchHandler(w traffic.ResponseWriter, r *traffic.Request) {
 				return
 			}
 
-			log.Debugf(c, "%s -> %#v\n", id, doc)
+			log.Debugf(c, "%s -> %#v\n", id, doc.Title)
 
 			entry, err := GetEntry(c, int64(doc.Id))
 			if err != nil {
