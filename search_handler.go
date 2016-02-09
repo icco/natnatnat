@@ -17,6 +17,7 @@ import (
 
 type SearchData struct {
 	Count   int
+	Results *[]Entry
 	IsAdmin bool
 }
 
@@ -24,7 +25,8 @@ func SearchHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	s_val := r.Request.FormValue("s")
 
-	count := 0
+	results := []Entry{}
+
 	if s_val != "" {
 		index, err := search.Open("entries")
 		if err != nil {
@@ -32,13 +34,36 @@ func SearchHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			return
 		}
 		iter := index.Search(c, s_val, nil)
-		count = iter.Count()
 		log.Infof(c, "Search Results for %+v: %+v", s_val, iter)
+
+		for t := iter; ; {
+			var doc EntrySearch
+			id, err := t.Next(&doc)
+			if err == search.Done {
+				break
+			}
+			if err != nil {
+				log.Errorf(c, "Error iterating: %+v", err)
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+
+			log.Debugf(c, "%s -> %#v\n", id, doc)
+
+			entry, err := GetEntry(c, int64(doc.Id))
+			if err != nil {
+				log.Errorf(c, "Error getting entry: %+v", err)
+				http.Error(w, err.Error(), http.StatusInternalServerError)
+				return
+			}
+			results = append(results, *entry)
+		}
 	}
 
 	w.Render("search", &SearchData{
-		Count:   count,
+		Count:   len(results),
 		IsAdmin: user.IsAdmin(c),
+		Results: &results,
 	})
 }
 
