@@ -7,16 +7,25 @@ time: 18:29:28
 
 ---
 
-The Internet is a really big and scary place. I have a drunken rant I sometimes go on, which is "how does the Internet even work?!?". I do this rant, because I am constantly surprised that societies second largest decision to work together (seconded only to fiat money and the World Bank) has worked for so long. 
+Building a website is easy. Building a website that makes money is a little harder. Keeping your website up as you grow it can be very hard. I've heard many reasons for this. Sometimes it's because the company gained users faster than they could handle, because the developers are too junior, because the company needs an SRE, because there is too much technical debt, or one of many other excuses. After a conversation held at RC, I realized it is usually none of these things. Instead it is a lack of understanding and promoting production health inside the company.
 
-There are a lot of protocols that we as a society have agreed to, and if you follow them, things for the most part, just work. DNS, NAT, TCP, HTML, HTTP, BGP and SMTP are all examples of protocols that we have agreed to that just work, but are also easily taken advantage of by "bad actors". For example, in 2013, [large network traffic hijacks](http://research.dyn.com/2013/11/mitm-internet- hijacking/) happened to many cities in the US. Compare the red routes to the green route in this fun picture:
+What do I mean by "Production Health"? When I say production, I am referring to the software, and the infrastructure it runs on, that your customers see when they visit your website and interact with your product. This can be as simple as a few lines of Ruby running on a Heroku account, a PHP script running on a laptop in your parent's closet, or hundreds of thousands of lines of code from many languages running on thousands of computers in datacenters scattered around the world.
 
-![hijack](http://research.dyn.com/wp-content/uploads/2013/11/jim_blog_nov_2013_path1_wired-01-1024x496.jpg)
+My general rule of thumb is, if you need it to make money, or if people who aren't software developers use it, it is production.
 
-The Dyn Research post has a lot more diagrams like this and an explanation as to what's happening. The best part about this is that [l0pht told congress about this vulnerability in 1993](https://www.youtube.com/watch?v=VVJldn_MmMY).
+As for health, let's stick to the dictionary definition: "the state of being free from illness or injury."
 
+What does a healthy production look like? When you go to a doctor, they usually compare you to some ideal version of health right? You get a physical so a doctor can tell you what you need to improve, and what is fine.
 
-## REASEARCH:
+The first level is "can our customers use our product?" Often many people stop there. If the product is a simple web page or a small art project, you probably care about its health like you would a house plant. It's still green, I water it on occasion, people smile when they visit and see it. If it dies, I don't care too much, I'll just go buy another.
+
+But let's assume you want to get past this level of "it looks fine" to actually knowing how healthy something is. If you're a human, you often will start weighing yourself, watching what you eat, going to the gym and measuring your progress. With a website, you can do this as well, with a single word: Monitoring.
+
+ gif here?
+
+What do you monitor you ask? Well that's actually a complicated question, because it depends on what you consider important, often it's not just one thing.
+
+## RESEARCH:
 
 https://www.technologyreview.com/s/540056/the-seemingly-unfixable-crack-in-the-internets-backbone/
 
@@ -41,6 +50,7 @@ https://www.youtube.com/watch?v=4fFDFbi3toc
 https://plus.google.com/+MarcBevand/posts/fBfCsaXReH5
 
 
+It's often hard to convince stake holders in a business of the classic software maintance rule of thumb that [Software development is 80% maintanence](https://programmers.stackexchange.com/questions/47991/where-is-this-from-originally-80-of-the-lifetime-cost-of-a-piece-of-softwa).
 
 Hey, this is a fantastic thread, lots of amazing discussion in here. I started writing this, and it turned into a bit of a rant... sorry about that... Everything below is my opinion based on my experience, but it jives with a lot of what’s above
 
