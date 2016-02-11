@@ -21,13 +21,27 @@ The first level is "can our customers use our product?" Often many people stop t
 
 But let's assume you want to get past this level of "it looks fine" to actually knowing how healthy something is. If you're a human, you often will start weighing yourself, watching what you eat, going to the gym and measuring your progress. With a website, you can do this as well, with a single word: Monitoring.
 
- gif here?
+. . . gif here?
 
-What do you monitor you ask? Well that's actually a complicated question, because it depends on what you consider important, often it's not just one thing.
+What do you monitor you ask? Well that's actually a complicated question, because it depends on what you consider important, often it's not just one thing. A classic trio of things to monitor request rate, request duration and request error rate. These three aren't the end all be all of how to measure a service, but it's a decent place to start.
+
+## Production Culture
+
+So you've got some services, you're measuring them, maybe you've even got a few graphs you're checking out on occasion. What next?
+
+ - sharing metrics with coworkers
+ - using metrics to influence decisions
+ - using error ratios to determine how much risk you can take on
+
+
 
 ## RESEARCH:
 
 https://www.technologyreview.com/s/540056/the-seemingly-unfixable-crack-in-the-internets-backbone/
+
+http://peter.bourgon.org/blog/2016/02/07/logging-v-instrumentation.html
+
+https://twitter.com/LindsayofSF/status/692191001692237825
 
 https://www.youtube.com/watch?v=y1OJlJ9COg0
 
