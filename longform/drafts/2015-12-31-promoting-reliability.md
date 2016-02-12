@@ -7,9 +7,9 @@ time: 18:29:28
 
 ---
 
-Building a website is easy. Building a website that makes money is a little harder. Keeping your website up as you grow it can be very hard. I've heard many reasons for this. Sometimes it's because the company gained users faster than they could handle, because the developers are too junior, because the company needs an SRE, because there is too much technical debt, or one of many other excuses. After a conversation held at RC, I realized it is usually none of these things. Instead it is a lack of understanding and promoting production health inside the company.
+Building a website is easy. Building a website that makes money is a little harder. Keeping your website up as you grow it can be very hard. I've heard many reasons for this. Sometimes it's because the company gained users faster than they could handle, because the developers are too junior, because the company needs an SRE, because there is too much technical debt, or one of many other excuses. After a conversation I had at RC, I realized it is usually none of these things. Instead it is a lack of understanding and promoting production health inside a company.
 
-What do I mean by "Production Health"? When I say production, I am referring to the software, and the infrastructure it runs on, that your customers see when they visit your website and interact with your product. This can be as simple as a few lines of Ruby running on a Heroku account, a PHP script running on a laptop in your parent's closet, or hundreds of thousands of lines of code from many languages running on thousands of computers in datacenters scattered around the world.
+What do I mean by "Production Health"? When I say production, I am referring to the software, the infrastructure it runs on, and it's dependencies, that your customers see when they visit your website and interact with your product. This can be as simple as a few lines of Ruby running on a Heroku account, a PHP script running on a laptop in your parent's closet, or hundreds of thousands of lines of code from many languages running on thousands of computers in datacenters scattered around the world.
 
 My general rule of thumb is, if you need it to make money, or if people who aren't software developers use it, it is production.
 
@@ -19,11 +19,11 @@ What does a healthy production look like? When you go to a doctor, they usually 
 
 The first level is "can our customers use our product?" Often many people stop there. If the product is a simple web page or a small art project, you probably care about its health like you would a house plant. It's still green, I water it on occasion, people smile when they visit and see it. If it dies, I don't care too much, I'll just go buy another.
 
-But let's assume you want to get past this level of "it looks fine" to actually knowing how healthy something is. If you're a human, you often will start weighing yourself, watching what you eat, going to the gym and measuring your progress. With a website, you can do this as well, with a single word: Monitoring.
+But let's assume you want to get past this level of "it looks fine" to actually knowing how healthy something is. If you're a human, you often will start weighing yourself, watching what you eat, going to the gym and measuring your progress. With a website, you can do this as well with a single word: Monitoring.
 
 . . . gif here?
 
-What do you monitor you ask? Well that's actually a complicated question, because it depends on what you consider important, often it's not just one thing. A classic trio of things to monitor request rate, request duration and request error rate. These three aren't the end all be all of how to measure a service, but it's a decent place to start.
+What do you monitor you ask? Well that's actually a complicated question, because it depends on what you consider important, often it's not just one thing. A classic trio of things to monitor request rate, request duration and request error rate. These three aren't the end all be all of how to measure a service, but it's a decent place to start. But after you're monitoring those three basic things, it's time to start talking to your coworkers and figure out where to go from here.
 
 ## Production Culture
 
