@@ -27,7 +27,27 @@ What do you monitor you ask? Well that's actually a complicated question, becaus
 
 ## Production Culture
 
-So you've got some services, you're measuring them, maybe you've even got a few graphs you're checking out on occasion. What next?
+So you've got some services, you're measuring them, maybe you've even got a few graphs you're checking out on occasion. What is next? Next is the hard question, the one that brought me to write this article in the first place: How do you convince coworkers that production health and reliability are important?
+
+I'll be up front and honest: I'm not sure. I think this is one of the core problems with engineering cultures in companies right now. That being said I've had decent luck convincing people of some good practices to start having conversations around production health and reliability being a core tenant in culture.
+
+First step is to approach your product owner. Sometimes it's you, sometimes it's a product manager, sometimes it's an executive of some sort, and sometimes it's a third party customer. You walk up to them and ask "how do I know if the product is working?" It often takes time, but you can get to the most important metric for the product. The thing that, no matter what, says "yes, we are still ticking". This metric is often not a binary thing, but rather a value. Something along a scale, and if it's perfect, it's at one value, and as it changes, the system gets in worse and worse state. This is often called a Service Level Indicator, or SLI. A common path is to come up with a few, some may be the metrics you already graphed, others may be ones you didn't even think of.
+
+Graph those SLIs, and sit on them for a few weeks.
+
+Now come back to them, are the graphs consistent? Do inconsisencies match the times when you suffered degraded service to your customers? If not, then sit down and try and find a better metric. If yes, then this SLI is probably a good candidate to be a Service Level Objective or Agreement! 
+
+SLOs and SLAs are used differently depending on the oraganization. Often an SLA is a legal agreement, while an SLO is just a goal, but they both have the same idea: X% of the time, we will perform at a certain level.
+
+You often here people talk about this by saying a service has a certain number of nines. For instance, [Google Compute Engine says that](https://cloud.google.com/compute/sla) "the Covered Service will provide a Monthly Uptime Percentage to Customer of at least 99.95%". 99.95 is called three and a half nines of uptime over the last month. That equates to about twenty two minutes of downtime. So for twenty two minutes, every month, your SLI can be below your goal SLO. I've heard of some networking providers aim for six nines, which is about two and a half seconds of downtime per month, or about thirty seconds per year. 
+
+As you can imagine, the engineering effort needed between allowing for thirty minutes of downtime per month is a lot lower than making sure you don't have more than thirty seconds of downtime every year. This scale of difference is important when you start having a discussion about SLAs. You now know how your system performs normally, because you've been monitoring the SLI, and you have an idea of what is required to maintain that, because of the work you and your coworkers have been doing since you started measuring the SLI.
+
+But sometimes, you're asked to perform at a level you aren't already.
+
+ - making reliability and performance and production everyone's job
+ - performance budget
+ - 
 
  - sharing metrics with coworkers
  - using metrics to influence decisions
