@@ -111,18 +111,11 @@ The thing to remember is production health is everyone's responsibiltiy. Even if
 
 ## More on this topic
 
- - https://www.technologyreview.com/s/540056/the-seemingly-unfixable-crack-in-the-internets-backbone/
- - http://peter.bourgon.org/blog/2016/02/07/logging-v-instrumentation.html
- - https://twitter.com/LindsayofSF/status/692191001692237825
- - https://www.youtube.com/watch?v=y1OJlJ9COg0
- - https://web.stanford.edu/class/msande91si/www-spr04/readings/week1/InternetWhitepaper.htm
- - http://www.site-reliability-engineering.info/2014/04/what-is-site-reliability-engineering.html
- - https://zulip.com/#narrow/stream/programming/topic/writing.20bug-free.20code
- - https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/32583.pdf
- - https://www.blacksintechnology.net/google-site-reliability-engineering-reasoning-about-systems/
- - http://www.oreilly.com/pub/e/2712
- - http://sigops.org/sosp/sosp15/current/2015-Monterey/008-tang-online.pdf
- - https://www.youtube.com/watch?v=4fFDFbi3toc
- - https://plus.google.com/+MarcBevand/posts/fBfCsaXReH5
+ - [The Seemingly Unfixable Crack in the Internet’s Backbone](https://www.technologyreview.com/s/540056/the-seemingly-unfixable-crack-in-the-internets-backbone/) - a nice article that should scare you about how fragile the internet is.
+ - [Logging v. instrumentation](http://peter.bourgon.org/blog/2016/02/07/logging-v-instrumentation.html) - an article exploring how to get data about the health of your applications.
+ - [A tweet on monitoring philosophy](https://twitter.com/LindsayofSF/status/692191001692237825) by @LindsayofSF
+ - [How does the internet work?](https://web.stanford.edu/class/msande91si/www-spr04/readings/week1/InternetWhitepaper.htm) - a useful whitepaper for understanding everything outside of your system.
+ - [What is Site Reliability Engineering?](http://www.site-reliability-engineering.info/2014/04/what-is-site-reliability-engineering.html) - an interview with one of the fathers of SRE, Google's Ben Treynor.
+ - [Engineering Reliability into Web Sites: Google SRE](https://static.googleusercontent.com/media/research.google.com/en/pubs/archive/32583.pdf) - a slide deck on SRE by Alex Perry at Google.
 
 
