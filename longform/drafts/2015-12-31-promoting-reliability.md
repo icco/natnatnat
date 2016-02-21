@@ -32,23 +32,21 @@ But let's assume you want to get past this level of "it looks fine" to actually 
 
 ![wheee](http://cl.natw.me/fCos/d)
 
-What do you monitor you ask? Well that's actually a complicated question, because it depends on what you consider important, often it's not just one thing. A classic trio of things to monitor request rate, request duration and request error rate. These three aren't the end all be all of how to measure a service, but it's a decent place to start. But after you're monitoring those three basic things, it's time to start talking to your coworkers and figure out where to go from here.
+What do you monitor you ask? Well that's actually a complicated question, because it depends on what you consider important, and often it's not just one thing. A classic trio of things to monitor for websites are request rate, request duration and request error rate. These three aren't the end all be all of how to measure a service, but it's a decent place to start. But after you're monitoring those three basic things, it's time to start talking to your coworkers and figure out where to go from here.
 
-## Production Culture
+## SL{I,O,A}
 
-So you've got some services, you're measuring them, maybe you've even got a few graphs you're checking out on occasion. What is next? Next is the hard question, the one that brought me to write this article in the first place: How do you convince coworkers that production health and reliability are important?
-
-I'll be up front and honest: I'm not sure. I think this is one of the core problems with engineering cultures in companies right now. That being said I've had decent luck convincing people of some good practices to start having conversations around production health and reliability being a core tenant in culture.
+So you've got some services, you're measuring them, maybe you've even got a few graphs you're checking out on occasion. What is next? 
 
 First step is to approach your product owner. Sometimes it's you, sometimes it's a product manager, sometimes it's an executive of some sort, and sometimes it's a third party customer. You walk up to them and ask "how do I know if the product is working?" It often takes time, but you can get to the most important metric for the product. The thing that, no matter what, says "yes, we are still ticking". This metric is often not a binary thing, but rather a value. Something along a scale, and if it's perfect, it's at one value, and as it changes, the system gets in worse and worse state. This is often called a Service Level Indicator, or SLI. A common path is to come up with a few, some may be the metrics you already graphed, others may be ones you didn't even think of.
 
 Graph those SLIs, and sit on them for a few weeks.
 
-Now come back to them, are the graphs consistent? Do inconsisencies match the times when you suffered degraded service to your customers? If not, then sit down and try and find a better metric. If yes, then this SLI is probably a good candidate to be a Service Level Objective or Agreement!
+Now come back to them, are the graphs consistent? Do inconsisencies match the times when you suffered degraded service to your customers? If not, then sit down and try and find a better metric (or source for the data). If yes, then this SLI is probably a good candidate to be a Service Level Objective or Agreement!
 
-SLOs and SLAs are used differently depending on the oraganization. Often an SLA is a legal agreement, while an SLO is just a goal, but they both have the same idea: X% of the time, we will perform at a certain level.
+SLOs and SLAs are used differently depending on the oraganization. Often an SLA is a legal agreement, while an SLO is just a goal, but they both have the same idea: X% of the time, we will perform at a certain level (our SLI will be at or better than a specific value).
 
-You often here people talk about this by saying a service has a certain number of nines. For instance, [Google Compute Engine says that](https://cloud.google.com/compute/sla) "the Covered Service will provide a Monthly Uptime Percentage to Customer of at least 99.95%". 99.95 is called three and a half nines of uptime over the last month. That equates to about twenty two minutes of downtime. So for twenty two minutes, every month, your SLI can be below your goal value. I've heard of some networking providers aim for six nines, which is about two and a half seconds of downtime per month, or about thirty seconds per year.
+You often here people talk about this by saying a service has a certain number of nines. For instance, [Google Compute Engine says that](https://cloud.google.com/compute/sla) "the Covered Service will provide a Monthly Uptime Percentage to Customer of at least 99.95%". 99.95% is called three and a half nines of uptime over the last month. That equates to about twenty two minutes of downtime. So for twenty two minutes, every month, your SLI can be below your goal value. I've heard of some networking providers aim for six nines, which is about two and a half seconds of downtime per month, or about thirty seconds per year (also known as crazy talk).
 
 As you can imagine, the engineering effort needed between allowing for thirty minutes of downtime per month is a lot lower than making sure you don't have more than thirty seconds of downtime every year. This scale of difference is important when you start having a discussion about SLAs. You now know how your system performs normally, because you've been monitoring the SLI, and you have an idea of what is required to maintain that, because of the work you and your coworkers have been doing since you started measuring the SLI.
 
@@ -60,21 +58,44 @@ If you find that you aren't meeting your goal, there are often a few questions y
 
 If your dependency isn't meeting it's SLO, there isn't much you can do, unless you run it.  And then you need to figure out why it is failing (more about that in a second).
 
-If your dependency has a lower SLO than you, then you are asking for the impossible. For example, if you are running a service on Amazon EC2, and you are promissing your system will be up for four nines of the time, you are promissing more than your dependency's SLA. EC2 claims it will be up only for three and a half nines of the time, which makes it hard for your service to be any better than that.
+If your dependency has a lower SLO than you, then you are asking for the impossible. For example, if you are running a service on [Amazon EC2](https://aws.amazon.com/ec2/sla/), and you are promissing your system will be up for four nines of the time, you are promissing more than your dependency's SLA. EC2 claims it will be up only for three and a half nines of the time, which makes it hard for your service to be any better than that.
 
-### Postmortems and Outages
+## Postmortems and Outages
 
- - MTTR
- - Postmortem Templates
+When a service you run has an outage, priority number one should be getting it back to a healthy state. After that, there are some things to think about:
+
+ - What was the time to recovery? 
+
+This is the time between the service went down (not from when you noticed it was down) and the time the system recovered. A good goal for production health is minimize the mean time to recovery or MTTR. This often involves making things like rollbacks easy, or even automatic.
+
+ - Did we notice that things were broken? If not, how can we fix that?
+
+This is a big thing. Did our monitoring systems know things were broken? Did they tell someone (with an app like [pagerduty](https://www.pagerduty.com/) or with email or with a text message or something)? Did that someone respond to being alerted that things were broken? If no to any of these questions, put an action item on someone to fix it, if you care about the thing being broken.
+
+ - How can we prevent this type of outage in the future?
+
+This is often the most interesting part of the problem to me, and can lead to total over-engineering or serious bike-shedding discussions if you're not careful. But if this type of outage happens twice, it's usually time to start making sure it doesn't happen again.
+
+ - Should we write a postmortem?
+
+The rule at Google, as I understood it, was if someone (anyone) asks for a postmortem, you need to write one. I like this rule. But whatever rule of thumb you create, you should make sure everyone involved with the service understands it.
+
+Postmortems are a document where you write down what happened (usually with a timeline as specific as it can be (links to commits, emails, etc)), why those things happened (the root cause of the outage), and what you are going to do about it (action items). Often answering the previous questions are a great way to start coming up with action items.
+
+Then send the doc around. Make sure everyone involved in the incident agrees with what the doc says. Also, make sure the document does not point blame, but rather states things as they happened. It doesn't matter if someone broke production, no one should get fired over these things or be given a talking to or whatever. The point is to find systemic issues in the system, not make yourself feel better by saying how much someone else sucks. Finally send the doc around to your team, and store it somewhere you can read about it in the future.
+
+## Taking on some risk
+
  - DiRT
 
-### Taking on some risk
+## Culture
+
+Next is the hard question, the one that brought me to write this article in the first place: How do you convince coworkers that production health and reliability are important?
+
+I'll be up front and honest: I'm not sure. I think this is one of the core problems with engineering cultures in companies right now. That being said I've had decent luck convincing people of some good practices to start having conversations around production health and reliability being a core tenant in culture.
 
 
-
-
-
-
+A lot of times putting responsibility on people, asking them to be the person who responds first to an outage helps them understand and respect production, but it also helps people understand what are the stable things in the system and what are the broken things
 
 ## RESEARCH:
 
