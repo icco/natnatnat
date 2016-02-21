@@ -86,18 +86,30 @@ Then send the doc around. Make sure everyone involved in the incident agrees wit
 
 ## Taking on some risk
 
- - DiRT
+If you've been monitoring your service for a while, and it's doing well, I've got some good news for you: It's time to take that error budget for a spin. When you've been above your goal for a while (lets say you had 100% uptime the last three months), you can use that as an excuse to take on risk. You shouldn't take on risk for no reason, but a little risk let's you try new or overly dangerous things that you might not have done if you didn't know how stable your system was.
 
 ## Culture
 
 Next is the hard question, the one that brought me to write this article in the first place: How do you convince coworkers that production health and reliability are important?
 
-I'll be up front and honest: I'm not sure. I think this is one of the core problems with engineering cultures in companies right now. That being said I've had decent luck convincing people of some good practices to start having conversations around production health and reliability being a core tenant in culture.
+I'll be up front and honest: I am not sure. I think this is one of the core problems with engineering cultures in software companies right now. 
 
+A lot of times putting responsibility on people, asking them to be the person who responds first to an outage helps them understand and respect production. It also helps people understand what are the stable things in the system and what are the broken things. You want to get away from mentalities such as "operations can deal with that" or "I write features, I'm not a maintainer" or "I don't own that code any more, I don't care".
 
-A lot of times putting responsibility on people, asking them to be the person who responds first to an outage helps them understand and respect production, but it also helps people understand what are the stable things in the system and what are the broken things
+Keeping people involved with postmortems is another way to keep people interested. "The code broke this way, any suggestions on how we can fix that?"
 
-## RESEARCH:
+Kripa Krishnan wrote a great article called ["Weathering the Unexpected"](https://queue.acm.org/detail.cfm?id=2371516) which talks about Google's DiRT (Disaster Recovery Testing). This event is a week long event where you plan on taking down parts of the system or trying new things you might only do in the case of a disaster. Common tasks you might want to go through with your team: 
+
+ - Can we recover from a backup?
+ - What happens when the database goes away?
+ - Can we survive a DDoS attack?
+ - Can we start up the service in another data center?
+
+Create a safe scenario to test these questions, or others your teammates might have, and then do them! Watching things blow up or survive is exciting, and can often bring a team together.
+
+The thing to remember is production health is everyone's responsibiltiy. Even if you have a dedicated operations or site reliability engineering team, they can't be all seeing and all knowing. Making sure everyone feels comfortable changing production and responsible for production is key.
+
+## More on this topic
 
  - https://www.technologyreview.com/s/540056/the-seemingly-unfixable-crack-in-the-internets-backbone/
  - http://peter.bourgon.org/blog/2016/02/07/logging-v-instrumentation.html
