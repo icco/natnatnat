@@ -111,11 +111,12 @@ The thing to remember is production health is everyone's responsibiltiy. Even if
 
 ## More on this topic
 
- - [The Seemingly Unfixable Crack in the Internet’s Backbone](https://www.technologyreview.com/s/540056/the-seemingly-unfixable-crack-in-the-internets-backbone/) - a nice article that should scare you about how fragile the internet is.
+ - [What is Site Reliability Engineering?](http://www.site-reliability-engineering.info/2014/04/what-is-site-reliability-engineering.html) - an interview with one of the fathers of SRE, Google's Ben Treynor.
+ - [John Allspaw's Blog](http://www.kitchensoap.com/) - this blog is full of amazing articles on the topic of web operations. Highly recommend.
  - [Logging v. instrumentation](http://peter.bourgon.org/blog/2016/02/07/logging-v-instrumentation.html) - an article exploring how to get data about the health of your applications.
  - [A tweet on monitoring philosophy](https://twitter.com/LindsayofSF/status/692191001692237825) by @LindsayofSF
- - [How does the internet work?](https://web.stanford.edu/class/msande91si/www-spr04/readings/week1/InternetWhitepaper.htm) - a useful whitepaper for understanding everything outside of your system.
- - [What is Site Reliability Engineering?](http://www.site-reliability-engineering.info/2014/04/what-is-site-reliability-engineering.html) - an interview with one of the fathers of SRE, Google's Ben Treynor.
  - [Engineering Reliability into Web Sites: Google SRE](https://static.googleusercontent.com/media/research.google.com/en/pubs/archive/32583.pdf) - a slide deck on SRE by Alex Perry at Google.
+ - [The Seemingly Unfixable Crack in the Internet’s Backbone](https://www.technologyreview.com/s/540056/the-seemingly-unfixable-crack-in-the-internets-backbone/) - a nice article that should scare you about how fragile the internet is.
+ - [How does the internet work?](https://web.stanford.edu/class/msande91si/www-spr04/readings/week1/InternetWhitepaper.htm) - a useful whitepaper for understanding everything outside of your system.
 
 
