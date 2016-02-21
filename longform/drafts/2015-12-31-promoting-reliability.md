@@ -7,7 +7,16 @@ time: 18:29:28
 
 ---
 
-Building a website is easy. Building a website that makes money is a little harder. Keeping your website up as you grow it can be very hard. I've heard many reasons for this. Sometimes it's because the company gained users faster than they could handle, because the developers are too junior, because the company needs an SRE, because there is too much technical debt, or one of many other excuses. After a conversation I had at RC, I realized it is usually none of these things. Instead it is a lack of understanding and promoting production health inside a company.
+Building a website is easy. Building a website that makes money is a little harder. Keeping your website up as you grow it can be very hard. I have heard many reasons for this. The list of excuses I have heard include:
+
+ - because the company gained users faster than they could handle
+ - because the developers are too junior
+ - because the company needs an SRE
+ - because there is too much technical debt
+ - because we don't know how to scale
+ - _Technology X_ doesn't work for our use case anymore.
+
+After a conversation I had at RC, I came to a realization I've been dancing around a lot recent. The root problem isn't these things. Instead it is a lack of understanding of and promoting of production health inside a company.
 
 What do I mean by "Production Health"? When I say production, I am referring to the software, the infrastructure it runs on, and it's dependencies, that your customers see when they visit your website and interact with your product. This can be as simple as a few lines of Ruby running on a Heroku account, a PHP script running on a laptop in your parent's closet, or hundreds of thousands of lines of code from many languages running on thousands of computers in datacenters scattered around the world.
 
