@@ -1,7 +1,7 @@
 ---
 
 layout: post
-title: #tenbysix template
+title: the #tenbysix template
 location: Brooklyn, NY
 time: 01:49:54
 
