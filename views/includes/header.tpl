@@ -35,6 +35,7 @@
                 <li class=""><a href="/about">About</a></li>
                 <li class=""><a href="/archives">Archives</a></li>
                 <li class=""><a href="/stats">Stats</a></li>
+                <li class=""><a href="/search">Search</a></li>
                 <li class=""><a href="/tags">Tags</a></li>
                 <li class=""><a href="/links">Links</a></li>
               </ul>
