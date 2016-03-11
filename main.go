@@ -29,6 +29,16 @@ func fmtTime(t time.Time) string {
 	return t.Format(layout)
 }
 
+func inputTime(t time.Time) string {
+	const layout = "2006-01-02 15:04:05 -0700 MST"
+	return t.Format(layout)
+}
+
+func ParseInputTime(s string) (time.Time, error) {
+	const layout = "2006-01-02 15:04:05 -0700 MST"
+	return time.Parse(layout, s)
+}
+
 func jsonTime(t time.Time) string {
 	b, err := t.MarshalText()
 	if err != nil {
@@ -65,6 +75,7 @@ func init() {
 
 	traffic.TemplateFunc("fmttime", fmtTime)
 	traffic.TemplateFunc("jsontime", jsonTime)
+	traffic.TemplateFunc("inputtime", inputTime)
 	traffic.TemplateFunc("m2i", monthToInt)
 	traffic.TemplateFunc("mrkdwn", markdown)
 	traffic.TemplateFunc("summary", summary)

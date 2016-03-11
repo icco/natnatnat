@@ -13,7 +13,7 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
 
   <div class="cf">
     <input type="submit" class="btn pas mrm btn--blue" />
-    <input type="text" name="date" value="{{.Entry.Datetime}}" class="pas input-text w-50" />
+    <input type="text" name="date" value="{{.Entry.Datetime|inputtime}}" class="pas input-text w-50" />
     <label for="option-one" class="tr pas fr">
       <input id="option-one" type="checkbox" name="draft" {{if .Entry.Draft}}checked{{end}}>
       Draft?
