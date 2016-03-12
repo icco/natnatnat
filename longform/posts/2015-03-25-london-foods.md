@@ -14,7 +14,7 @@ After a year in London, I figured I'd write up the places I have eaten often and
 
  * [Dishoom](http://www.dishoom.com/)
 
-Amazing Indian food. The wait is usually long, but worth it. I lad some sort of slow cooked lamb that was out of this world.
+Amazing Indian food. The wait is usually long, but worth it. I had some sort of slow cooked lamb that was out of this world.
 
  * [Busaba Eathai](http://www.busaba.com/)
 
