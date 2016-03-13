@@ -8,6 +8,9 @@ window.onload = function() {
   var links = require('./js/link_adder.js');
   links();
 
+  var forms = require('./js/forms.js');
+  forms();
+
   var md = require('./js/markdown.js');
   md();
 };
