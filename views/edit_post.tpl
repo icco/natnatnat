@@ -40,4 +40,11 @@ Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
   {{ end }}
 </div>
 
+<script language="JavaScript">
+  window.onbeforeunload = confirmExit;
+  function confirmExit() {
+    return "You are in the process of editing a post.";
+  }
+</script>
+
 {{ template "includes/footer" }}
