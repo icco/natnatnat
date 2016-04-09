@@ -22,6 +22,8 @@ type StatsData struct {
 	IsAdmin      bool
 	LinksPerPost float64
 	LinksPerDay  float64
+	Years        []int
+	YearData     map[int][]float64
 }
 
 func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -39,10 +41,22 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		oldestPost := (*entries)[postCount-1]
 		dayCount := time.Since(oldestPost.Datetime).Hours() / 24.0
 
+		years := []int{}
+		yearData := make(map[int][]float64)
+		for i := oldestPost.Datetime.Year; i <= time.UTC().Year; i++ {
+			years = append(years, i)
+			yearData[i] = []float64{0.0}
+		}
+
 		words := 0
 		for _, p := range *entries {
 			words += len(strings.Fields(p.Content))
 			words += len(strings.Fields(p.Title))
+			yearData[p.Datetime.Year][0] += 1
+		}
+
+		for y := range years {
+			yearData[y][1] = yearData[y][0] / 52.0
 		}
 
 		links, err := AllLinks(c)
@@ -59,6 +73,8 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			WordsPerDay:  float64(words) / dayCount,
 			DaysSince:    dayCount,
 			LinksPerDay:  float64(readLinks) / dayCount,
+			Years:        years,
+			YearData:     yearData,
 		}
 
 		b, err := json.Marshal(data)
