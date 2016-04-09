@@ -47,6 +47,31 @@
   </div>
 </div>
 
+<!-- years -->
+{{ range $y := .Years }}
+  <div class="tc center">
+    <h2>{{ $y }}</h2>
+  </div>
+  <div class="lh-title tc dt">
+    <div class="dtr-ns db">
+      <div class="mw5-ns center tc pal dtc-ns">
+        <div class="f1">{{ printf "%.2f" (index $.YearData $y 0) }}</div>
+        <div class="book">Posts this year</div>
+      </div>
+
+      <div class="mw5-ns center tc pal dtc-ns">
+        <div class="f1">{{ printf "%.2f" (index $.YearData $y 1) }}</div>
+        <div class="book">Avg. posts per week</div>
+      </div>
+
+      <div class="mw5-ns center tc pal dtc-ns">
+        <div class="f1">{{ printf "%.2f" (index $.YearData $y 2) }}</div>
+        <div class="book">Links saved</div>
+      </div>
+    </div>
+  </div>
+{{ end }}
+
 <div id="statsgraph">
   <!-- TODO -->
 </div>

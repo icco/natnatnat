@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+	"strconv"
 	"strings"
 	"time"
 
@@ -22,15 +23,15 @@ type StatsData struct {
 	IsAdmin      bool
 	LinksPerPost float64
 	LinksPerDay  float64
-	Years        []int
-	YearData     map[int][]float64
+	Years        []string
+	YearData     map[string][]float64
 }
 
 func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 
 	var data *StatsData
-	if json_data, err := memcache.Get(c, "stats_data"); err == memcache.ErrCacheMiss {
+	if json_data, err := memcache.Get(c, "stats-data"); err == memcache.ErrCacheMiss {
 		entries, err := AllPosts(c)
 		if err != nil {
 			http.Error(w, err.Error(), 500)
@@ -41,21 +42,23 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		oldestPost := (*entries)[postCount-1]
 		dayCount := time.Since(oldestPost.Datetime).Hours() / 24.0
 
-		years := []int{}
-		yearData := make(map[int][]float64)
-		for i := oldestPost.Datetime.Year; i <= time.UTC().Year; i++ {
-			years = append(years, i)
-			yearData[i] = []float64{0.0}
+		years := []string{}
+		yearData := make(map[string][]float64)
+		for i := time.Now().Year(); i >= oldestPost.Datetime.Year(); i-- {
+			years = append(years, strconv.Itoa(i))
+			yearData[strconv.Itoa(i)] = []float64{0.0, 0.0, 0.0}
 		}
 
 		words := 0
 		for _, p := range *entries {
 			words += len(strings.Fields(p.Content))
 			words += len(strings.Fields(p.Title))
-			yearData[p.Datetime.Year][0] += 1
+			yearData[strconv.Itoa(p.Datetime.Year())][0] += 1
 		}
 
-		for y := range years {
+		// log.Infof(c, "%+v", years)
+		for _, y := range years {
+			// log.Infof(c, "%d: %+v", y, yearData[y])
 			yearData[y][1] = yearData[y][0] / 52.0
 		}
 
@@ -65,6 +68,10 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			return
 		}
 		readLinks := len(*links)
+
+		for _, l := range *links {
+			yearData[strconv.Itoa(l.Posted.Year())][2] += 1
+		}
 
 		data = &StatsData{
 			Posts:        postCount,
@@ -81,9 +88,10 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		if err != nil {
 			log.Errorf(c, err.Error())
 			http.Error(w, err.Error(), 500)
+			return
 		}
 		item := &memcache.Item{
-			Key:   "stats_data",
+			Key:   "stats-data",
 			Value: b,
 		}
 
