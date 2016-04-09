@@ -24,8 +24,18 @@ deploy:
 
 update:
 	rm -rf node_modules
-	-npm install
-	-$(GOAPP) get -d -u -v ...
+	npm install
+	../go_appengine/goapp get -d -v github.com/gorilla/feeds
+	../go_appengine/goapp get -d -v github.com/gorilla/sessions
+	../go_appengine/goapp get -d -v github.com/icco/xsrftoken
+	../go_appengine/goapp get -d -v github.com/kennygrant/sanitize
+	../go_appengine/goapp get -d -v github.com/pilu/traffic
+	../go_appengine/goapp get -d -v github.com/russross/blackfriday
+	../go_appengine/goapp get -d -v github.com/spf13/cast
+	../go_appengine/goapp get -d -v github.com/spf13/hugo/parser
+	../go_appengine/goapp get -d -v google.golang.org/appengine/search
+	../go_appengine/goapp get -d -v google.golang.org/appengine/taskqueue
+	../go_appengine/goapp get -d -v google.golang.org/appengine/user
 
 test: update build
 	$(GOAPP) test
