@@ -28,4 +28,7 @@
   </ul>
 </div>
 
+<!-- trying out genius annotations -->
+<script async src="//genius.codes"></script>
+
 {{ template "includes/footer" }}
