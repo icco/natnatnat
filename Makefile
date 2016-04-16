@@ -4,6 +4,7 @@ PID = tmp/server.pid
 
 GOAPP=../go_appengine/goapp
 DEVAPPSERVER=../go_appengine/dev_appserver.py
+VERSION := $(shell date +%Y%m%d-%H%M)
 
 local: clean assets build
 	$(DEVAPPSERVER) --log_level=debug --clear_datastore=true app.yaml
@@ -19,8 +20,9 @@ clean:
 	rm -f $(PID)
 
 deploy:
-	git push
-	$(GOAPP) deploy -application=natwelch-writing -version=$(shell date +%Y%m%d-%H%M)
+	git tag -a $(VERSION) -m "Release version: $(VERSION)"
+	git push && git push origin $(VERSION)
+	$(GOAPP) deploy -application=natwelch-writing -version=$(VERSION)
 
 update:
 	rm -rf node_modules
