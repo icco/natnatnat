@@ -19,6 +19,7 @@ type SearchData struct {
 	Count   int
 	Results *[]Entry
 	IsAdmin bool
+	Query   string
 }
 
 func SearchHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -63,6 +64,7 @@ func SearchHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		Count:   len(results),
 		IsAdmin: user.IsAdmin(c),
 		Results: &results,
+		Query:   s_val,
 	})
 }
 

@@ -1,7 +1,7 @@
 {{ template "includes/header" "Search" }}
 
 <form>
-  <input type="text" name="s" class="f3 semibold input-text plm pvm db ba black-80 b--black-20 w-100 bg-black-05 bg-black-10-focus" />
+  <input type="text" name="s" class="f3 semibold input-text plm pvm db ba black-80 b--black-20 w-100 bg-black-05 bg-black-10-focus" value="{{ .Query }}" />
   <input type="submit" class="input-text bg-black-05 pam brs semibold ba b--black-20 ttu tracked-mega bg-black-10-focus mvs" value="Search" />
 </form>
 
