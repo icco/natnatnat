@@ -4,7 +4,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 */
 
-.hljs {
+.hljs, .language-shell {
   display: block;
   overflow-x: scroll;
   padding: 0.5em;
