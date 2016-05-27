@@ -8,7 +8,7 @@
 <h2 class="mvm" style="color: red; font-weight: 800;">POST IS A DRAFT.</h2>
 {{ end }}
 
-<div class="post">
+<article class="post">
   {{ template "includes/post_meta" .Entry }}
 
   <div class="post-content">
@@ -19,7 +19,7 @@
 
   <div class="addons">
   </div>
-</div>
+</article>
 
 <div class="post-nav f2">
   <ul class="pager">
