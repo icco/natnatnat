@@ -10,6 +10,7 @@
           </ul>
         </div>
       </div>
+      <script async defer src="https://www.recurse-scout.com/loader.js?t=1a20cf01214e4c5923ab6ebd6c0f8f18"></script>
     </div> <!-- /.wrap -->
 
     <script>
