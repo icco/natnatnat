@@ -92,7 +92,7 @@ type LinkPageData struct {
 
 func LinkPageGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	lds, err := LinksByDay(c, 90)
+	lds, err := LinksByDay(c, 30)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
