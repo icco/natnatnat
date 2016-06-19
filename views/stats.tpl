@@ -55,7 +55,7 @@
   <div class="lh-title tc dt">
     <div class="dtr-ns db">
       <div class="mw5-ns center tc pal dtc-ns">
-        <div class="f1">{{ printf "%d" (index $.YearData $y 0) }}</div>
+        <div class="f1">{{ printf "%f" (index $.YearData $y 0) }}</div>
         <div class="book">Posts this year</div>
       </div>
 
@@ -65,7 +65,7 @@
       </div>
 
       <div class="mw5-ns center tc pal dtc-ns">
-        <div class="f1">{{ printf "%d" (index $.YearData $y 2) }}</div>
+        <div class="f1">{{ printf "%f" (index $.YearData $y 2) }}</div>
         <div class="book">Links saved</div>
       </div>
     </div>
