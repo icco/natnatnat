@@ -19,6 +19,8 @@ clean:
 	rm -f natnatnat
 	rm -f $(PID)
 
+release: deploy
+
 deploy:
 	git tag -a $(VERSION) -m "Release version: $(VERSION)"
 	git push && git push origin $(VERSION)
