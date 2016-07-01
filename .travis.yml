@@ -1,25 +1,19 @@
 # https://docs.travis-ci.com/user/languages/go
 language: go
-go:
-  - "1.5.1"
-  - "1.6.2"
-  - tip
+sudo: false
 
-# Set it up
+# https://cloud.google.com/appengine/docs/go/release-notes
+# the golang version should match the version in the pkg
+go:
+  - "1.6.2"
 install:
  - curl -O https://storage.googleapis.com/appengine-sdks/featured/go_appengine_sdk_linux_amd64-1.9.38.zip
  - unzip -q go_appengine_sdk_linux_amd64-1.9.30
  - mv go_appengine ..
  - ../go_appengine/goapp env
-
-# run build
 script:
  - make test
-
 notifications:
   email:
     on_success: never
     on_failure: change
-
-# Containers
-sudo: false
