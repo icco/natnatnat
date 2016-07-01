@@ -2,6 +2,6 @@ cron:
 - description: Queue all of the work
   url: /work/queue
   schedule: every 1 hours
-- retry_parameters:
-  job_retry_limit: 2
-  job_age_limit: 10m
+  retry_parameters:
+    job_retry_limit: 2
+    job_age_limit: 10m
