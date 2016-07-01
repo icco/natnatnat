@@ -104,7 +104,7 @@ func (p linkDays) HasDate(day time.Time) int {
 }
 
 func LinksByDay(c context.Context, days int) (*linkDays, error) {
-	links, err := AllLinks(c)
+	links, err := Links(c, days*50, true)
 	if err != nil {
 		return nil, err
 	}
