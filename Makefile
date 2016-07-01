@@ -26,9 +26,13 @@ deploy:
 	git push && git push origin $(VERSION)
 	$(GOAPP) deploy -application=natwelch-writing -version=$(VERSION)
 
-update:
+update: npm godeps
+
+npm:
 	rm -rf node_modules
 	npm install
+
+godeps:
 	../go_appengine/goapp get -d -v github.com/gorilla/feeds
 	../go_appengine/goapp get -d -v github.com/gorilla/sessions
 	../go_appengine/goapp get -d -v github.com/icco/xsrftoken
@@ -41,7 +45,7 @@ update:
 	../go_appengine/goapp get -d -v google.golang.org/appengine/taskqueue
 	../go_appengine/goapp get -d -v google.golang.org/appengine/user
 
-test: update build
+test: godeps build
 	$(GOAPP) test
 
 new:
