@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/pilu/traffic"
 	"google.golang.org/appengine"
@@ -22,9 +24,24 @@ type SearchData struct {
 	Query   string
 }
 
+const spaceChars = "!\"%()*,-|/[]]^`:=>?@{}~$"
+
 func SearchHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	s_val := r.Request.FormValue("s")
+	orig_s_val := r.Request.FormValue("s")
+	s_val := orig_s_val
+
+	spaceArray := strings.Split(spaceChars, "")
+
+	for _, c := range spaceArray {
+		s_val = strings.Replace(s_val, c, " ", -1)
+	}
+	s_val = strings.ToLower(s_val)
+	s_val = strings.TrimSpace(s_val)
+
+	if s_val != orig_s_val {
+		http.Redirect(w, r.Request, fmt.Sprintf("/search?s=%s", s_val), 301)
+	}
 
 	results := []Entry{}
 
