@@ -25,11 +25,13 @@ func PostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	id, err := strconv.ParseInt(r.Param("id"), 10, 64)
 	if err != nil {
-		http.Error(w, err.Error(), 500)
+		log.Errorf(c, "Error parsing int: %+v", err)
+		http.Redirect(w, r.Request, "/", 302)
 		return
 	}
 	entry, err := GetEntry(c, id)
 	if err != nil {
+		log.Errorf(c, "Error loading post: %+v", err)
 		http.Error(w, err.Error(), 500)
 		return
 	}
