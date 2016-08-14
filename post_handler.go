@@ -8,10 +8,10 @@ import (
 	"text/template"
 	"time"
 
-	"google.golang.org/appengine"
-	"google.golang.org/appengine/user"
-
 	"github.com/pilu/traffic"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/log"
+	"google.golang.org/appengine/user"
 )
 
 type ResponseData struct {

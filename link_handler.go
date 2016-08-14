@@ -10,6 +10,7 @@ import (
 
 	"github.com/pilu/traffic"
 	"google.golang.org/appengine"
+	"google.golang.org/appengine/log"
 	"google.golang.org/appengine/urlfetch"
 	"google.golang.org/appengine/user"
 )
