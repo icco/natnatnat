@@ -12,6 +12,10 @@
     <!-- TODO: Auto add tags from post. -->
     <meta name="keywords" content="Nat, welch, natwelch, nathaniel, nathanielwelch, dehn, code, student, developer, software, writing" />
 
+    <!-- Scripts! -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js" type="text/javascript"></script>
     <script src="/js/nat.min.js?v=20160814" type="text/javascript"></script>
 
     <!-- Feeds! -->
