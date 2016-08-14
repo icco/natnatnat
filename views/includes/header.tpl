@@ -12,7 +12,7 @@
     <!-- TODO: Auto add tags from post. -->
     <meta name="keywords" content="Nat, welch, natwelch, nathaniel, nathanielwelch, dehn, code, student, developer, software, writing" />
 
-    <script src="/js/bundle.js?v=20160312" type="text/javascript"></script>
+    <script src="/js/nat.min.js?v=20160814" type="text/javascript"></script>
 
     <!-- Feeds! -->
     <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.rss" />

@@ -13,7 +13,7 @@ build:
 	$(GOAPP) build
 
 assets:
-	./node_modules/webpack/bin/webpack.js -p
+	./node_modules/uglify-js/bin/uglifyjs src/js/*.js -o public/js/nat.min.js --source-map public/js/nat.min.js.map --source-map-root https://writing.natwelch.com/src/ -p 5 -c -m
 
 clean:
 	rm -f natnatnat
