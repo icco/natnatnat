@@ -34,6 +34,7 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	if json_data, err := memcache.Get(c, "stats-data"); err == memcache.ErrCacheMiss {
 		entries, err := AllPosts(c)
 		if err != nil {
+			log.Errorf(c, "Error loading posts: %+v", err)
 			http.Error(w, err.Error(), 500)
 			return
 		}
@@ -56,14 +57,13 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			yearData[strconv.Itoa(p.Datetime.Year())][0] += 1
 		}
 
-		// log.Infof(c, "%+v", years)
 		for _, y := range years {
-			// log.Infof(c, "%d: %+v", y, yearData[y])
 			yearData[y][1] = yearData[y][0] / 52.0
 		}
 
 		links, err := AllLinks(c)
 		if err != nil {
+			log.Errorf(c, "Error loading links: %+v", err)
 			http.Error(w, err.Error(), 500)
 			return
 		}
@@ -118,6 +118,7 @@ func StatsHistoryJsonHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	entries, err := AllPosts(c)
 	if err != nil {
+		log.Errorf(c, "Error loading posts: %+v", err)
 		http.Error(w, err.Error(), 500)
 		return
 	}
