@@ -72,12 +72,10 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			}
 			if err != nil {
 				log.Errorf(c, "Error loading link: %+v", err)
-				http.Error(w, err.Error(), 500)
-				return
+			} else {
+				readLinks += 1
+				yearData[strconv.Itoa(l.Posted.Year())][2] += 1
 			}
-
-			readLinks += 1
-			yearData[strconv.Itoa(l.Posted.Year())][2] += 1
 		}
 
 		data = &StatsData{
