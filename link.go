@@ -60,22 +60,22 @@ func (e *Link) Save(c context.Context) error {
 	return err
 }
 
-func AllLinks(c context.Context) (*[]Link, error) {
-	return Links(c, -1, true)
-}
-
-func Links(c context.Context, limit int, recentFirst bool) (*[]Link, error) {
+func LinkQuery(c context.Context, limit int, recentFirst bool) *datastore.Query {
 	q := datastore.NewQuery("Link")
 
 	if recentFirst {
 		q = q.Order("-Posted")
-	} else {
-		q = q.Order("Posted")
 	}
 
 	if limit > 0 {
 		q = q.Limit(limit)
 	}
+
+	return q
+}
+
+func Links(c context.Context, limit int, recentFirst bool) (*[]Link, error) {
+	q := LinkQuery(c, limit, recentFirst)
 
 	links := new([]Link)
 	_, err := q.GetAll(c, links)

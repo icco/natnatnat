@@ -9,6 +9,7 @@ import (
 
 	"github.com/pilu/traffic"
 	"google.golang.org/appengine"
+	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/log"
 	"google.golang.org/appengine/memcache"
 	"google.golang.org/appengine/user"
@@ -61,15 +62,21 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			yearData[y][1] = yearData[y][0] / 52.0
 		}
 
-		links, err := AllLinks(c)
-		if err != nil {
-			log.Errorf(c, "Error loading links: %+v", err)
-			http.Error(w, err.Error(), 500)
-			return
-		}
-		readLinks := len(*links)
+		readLinks := 0
+		q := LinkQuery(c, -1, true)
+		for t := q.Run(c); ; {
+			var l Link
+			_, err := t.Next(&l)
+			if err == datastore.Done {
+				break
+			}
+			if err != nil {
+				log.Errorf(c, "Error loading link: %+v", err)
+				http.Error(w, err.Error(), 500)
+				return
+			}
 
-		for _, l := range *links {
+			readLinks += 1
 			yearData[strconv.Itoa(l.Posted.Year())][2] += 1
 		}
 
