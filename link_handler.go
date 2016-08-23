@@ -43,6 +43,7 @@ type PostsType struct {
 	Pins    []LinkXML `xml:"post"`
 }
 
+// TODO: Switch to https://pinboard.in/api#posts_all with a date lock.
 func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	user := GetFlagLogError(c, "PINBOARD_USER")
