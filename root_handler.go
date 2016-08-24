@@ -149,6 +149,16 @@ func WorkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 
+	// Update the stats
+	t = taskqueue.NewPOSTTask("/stats/work", url.Values{})
+	_, err = taskqueue.Add(c, t, "")
+
+	if err != nil {
+		log.Errorf(c, "Error queueing work: %v", err.Error())
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
 	// Update the longform data.
 	t = taskqueue.NewPOSTTask("/longform/work", url.Values{})
 	_, err = taskqueue.Add(c, t, "")

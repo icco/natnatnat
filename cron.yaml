@@ -1,7 +1,7 @@
 cron:
 - description: Queue all of the work
   url: /work/queue
-  schedule: every 30 minutes
+  schedule: every 10 minutes
   retry_parameters:
     job_retry_limit: 2
     job_age_limit: 10m
