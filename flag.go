@@ -47,7 +47,3 @@ func GetFlagLogError(c context.Context, flag string) string {
 
 	return ret
 }
-
-func WriteVersionKey(c context.Context) error {
-	return SetFlag(c, "VERSION", "1.0.1")
-}

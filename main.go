@@ -85,9 +85,11 @@ func init() {
 	router.Get("/page/:page/?", RootHandler)
 
 	router.Get("/about", AboutHandler)
-	router.Get("/stats", StatsHandler)
 	router.Get("/posts.json", StatsHistoryJsonHandler)
 	router.Get("/sitemap.xml", SitemapHandler)
+
+	router.Get("/stats", StatsHandler)
+	router.Post("/stats/work", StatsWorkHandler)
 
 	router.Get("/archive(s?)", ArchiveHandler)
 	router.Post("/archive/work", ArchiveTaskHandler)

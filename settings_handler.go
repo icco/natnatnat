@@ -28,7 +28,6 @@ type SettingsPageData struct {
 	PinboardUser             string
 	PinboardToken            string
 	User                     string
-	Version                  string
 	Xsrf                     string
 }
 
@@ -47,12 +46,6 @@ func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		http.Error(w, errors.New("Not a valid user.").Error(), 403)
 		return
 	} else {
-		err := WriteVersionKey(c)
-		if err != nil {
-			http.Error(w, err.Error(), 500)
-			return
-		}
-
 		url, _ := user.LogoutURL(c, "/")
 		token := xsrftoken.Generate(GetFlagLogError(c, "SESSION_KEY"), u.String(), "/settings")
 
@@ -62,15 +55,10 @@ func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		twt_asec := GetFlagLogError(c, "TWITTER_ACCESS_SECRET")
 
 		ses := GetFlagLogError(c, "SESSION_KEY")
-		ver := GetFlagLogError(c, "VERSION")
 
 		pb_usr := GetFlagLogError(c, "PINBOARD_USER")
 		pb_tok := GetFlagLogError(c, "PINBOARD_TOKEN")
 
-		if err != nil {
-			http.Error(w, err.Error(), 500)
-			return
-		}
 		responseData := &SettingsPageData{
 			LogoutUrl:                url,
 			Random:                   RandomString(64),
@@ -82,7 +70,6 @@ func SettingsGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			TwitterKey:               twt_key,
 			TwitterSecret:            twt_sec,
 			User:                     u.String(),
-			Version:                  ver,
 			Xsrf:                     token,
 			IsAdmin:                  user.IsAdmin(c),
 		}
