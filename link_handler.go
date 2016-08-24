@@ -43,13 +43,11 @@ type PostsType struct {
 	Pins    []LinkXML `xml:"post"`
 }
 
-// TODO: Switch to https://pinboard.in/api#posts_all with a date lock.
 func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	user := GetFlagLogError(c, "PINBOARD_USER")
 	token := GetFlagLogError(c, "PINBOARD_TOKEN")
-	params := "count=100"
-	pb_url := fmt.Sprintf("https://api.pinboard.in/v1/%s?auth_token=%s:%s&%s", "posts/recent", user, token, params)
+	pb_url := fmt.Sprintf("https://api.pinboard.in/v1/%s?auth_token=%s:%s", "posts/all", user, token)
 
 	client := urlfetch.Client(c)
 	resp, err := client.Get(pb_url)
@@ -61,7 +59,7 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 
 	if resp.StatusCode != 200 {
-		errorStr := "Error getting '%s': %+v"
+		errorStr := "Error getting '%s' (status != 200): %+v"
 		log.Errorf(c, errorStr, pb_url, resp.Status)
 		http.Error(w, fmt.Sprintf(errorStr, pb_url, resp.Status), http.StatusInternalServerError)
 		return
