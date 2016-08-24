@@ -66,6 +66,7 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			return
 		}
 
+		log.Infof(c, "Requested posts from %d.", year)
 		defer resp.Body.Close()
 		body, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
@@ -80,6 +81,7 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			http.Error(w, fmt.Sprintf("Error parsing XML: %+v", pb_url, err), http.StatusInternalServerError)
 			return
 		}
+		log.Infof(c, "Read %d posts from %d.", len(posts.Pins), year)
 
 		for _, pin := range posts.Pins {
 			tags := strings.Fields(pin.Tags)
