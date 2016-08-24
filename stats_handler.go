@@ -108,7 +108,7 @@ func StatsWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 
-	var data *StatsData
+	data := &StatsData{}
 	if json_data, err := memcache.Get(c, "stats-data"); err == memcache.ErrCacheMiss {
 		log.Errorf(c, "stats-data is empty")
 	} else if err != nil {
