@@ -52,8 +52,8 @@ func (e *Link) Save(c context.Context) error {
 	k := datastore.NewKey(c, "Link", e.Url, 0, nil)
 	k2, err := datastore.Put(c, k, e)
 	if err == nil {
-		log.Infof(c, "Wrote %+v", e)
-		log.Infof(c, "Old key: %+v; New Key: %+v", k, k2)
+		log.Debugf(c, "Wrote %+v", e)
+		log.Debugf(c, "Old key: %+v; New Key: %+v", k, k2)
 	} else {
 		log.Warningf(c, "Error writing link: %v", e)
 	}

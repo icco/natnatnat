@@ -50,8 +50,8 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	pb_url := fmt.Sprintf("https://api.pinboard.in/v1/%s?auth_token=%s:%s", "posts/all", user, token)
 
 	client := urlfetch.Client(c)
-	for year := 2003; year <= time.Now().Year(); year++ {
-		resp, err := client.Get(fmt.Sprintf("%s&fromdt=%d-01-01T00:00:00Z&todt=%d-01-01T00:00:00Z", pb_url, year, year+1))
+	for year := time.Now().Year(); year >= 2003; year-- {
+		resp, err := client.Get(fmt.Sprintf("%s&fromdt=%d-01-01T00:00:00Z&todt=%d-01-01T00:00:00Z", pb_url, year, year-1))
 		if err != nil {
 			errorStr := "Error getting '%s': %+v"
 			log.Errorf(c, errorStr, pb_url, err)
