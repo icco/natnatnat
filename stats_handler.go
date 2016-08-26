@@ -42,10 +42,11 @@ func StatsWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	postCount := len(*entries)
 	oldestPost := (*entries)[postCount-1]
 	dayCount := time.Since(oldestPost.Datetime).Hours() / 24.0
+	oldestYear := oldestPost.Datetime.Year()
 
 	years := []string{}
 	yearData := make(map[string][]float64)
-	for i := time.Now().Year(); i >= oldestPost.Datetime.Year(); i-- {
+	for i := time.Now().Year(); i >= oldestYear; i-- {
 		years = append(years, strconv.Itoa(i))
 		yearData[strconv.Itoa(i)] = []float64{0.0, 0.0, 0.0}
 	}
@@ -73,10 +74,10 @@ func StatsWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			log.Errorf(c, "Error loading link: %+v", err)
 		} else {
 			readLinks += 1
-			yearPosted := strconv.Itoa(l.Posted.Year())
+			yearPosted := l.Posted.Year()
 			// Don't want to record stats for years we don't have posts.
-			if yearPosted >= oldestPost.Datetime.Year() {
-				yearData[yearPosted][2] += 1
+			if yearPosted >= oldestYear {
+				yearData[strconv.Itoa(yearPosted)][2] += 1
 			}
 		}
 	}
