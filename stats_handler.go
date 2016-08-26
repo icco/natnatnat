@@ -73,7 +73,11 @@ func StatsWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 			log.Errorf(c, "Error loading link: %+v", err)
 		} else {
 			readLinks += 1
-			yearData[strconv.Itoa(l.Posted.Year())][2] += 1
+			yearPosted := strconv.Itoa(l.Posted.Year())
+			// Don't want to record stats for years we don't have posts.
+			if yearPosted >= oldestPost.Datetime.Year() {
+				yearData[yearPosted][2] += 1
+			}
 		}
 	}
 
