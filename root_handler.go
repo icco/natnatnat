@@ -131,7 +131,7 @@ func WorkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	// Build data for the Archive Page
 	t := taskqueue.NewPOSTTask("/archive/work", url.Values{})
-	_, err := taskqueue.Add(c, t, "")
+	_, err := taskqueue.Add(c, t, "tasks")
 
 	if err != nil {
 		log.Errorf(c, "Error queueing work: %v", err.Error())
@@ -141,7 +141,7 @@ func WorkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	//// Download all the links.
 	//t = taskqueue.NewPOSTTask("/link/work", url.Values{})
-	//_, err = taskqueue.Add(c, t, "")
+	//_, err = taskqueue.Add(c, t, "tasks")
 
 	//if err != nil {
 	//	log.Errorf(c, "Error queueing work: %v", err.Error())
@@ -151,7 +151,7 @@ func WorkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	//// Update the stats
 	//t = taskqueue.NewPOSTTask("/stats/work", url.Values{})
-	//_, err = taskqueue.Add(c, t, "")
+	//_, err = taskqueue.Add(c, t, "tasks")
 
 	//if err != nil {
 	//	log.Errorf(c, "Error queueing work: %v", err.Error())
@@ -161,7 +161,7 @@ func WorkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	// Update the longform data.
 	t = taskqueue.NewPOSTTask("/longform/work", url.Values{})
-	_, err = taskqueue.Add(c, t, "")
+	_, err = taskqueue.Add(c, t, "tasks")
 
 	if err != nil {
 		log.Errorf(c, "Error queueing work: %v", err.Error())
@@ -171,7 +171,7 @@ func WorkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	// Clean the database
 	t = taskqueue.NewPOSTTask("/clean/work", url.Values{})
-	_, err = taskqueue.Add(c, t, "")
+	_, err = taskqueue.Add(c, t, "tasks")
 
 	if err != nil {
 		log.Errorf(c, "Error queueing work: %v", err.Error())
@@ -181,7 +181,7 @@ func WorkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	// Update the Search Index
 	t = taskqueue.NewPOSTTask("/search/work", url.Values{})
-	_, err = taskqueue.Add(c, t, "")
+	_, err = taskqueue.Add(c, t, "tasks")
 
 	if err != nil {
 		log.Errorf(c, "Error queueing work: %v", err.Error())
