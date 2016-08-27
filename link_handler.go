@@ -54,15 +54,15 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	client := urlfetch.Client(c)
 	resp, err := client.Get(pb_url)
 	if err != nil {
-		errorStr := "Error getting '%s': %+v"
-		log.Errorf(c, errorStr, pb_url, err)
-		http.Error(w, fmt.Sprintf(errorStr, pb_url, err), http.StatusInternalServerError)
+		errorStr := "Error getting '%s': %+v. %+v"
+		log.Errorf(c, errorStr, pb_url, err, resp)
+		http.Error(w, fmt.Sprintf(errorStr, pb_url, err, resp), http.StatusInternalServerError)
 		return
 	}
 
 	if resp.StatusCode != 200 {
-		errorStr := "Error getting '%s': %+v"
-		log.Errorf(c, errorStr, pb_url, resp.Status)
+		errorStr := "Error getting '%s' (status != 200): %+v"
+		log.Errorf(c, errorStr, pb_url, resp)
 		http.Error(w, fmt.Sprintf(errorStr, pb_url, resp.Status), http.StatusInternalServerError)
 		return
 	}
