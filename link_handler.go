@@ -52,6 +52,7 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	pb_url := fmt.Sprintf("https://api.pinboard.in/v1/%s?auth_token=%s:%s&%s", "posts/recent", user, token, params)
 
 	client := urlfetch.Client(c)
+	log.Infof(c, "GET %s", pb_url)
 	resp, err := client.Get(pb_url)
 	if err != nil {
 		errorStr := "Error getting '%s': %+v. %+v"
