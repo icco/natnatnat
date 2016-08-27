@@ -50,9 +50,11 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	pb_url := fmt.Sprintf("https://api.pinboard.in/v1/%s?auth_token=%s:%s", "posts/all", user, token)
 
 	client := urlfetch.Client(c)
-	for year := time.Now().Year(); year >= 2003; year-- {
+
+	// So, there are links going back to 2003, but lets only get since 2015
+	for year := time.Now().Year(); year >= 2015; year-- {
 		// We've gotta sleep for five minutes so we don't get ratelimited.
-		five_minutes := time.Duration(300) * time.Second
+		five_minutes := time.Duration(5) * time.Minute
 		time.Sleep(five_minutes)
 
 		// Ok now we do work.
