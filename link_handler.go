@@ -51,11 +51,16 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	client := urlfetch.Client(c)
 	for year := time.Now().Year(); year >= 2003; year-- {
+		// We've gotta sleep for five minutes so we don't get ratelimited.
+		five_minutes := time.Duration(300) * time.Second
+		time.Sleep(five_minutes)
+
+		// Ok now we do work.
 		resp, err := client.Get(fmt.Sprintf("%s&fromdt=%d-01-01T00:00:00Z&todt=%d-01-01T00:00:00Z", pb_url, year, year-1))
 		if err != nil {
-			errorStr := "Error getting '%s': %+v"
-			log.Errorf(c, errorStr, pb_url, err)
-			http.Error(w, fmt.Sprintf(errorStr, pb_url, err), http.StatusInternalServerError)
+			errorStr := "Error getting '%s': %+v. %+v"
+			log.Errorf(c, errorStr, pb_url, err, resp)
+			http.Error(w, fmt.Sprintf(errorStr, pb_url, err, resp), http.StatusInternalServerError)
 			return
 		}
 
