@@ -190,3 +190,17 @@ func WorkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	fmt.Fprint(w, "success.\n")
 }
+
+// This queues lots of work every twelve hours.
+func LongWorkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	c := appengine.NewContext(r.Request)
+
+	// Build data for the Archive Page
+	err := queueWork(c, "/link/long-work")
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	fmt.Fprint(w, "success.\n")
+}

@@ -137,10 +137,12 @@ func init() {
 	router.Get("/summary.rss", SummaryRssHandler)
 
 	router.Post("/link/work", LinkWorkHandler)
+	router.Post("/link/long-work", LinkLongWorkHandler)
 	router.Get("/links", LinkPageGetHandler)
 
 	router.Post("/clean/work", CleanWorkHandler)
 	router.Get("/work/queue", WorkQueueHandler)
+	router.Get("/work/long", LongWorkQueueHandler)
 
 	router.Get("/search", SearchHandler)
 	router.Post("/search/work", SearchWorkHandler)
