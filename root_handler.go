@@ -160,12 +160,12 @@ func WorkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 
-	//// Update the stats
-	//err = queueWork(c, "/stats/work")
-	//if err != nil {
-	//	http.Error(w, err.Error(), 500)
-	//	return
-	//}
+	// Update the stats
+	err = queueWork(c, "/stats/work")
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
+	}
 
 	// Update the longform data.
 	err = queueWork(c, "/longform/work")
