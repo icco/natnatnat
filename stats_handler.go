@@ -63,7 +63,7 @@ func StatsWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 
 	readLinks := 0
-	q := LinkQuery(c, 1000, true)
+	q := LinkQuery(c, 10000, true)
 	for t := q.Run(c); ; {
 		var l Link
 		_, err := t.Next(&l)
