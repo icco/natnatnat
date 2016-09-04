@@ -23,6 +23,11 @@ indexes:
 
 - kind: Entry
   properties:
+  - name: Longform
+  - name: Id
+
+- kind: Entry
+  properties:
   - name: Public
   - name: Datetime
 
