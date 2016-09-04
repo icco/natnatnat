@@ -127,6 +127,23 @@ func createPostFromLongformFile(c context.Context, dir string, file os.FileInfo,
 		}
 	}
 
+	all_query := datastore.NewQuery("Entry").Filter("Longform =", longform).Order("Id")
+	count, err := all_query.Count(c)
+	if err != nil {
+		log.Warningf(c, "Error getting longform count %v: %v", file.Name(), err.Error())
+	}
+
+	if count > 1 {
+		// get all from query, and delete all but the first
+		entries := new([]Entry)
+		_, err := all_query.GetAll(c, entries)
+		for i, e := range entries {
+			if i >= 1 {
+				e.Delete(c)
+			}
+		}
+	}
+
 	// create entries for those that don't exist, update those that do
 	entry, err := GetLongform(c, file.Name())
 	if err != nil {
