@@ -138,6 +138,10 @@ func createPostFromLongformFile(c context.Context, dir string, file os.FileInfo,
 		// get all from query, and delete all but the first
 		entries := new([]Entry)
 		_, err := all_query.GetAll(c, entries)
+		if err != nil {
+			log.Warningf(c, "Error getting longform duplicates %v: %v", file.Name(), err.Error())
+		}
+
 		for i, e := range *entries {
 			if i >= 1 {
 				e.Delete(c)
