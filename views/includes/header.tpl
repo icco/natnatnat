@@ -12,6 +12,10 @@
     <!-- TODO: Auto add tags from post. -->
     <meta name="keywords" content="Nat, welch, natwelch, nathaniel, nathanielwelch, dehn, code, student, developer, software, writing" />
 
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.3.1/css/tachyons.min.css">
+    <link rel="stylesheet" href="/css/nat.css?v=20160913">
+
     <!-- Scripts! -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js" type="text/javascript"></script>
