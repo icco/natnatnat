@@ -1,0 +1,35 @@
+a, a:link, a:visited {
+  transition: color .4s;
+  color: #265C83;
+}
+
+a:hover {
+  color: #7FDBFF;
+}
+
+a:active {
+  transition: color .3s;
+  color: #007BE6;
+}
+
+h1 a {
+  text-decoration: none;
+}
+
+blockquote {
+  border-left: 4px solid #ddd;
+  padding-left: 1em;
+  margin-left: 0px;
+}
+
+.post .addons .embed {
+  padding: 10px;
+}
+
+.markdown img {
+  max-width: 100%;
+}
+
+ul.sentence li:nth-last-child(2):after {
+  content: " & ";
+}
