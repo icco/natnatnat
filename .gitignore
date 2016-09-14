@@ -27,3 +27,4 @@ natnatnat
 .sass-cache
 node_modules
 npm-debug.log
+.env

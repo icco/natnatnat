@@ -14,6 +14,7 @@ import (
 	"github.com/spf13/hugo/parser"
 	"golang.org/x/net/context"
 	"google.golang.org/appengine"
+	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/log"
 )
 
@@ -124,6 +125,27 @@ func createPostFromLongformFile(c context.Context, dir string, file os.FileInfo,
 		if err != nil {
 			log.Errorf(c, "Error casting metadata for %v: %v. Metadata: %+v", file.Name(), err.Error(), meta_uncast)
 			return err
+		}
+	}
+
+	all_query := datastore.NewQuery("Entry").Filter("Longform =", file.Name()).Order("Id")
+	count, err := all_query.Count(c)
+	if err != nil {
+		log.Warningf(c, "Error getting longform count %v: %v", file.Name(), err.Error())
+	}
+
+	if count > 1 {
+		// get all from query, and delete all but the first
+		entries := new([]Entry)
+		_, err := all_query.GetAll(c, entries)
+		if err != nil {
+			log.Warningf(c, "Error getting longform duplicates %v: %v", file.Name(), err.Error())
+		}
+
+		for i, e := range *entries {
+			if i >= 1 {
+				e.Delete(c)
+			}
 		}
 	}
 

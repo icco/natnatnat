@@ -85,9 +85,11 @@ func init() {
 	router.Get("/page/:page/?", RootHandler)
 
 	router.Get("/about", AboutHandler)
-	router.Get("/stats", StatsHandler)
 	router.Get("/posts.json", StatsHistoryJsonHandler)
 	router.Get("/sitemap.xml", SitemapHandler)
+
+	router.Get("/stats", StatsHandler)
+	router.Post("/stats/work", StatsWorkHandler)
 
 	router.Get("/archive(s?)", ArchiveHandler)
 	router.Post("/archive/work", ArchiveTaskHandler)
@@ -135,10 +137,12 @@ func init() {
 	router.Get("/summary.rss", SummaryRssHandler)
 
 	router.Post("/link/work", LinkWorkHandler)
+	router.Post("/link/long-work", LinkLongWorkHandler)
 	router.Get("/links", LinkPageGetHandler)
 
 	router.Post("/clean/work", CleanWorkHandler)
 	router.Get("/work/queue", WorkQueueHandler)
+	router.Get("/work/long", LongWorkQueueHandler)
 
 	router.Get("/search", SearchHandler)
 	router.Post("/search/work", SearchWorkHandler)

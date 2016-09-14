@@ -21,24 +21,14 @@ import (
 	"net/http"
 
 	"github.com/pilu/traffic"
-
-	"google.golang.org/appengine"
 )
 
 func WebMentionGetHandler(w traffic.ResponseWriter, r *traffic.Request) {
-	c := appengine.NewContext(r.Request)
-	err := WriteVersionKey(c)
-	if err != nil {
-		http.Error(w, err.Error(), 500)
-		return
-	}
+	http.Error(w, "Unimplemented.", 500)
+	return
 }
 
 func WebMentionPostHandler(w traffic.ResponseWriter, r *traffic.Request) {
-	c := appengine.NewContext(r.Request)
-	err := WriteVersionKey(c)
-	if err != nil {
-		http.Error(w, err.Error(), 500)
-		return
-	}
+	http.Error(w, "Unimplemented.", 500)
+	return
 }

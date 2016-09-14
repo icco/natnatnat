@@ -43,6 +43,68 @@ type PostsType struct {
 	Pins    []LinkXML `xml:"post"`
 }
 
+func LinkLongWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	c := appengine.NewContext(r.Request)
+	user := GetFlagLogError(c, "PINBOARD_USER")
+	token := GetFlagLogError(c, "PINBOARD_TOKEN")
+	pb_url := fmt.Sprintf("https://api.pinboard.in/v1/%s?auth_token=%s:%s", "posts/all", user, token)
+
+	client := urlfetch.Client(c)
+
+	// So, there are links going back to 2003, but lets only get since 2015
+	for year := time.Now().Year(); year >= 2003; year-- {
+		for month := 1; month <= 12; month++ {
+			// We've gotta sleep for five minutes so we don't get ratelimited.
+			five_minutes := time.Duration(5) * time.Minute
+			time.Sleep(five_minutes)
+
+			// Ok now we do work.
+			resp, err := client.Get(fmt.Sprintf("%s&fromdt=%d-%2d-01T00:00:00Z&todt=%d-%2d-31T23:59:59Z", pb_url, year, month, year, month))
+			if err != nil {
+				errorStr := "Error getting '%s': %+v. %+v"
+				log.Errorf(c, errorStr, pb_url, err, resp)
+				http.Error(w, fmt.Sprintf(errorStr, pb_url, err, resp), http.StatusInternalServerError)
+				return
+			}
+
+			if resp.StatusCode != 200 {
+				errorStr := "Error getting '%s' (status != 200): %+v"
+				log.Errorf(c, errorStr, pb_url, resp.Status)
+				http.Error(w, fmt.Sprintf(errorStr, pb_url, resp.Status), http.StatusInternalServerError)
+				return
+			}
+
+			log.Infof(c, "Requested posts from %d.", year)
+			defer resp.Body.Close()
+			body, err := ioutil.ReadAll(resp.Body)
+			if err != nil {
+				log.Errorf(c, "Error reading body of '%s': %+v. '%+v' parsed from %+v", pb_url, err, body, resp)
+				http.Error(w, fmt.Sprintf("Error reading body of '%s': %+v. '%+v' parsed from %+v", pb_url, err, body, resp), http.StatusInternalServerError)
+				return
+			}
+
+			posts := new(PostsType)
+			if err = xml.Unmarshal(body, posts); err != nil {
+				log.Errorf(c, "Error parsing XML: %+v", pb_url, err)
+				http.Error(w, fmt.Sprintf("Error parsing XML: %+v", pb_url, err), http.StatusInternalServerError)
+				return
+			}
+			log.Infof(c, "Read %d posts from %d.", len(posts.Pins), year)
+
+			for _, pin := range posts.Pins {
+				tags := strings.Fields(pin.Tags)
+				e := NewLink(pin.Desc, pin.Url, pin.Notes, tags, pin.Time)
+				err = e.Save(c)
+				if err != nil {
+					log.Errorf(c, "Error saving link: %+v", pb_url, err)
+					http.Error(w, fmt.Sprintf("Error saving link: %+v", pb_url, err), http.StatusInternalServerError)
+					return
+				}
+			}
+		}
+	}
+}
+
 func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	user := GetFlagLogError(c, "PINBOARD_USER")
@@ -51,17 +113,18 @@ func LinkWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	pb_url := fmt.Sprintf("https://api.pinboard.in/v1/%s?auth_token=%s:%s&%s", "posts/recent", user, token, params)
 
 	client := urlfetch.Client(c)
+	log.Infof(c, "GET %s", pb_url)
 	resp, err := client.Get(pb_url)
 	if err != nil {
-		errorStr := "Error getting '%s': %+v"
-		log.Errorf(c, errorStr, pb_url, err)
-		http.Error(w, fmt.Sprintf(errorStr, pb_url, err), http.StatusInternalServerError)
+		errorStr := "Error getting '%s': %+v. %+v"
+		log.Errorf(c, errorStr, pb_url, err, resp)
+		http.Error(w, fmt.Sprintf(errorStr, pb_url, err, resp), http.StatusInternalServerError)
 		return
 	}
 
 	if resp.StatusCode != 200 {
-		errorStr := "Error getting '%s': %+v"
-		log.Errorf(c, errorStr, pb_url, resp.Status)
+		errorStr := "Error getting '%s' (status != 200): %+v"
+		log.Errorf(c, errorStr, pb_url, resp)
 		http.Error(w, fmt.Sprintf(errorStr, pb_url, resp.Status), http.StatusInternalServerError)
 		return
 	}

@@ -52,30 +52,30 @@ func (e *Link) Save(c context.Context) error {
 	k := datastore.NewKey(c, "Link", e.Url, 0, nil)
 	k2, err := datastore.Put(c, k, e)
 	if err == nil {
-		log.Infof(c, "Wrote %+v", e)
-		log.Infof(c, "Old key: %+v; New Key: %+v", k, k2)
+		log.Debugf(c, "Wrote %+v", e)
+		log.Debugf(c, "Old key: %+v; New Key: %+v", k, k2)
 	} else {
 		log.Warningf(c, "Error writing link: %v", e)
 	}
 	return err
 }
 
-func AllLinks(c context.Context) (*[]Link, error) {
-	return Links(c, -1, true)
-}
-
-func Links(c context.Context, limit int, recentFirst bool) (*[]Link, error) {
+func LinkQuery(c context.Context, limit int, recentFirst bool) *datastore.Query {
 	q := datastore.NewQuery("Link")
 
 	if recentFirst {
 		q = q.Order("-Posted")
-	} else {
-		q = q.Order("Posted")
 	}
 
 	if limit > 0 {
 		q = q.Limit(limit)
 	}
+
+	return q
+}
+
+func Links(c context.Context, limit int, recentFirst bool) (*[]Link, error) {
+	q := LinkQuery(c, limit, recentFirst)
 
 	links := new([]Link)
 	_, err := q.GetAll(c, links)

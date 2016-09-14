@@ -8,10 +8,10 @@ import (
 	"time"
 
 	"github.com/pilu/traffic"
+	"golang.org/x/net/context"
 	"google.golang.org/appengine"
 	"google.golang.org/appengine/datastore"
 	"google.golang.org/appengine/log"
-	"google.golang.org/appengine/memcache"
 	"google.golang.org/appengine/taskqueue"
 	"google.golang.org/appengine/user"
 )
@@ -125,67 +125,81 @@ func SitemapHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	w.Render("sitemap", data)
 }
 
+func queueWork(c context.Context, uri string) error {
+	r := &taskqueue.RetryOptions{
+		RetryLimit: 1,
+	}
+
+	t := taskqueue.NewPOSTTask(uri, url.Values{})
+	t.RetryOptions = r
+	_, err := taskqueue.Add(c, t, "tasks")
+
+	if err != nil {
+		log.Errorf(c, "Error queueing %s: %v", err.Error())
+		return err
+	}
+
+	return nil
+}
+
 // This queues lots of work every fifteen minutes.
 func WorkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 
 	// Build data for the Archive Page
-	t := taskqueue.NewPOSTTask("/archive/work", url.Values{})
-	_, err := taskqueue.Add(c, t, "")
-
+	err := queueWork(c, "/archive/work")
 	if err != nil {
-		log.Errorf(c, "Error queueing work: %v", err.Error())
 		http.Error(w, err.Error(), 500)
 		return
 	}
 
 	// Download all the links.
-	t = taskqueue.NewPOSTTask("/link/work", url.Values{})
-	_, err = taskqueue.Add(c, t, "")
-
+	err = queueWork(c, "/link/work")
 	if err != nil {
-		log.Errorf(c, "Error queueing work: %v", err.Error())
+		http.Error(w, err.Error(), 500)
+		return
+	}
+
+	// Update the stats
+	err = queueWork(c, "/stats/work")
+	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
 	}
 
 	// Update the longform data.
-	t = taskqueue.NewPOSTTask("/longform/work", url.Values{})
-	_, err = taskqueue.Add(c, t, "")
-
+	err = queueWork(c, "/longform/work")
 	if err != nil {
-		log.Errorf(c, "Error queueing work: %v", err.Error())
 		http.Error(w, err.Error(), 500)
 		return
 	}
 
 	// Clean the database
-	t = taskqueue.NewPOSTTask("/clean/work", url.Values{})
-	_, err = taskqueue.Add(c, t, "")
-
+	err = queueWork(c, "/clean/work")
 	if err != nil {
-		log.Errorf(c, "Error queueing work: %v", err.Error())
 		http.Error(w, err.Error(), 500)
 		return
 	}
 
 	// Update the Search Index
-	t = taskqueue.NewPOSTTask("/search/work", url.Values{})
-	_, err = taskqueue.Add(c, t, "")
-
+	err = queueWork(c, "/search/work")
 	if err != nil {
-		log.Errorf(c, "Error queueing work: %v", err.Error())
 		http.Error(w, err.Error(), 500)
 		return
 	}
 
-	// Delete some caches
-	hour, min, _ := time.Now().Clock()
-	if hour == 0 && (min > 0 && min < 20) {
-		err = memcache.Delete(c, "stats_data")
-		if err != nil {
-			log.Errorf(c, "Error cleaning stats cache: %v", err.Error())
-		}
+	fmt.Fprint(w, "success.\n")
+}
+
+// This queues lots of work every twelve hours.
+func LongWorkQueueHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	c := appengine.NewContext(r.Request)
+
+	// Build data for the Archive Page
+	err := queueWork(c, "/link/long-work")
+	if err != nil {
+		http.Error(w, err.Error(), 500)
+		return
 	}
 
 	fmt.Fprint(w, "success.\n")

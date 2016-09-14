@@ -42,11 +42,6 @@
       <input id="pb_tok" name="pb_tok" type="text" placeholder="Pinboard Token" value="{{.PinboardToken}}">
     </div>
 
-    <div class="pure-control-group">
-      <label for="version">Version</label>
-      <input id="version" name="version" type="text" placeholder="Version" value="{{.Version}}" disabled>
-    </div>
-
     <div class="pure-controls">
       <button type="submit" class="pure-button pure-button-primary">Submit</button>
     </div>
