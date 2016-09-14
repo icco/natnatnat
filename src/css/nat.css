@@ -33,3 +33,60 @@ blockquote {
 ul.sentence li:nth-last-child(2):after {
   content: " & ";
 }
+
+.pager {
+  padding-left: 0;
+  margin: 20px 0;
+  list-style: none;
+  text-align: center;
+}
+
+.pager li {
+  display: inline;
+}
+
+.pager li > a,
+.pager li > span {
+  display: inline-block;
+  padding: 5px 14px;
+}
+
+.pager .next > a,
+.pager .next > span {
+  float: right;
+}
+
+.pager .previous > a,
+.pager .previous > span {
+  float: left;
+}
+
+.pager .disabled > a,
+.pager .disabled > a:hover,
+.pager .disabled > a:focus,
+.pager .disabled > span {
+  cursor: not-allowed;
+}
+
+ul.inline, ul.sentence {
+  display: inline;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.inline li, ul.sentence li {
+  text-align: left;
+  display: inline;
+  list-style: none;
+  display: inline;
+  margin: 0;
+}
+
+ul.inline li:after, ul.sentence li:after {
+  content: ", ";
+}
+
+ul.inline li:last-child:after, ul.sentence li:last-child:after {
+  content: "";
+}
