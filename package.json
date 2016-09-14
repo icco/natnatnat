@@ -16,10 +16,9 @@
     "url": "https://github.com/icco/natnatnat/issues",
     "email": "nat@natwelch.com"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "devDependencies": {
-    "node-sass": "^3.4.2",
-    "uglify-js": "^2.7.1"
+    "clean-css": "^3.4.19",
+    "uglify-js": "^2.7.3"
   }
 }
