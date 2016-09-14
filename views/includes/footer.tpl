@@ -1,18 +1,14 @@
-        </div> <!-- /.l-box -->
-      </div> <!-- /.grid -->
-      <div class="footer">
-        <div class="">
-          <ul>
-            {{if .IsAdmin}}
-            <li><a href="/post/new">New Post</a></li>
-            <li><a href="/settings">Settings</a></li>
-            {{end}}
-          </ul>
-        </div>
+    <footer class="pv4 ph3 ph5-m ph6-l">
+      <p class="db tc">&copy; 2016 Nathaniel Welch, All Rights Reserved</p>
+      <div class="tc mv3">
+        <a href="/one/" class="f6 dib ph2 link mid-gray dim">One</a>
+        <a href="/two/" class="f6 dib ph2 link mid-gray dim">Two</a>
+        <a href="/three/" class="f6 dib ph2 link mid-gray dim">Three</a>
       </div>
-      <script async defer src="https://www.recurse-scout.com/loader.js?t=1a20cf01214e4c5923ab6ebd6c0f8f18"></script>
-    </div> <!-- /.wrap -->
+      <div class="f6 tc rc-scout"></div>
+    </footer>
 
+    <script async defer src="https://www.recurse-scout.com/loader.js?t=1a20cf01214e4c5923ab6ebd6c0f8f18"></script>
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
           (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
