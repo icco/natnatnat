@@ -71,8 +71,6 @@ ul.sentence li:nth-last-child(2):after {
 ul.inline, ul.sentence {
   display: inline;
   list-style-type: none;
-  margin: 0;
-  padding: 0;
 }
 
 ul.inline li, ul.sentence li {
