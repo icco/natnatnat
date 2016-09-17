@@ -15,7 +15,7 @@
 
   <p class="gray f6 mb4 ttu tracked">By Nat Welch</p>
 
-  <div class="measure">
+  <div class="lh-copy mw7">
     <div class="markdown">
       {{.Entry.Content|mrkdwn}}
     </div>
@@ -25,7 +25,7 @@
   </div>
 </article>
 
-<div class="post-nav f2">
+<div class="post-nav f4">
   <ul class="pager">
     <li class="{{if not .Prev}}disabled{{end}}"><a class="prev" href="{{.Prev}}">&#171;</a></li>
     <li class="{{if not .Next}}disabled{{end}}"><a class="next" href="{{.Next}}">&#187;</a></li>
