@@ -31,7 +31,7 @@
     <link rel="http://webmention.org/" href="/mention" />
   </head>
   <body class="sans-serif">
-    <header class="pv0 ph3 pa4-m pa5-l oh pos-rel mt0-ns mt4">
+    <header class="pv1 ph3 pa4-m pa5-l oh pos-rel mt0-ns mt4">
       <div class="dt w-100">
         <div class="dtc w-50 v-mid">
           <a href="/"><img src="/img/dots.png" class="v-mid mh0-ns dib-ns db center ph0 w4" alt="Nat? Nat. Nat!"></a>
