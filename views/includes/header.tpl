@@ -13,7 +13,7 @@
     <meta name="keywords" content="Nat, welch, natwelch, nathaniel, nathanielwelch, dehn, code, student, developer, software, writing" />
 
     <!-- CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.4.1/css/tachyons.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/tachyons@4.5.1/css/tachyons.min.css">
     <link rel="stylesheet" href="/css/nat.min.css?v=20160913">
 
     <!-- Scripts! -->

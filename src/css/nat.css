@@ -28,6 +28,17 @@ blockquote {
 
 .markdown img {
   max-width: 100%;
+  display: block;
+}
+
+.markdown p {
+  max-width: 34em;
+  line-height: 1.5;
+  font-size: 1.25rem;
+}
+
+@media screen and (min-width: 30em) .markdown p {
+  font-size: 1.5rem;
 }
 
 ul.sentence li:nth-last-child(2):after {

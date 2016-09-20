@@ -15,7 +15,7 @@
 
   <p class="gray f6 mb4 ttu tracked">By Nat Welch</p>
 
-  <div class="lh-copy mw7">
+  <div class="lh-copy">
     <div class="markdown">
       {{.Entry.Content|mrkdwn}}
     </div>
