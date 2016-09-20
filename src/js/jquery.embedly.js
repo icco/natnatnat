@@ -1,4 +1,10 @@
-module.exports = function($) {
+/*! Embedly jQuery - v3.1.1 - 2013-06-05
+ * https://github.com/embedly/embedly-jquery
+ * Copyright (c) 2013 Sean Creeley
+ * Licensed BSD
+ */ 
+(function($) {
+
   /*
    *  Util Functions
    */
@@ -517,4 +523,5 @@ module.exports = function($) {
   $.expr[':'].display = function(elem) {
     return ! none($(elem).data('display'));
   };
-};
+
+}(jQuery, window));

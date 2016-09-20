@@ -14,7 +14,7 @@ build:
 
 assets:
 	cat src/css/*.css | ./node_modules/clean-css/bin/cleancss -o public/css/nat.min.css
-	./node_modules/uglify-js/bin/uglifyjs src/js/*.js -o public/js/nat.min.js --source-map public/js/nat.min.js.map --source-map-root https://writing.natwelch.com/src/ -p 5 -c -m
+	./node_modules/uglify-js/bin/uglifyjs src/js/*.js -o public/js/nat.min.js --source-map public/js/nat.min.js.map --source-map-url /js/nat.min.js.map --source-map-root https://writing.natwelch.com/src/ -p 5 -c -m
 
 clean:
 	rm -f natnatnat

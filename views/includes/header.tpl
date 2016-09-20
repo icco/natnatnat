@@ -20,7 +20,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment-with-locales.min.js" type="text/javascript"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.6.0/highlight.min.js" type="text/javascript"></script>
-    <script src="/js/nat.min.js?v=20160914" type="text/javascript"></script>
+    <script src="/js/nat.min.js?v=20160920" type="text/javascript"></script>
 
     <!-- Feeds! -->
     <link rel="alternate" type="application/rss+xml" title="RSS" href="/feed.rss" />

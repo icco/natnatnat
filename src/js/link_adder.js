@@ -1,7 +1,6 @@
 // Takes a list of links and makes it so when you click them the appear as
 // markdown in a textbox.
-var LinkAdder = function() {
-  var $ = require('jquery');
+$(document).ready(function() {
   $('li.link').each(function(i, el) {
     $(el).children('a.adder').click(function() {
       link = $(el).children('a.actual')[0];
@@ -13,5 +12,4 @@ var LinkAdder = function() {
       ta.val(ta.val() + mkd);
     });
   });
-};
-module.exports = LinkAdder;
+});
