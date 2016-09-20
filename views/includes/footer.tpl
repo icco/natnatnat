@@ -1,5 +1,5 @@
-    <footer class="pv4 ph3 ph5-m ph6-l">
-      <p class="db tc measure center"><a href="http://natwelch.com/">Nat Welch</a> is Software Reconnaissance Engineer who likes writing software to help humans deal with the chaos.</p>
+    <footer class="pa4 measure-wide f4">
+      <p class="db tc center"><a href="http://natwelch.com/">Nat Welch</a> is Software Reconnaissance Engineer who likes writing software to help humans deal with the chaos.</p>
       <ul class="list ph3 ph5-ns pv0 tc">
         <li class="dib mr2"><a href="/about" class="f6 f5-ns b db pa2 link dim mid-gray">About</a></li>
         <li class="dib mr2"><a href="https://twitter.com/icco" class="f6 f5-ns b db pa2 link dim mid-gray">Twitter</a></li>
