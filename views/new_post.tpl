@@ -1,26 +1,28 @@
 {{ template "includes/header" "#NewPost" }}
 
-<p>
-Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
-</p>
+<article class="mh3">
+  <p>
+  Welcome, {{.User}}! (<a href="{{.LogoutUrl}}">sign out</a>)
+  </p>
 
-<form method="post" action="/post/new" class="">
-  <input type="text" name="title" placeholder="Title" class="db w-100 pas mvm input-text" />
+  <form method="post" action="/post/new" class="">
+    <input type="text" name="title" placeholder="Title" class="db w-100 pa1 mv3 input-text" />
 
-  <textarea name="text" class="db w-100 pas mvs input-text" style="min-height: 17rem; resize: vertical;"></textarea>
+    <textarea name="text" class="db w-100 pa1 mv1 input-text" style="min-height: 17rem; resize: vertical;"></textarea>
 
-  <input type="hidden" value="{{.Xsrf}}" name="xsrf" />
+    <input type="hidden" value="{{.Xsrf}}" name="xsrf" />
 
-  <div class="cf">
-    <input type="submit" class="btn pas mrm btn--blue" />
-    <label for="option-one" class="tr pas fr">
-      <input id="option-one" type="checkbox" name="draft">
-      Draft?
-    </label>
-  </div>
-</form>
+    <div class="cf">
+      <input type="submit" class="f6 link dim br2 ph3 pv2 mb2 dib white bg-dark-blue pointer" />
+      <label for="option-one" class="tr pa1 fr">
+        <input id="option-one" type="checkbox" name="draft">
+        Draft?
+      </label>
+    </div>
+  </form>
+</article>
 
-<div class="preview">
+<div class="preview mh3">
   <div class="mvs">
     <small><a class="show_hide">Preview...</a></small>
   </div>
