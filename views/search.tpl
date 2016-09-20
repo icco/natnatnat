@@ -1,16 +1,23 @@
 {{ template "includes/header" "Search" }}
 
-<form>
-  <input type="text" name="s" class="f3 semibold input-text plm pvm db ba black-80 b--black-20 w-100 bg-black-05 bg-black-10-focus" value="{{ .Query }}" />
-  <input type="submit" class="input-text bg-black-05 pam brs semibold ba b--black-20 ttu tracked-mega bg-black-10-focus mvs" value="Search" />
-</form>
+<article class="pv0 ph3 ph4-m ph5-l oh mt0-ns mt4 black-80">
+  <form method="get" accept-charset="utf-8">
+    <fieldset id="sign_up" class="ba b--transparent ph0 mh0">
+      <legend class="ph0 mh0 fw6 clip">Search</legend>
+      <div class="mt3">
+        <input class="pa2 input-reset ba bg-transparent w-100 measure" type="text" name="s" id="s" value="{{ .Query }}">
+      </div>
+    </fieldset>
+    <div class="mt3"><input class="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6" type="submit" value="Search"></div>
+  </form>
 
-<p>
-{{.Count}} Results
-</p>
+  <p>
+  {{.Count}} Results
+  </p>
+</article>
 
 {{ range $entry := .Results }}
-  <div class="post">
+  <article class="pv0 ph3 ph4-m ph5-l oh mt0-ns mt4">
     {{ template "includes/post_meta" $entry }}
 
     <div class="post-content">
@@ -20,7 +27,7 @@
         <p><a href="/post/{{$entry.Id}}">Continue Reading...</a></p>
       </div>
     </div>
-  </div>
+  </article>
 {{ end }}
 
 {{ template "includes/footer" }}
