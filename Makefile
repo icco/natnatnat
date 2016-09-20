@@ -7,7 +7,7 @@ DEVAPPSERVER=../go_appengine/dev_appserver.py
 VERSION := $(shell date +%Y%m%d-%H%M)
 
 local: clean assets build
-	$(DEVAPPSERVER) --log_level=debug --clear_datastore=true app.yaml
+	$(DEVAPPSERVER) --log_level=debug app.yaml
 
 build:
 	$(GOAPP) build
