@@ -5,7 +5,7 @@
 {{ end }}
 
 {{ if .Entry.Draft }}
-<h2 class="mvm" style="color: red; font-weight: 800;">POST IS A DRAFT.</h2>
+<p class="f2 mv4 fw8 red">POST IS A DRAFT.</p>
 {{ end }}
 
 <article class="pv0 ph3 pa4-m pa5-l oh pos-rel mt0-ns mt4">

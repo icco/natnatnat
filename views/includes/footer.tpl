@@ -1,4 +1,4 @@
-    <footer class="pa4 measure-wide f4">
+    <footer class="pa4 measure-wide f4 bg-white black-70 bt b--black-10">
       <p class="db tc center"><a href="http://natwelch.com/">Nat Welch</a> is Software Reconnaissance Engineer who likes writing software to help humans deal with the chaos.</p>
       <ul class="list ph3 ph5-ns pv0 tc">
         <li class="dib mr2"><a href="/about" class="f6 f5-ns b db pa2 link dim mid-gray">About</a></li>

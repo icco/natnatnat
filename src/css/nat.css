@@ -47,7 +47,7 @@ ul.sentence li:nth-last-child(2):after {
 
 .pager {
   padding-left: 0;
-  margin: 20px 0;
+  margin: 2.5em 0;
   list-style: none;
   text-align: center;
 }
