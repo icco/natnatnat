@@ -1,17 +1,16 @@
 {{ template "includes/header" "Search" }}
 
 <article class="pv0 ph3 ph4-m ph5-l oh mt0-ns mt4 black-80">
-  <form method="get" accept-charset="utf-8">
-    <fieldset id="sign_up" class="ba b--transparent ph0 mh0">
-      <legend class="ph0 mh0 fw6 clip">Search</legend>
-      <div class="mt3">
-        <input class="pa2 input-reset ba bg-transparent w-100 measure" type="text" name="s" id="s" value="{{ .Query }}">
+  <form class="mw7 pa2 br2-ns " method="get" accept-charset="utf-8">
+    <fieldset class="cf bn ma0 pa0">
+      <div class="cf">
+        <input class="fl f6 f5-l input-reset ba b--black-70 black-80 bg-white fl pa3 lh-solid w-100 w-75-m w-80-l br2-ns br--left-ns" placeholder="Search query" type="text" name="s" value="{{ .Query }}" id="s">
+        <input class="fl f6 f5-l button-reset pv3 tc ba b--black-70 bg-animate bg-black-70 hover-bg-black white pointer w-100 w-25-m w-20-l br2-ns br--right-ns" type="submit" value="Search">
       </div>
     </fieldset>
-    <div class="mt3"><input class="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6" type="submit" value="Search"></div>
   </form>
 
-  <p>
+  <p class="pa2">
   {{.Count}} Results
   </p>
 </article>
