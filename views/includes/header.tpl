@@ -36,7 +36,7 @@
         <div class="dtc w-50 v-mid">
           <a href="/"><img src="/img/dots.png" class="v-mid mh0-ns dib-ns db center ph0 w4" alt="Nat? Nat. Nat!"></a>
           <div class="dib v-mid pa0 w-100 w-auto-ns">
-            <a href="/" class="no-underline black"><h1 class="mb2 tracked tl-ns tc w-100">Nat? Nat. Nat!</h1></a>
+            <a href="/" class="no-underline black"><h1 class="mb2 mt0 tracked tl-ns tc w-100">Nat? Nat. Nat!</h1></a>
             <ul class="fw2 mt0 tracked tl-ns tc w-100-ns w5 center ma0-ns pa0">
               <a class="ph3 ph0-ns" href="/about">About</a>
               <a class="ph0 ph0-ns" href="/archives">Archives</a>
