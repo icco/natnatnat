@@ -31,7 +31,7 @@ blockquote {
   display: block;
 }
 
-.markdown p {
+.markdown p, .markdown li {
   max-width: 34em;
   line-height: 1.5;
   font-size: 1.25rem;
