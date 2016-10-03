@@ -38,7 +38,7 @@
           <h2>{{$pair.Day}}</h2>
           <ul>
             {{ range $l := (index $pair.Links)}}
-              <li class="link"><a class="pointer" data-tags="{{$l.TagString}}">&plus;</a> &ndash; <a class="actual" href="{{$l.Url}}">{{$l.Title}}</a></li>
+              <li class="link"><a class="adder pointer" data-tags="{{$l.TagString}}">&plus;</a> &ndash; <a class="actual" href="{{$l.Url}}">{{$l.Title}}</a></li>
             {{ end }}
           </ul>
         {{ end }}
