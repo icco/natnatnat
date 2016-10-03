@@ -1,6 +1,6 @@
 {{ template "includes/header" printf "%v" .Date}}
 
-<article class="pv0 ph3 pa4-m pa5-l oh pos-rel mt0-ns mt4">
+<article class="pv0 ph3 ph4-m ph5-l oh pos-rel mt0-ns mt4">
   <h1 class="f1 mt0 mb3">All posts from {{.Date}}</h1>
 </article>
 
