@@ -1,6 +1,5 @@
 // Markdown Preview generator.
-var MarkdownPreview = function() {
-  var $ = require('jquery');
+$(document).ready(function() {
   var md_text_name = "textarea[name=text]";
   if ($(md_text_name).length) {
     $(md_text_name).bind('input propertychange', function() {
@@ -20,5 +19,4 @@ var MarkdownPreview = function() {
   $('.show_hide').click(function() {
     $("#rendered").slideToggle();
   });
-};
-module.exports = MarkdownPreview;
+});

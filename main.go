@@ -29,6 +29,11 @@ func fmtTime(t time.Time) string {
 	return t.Format(layout)
 }
 
+func fmtDate(t time.Time) string {
+	const layout = "Jan 2, 2006 UTC"
+	return t.Format(layout)
+}
+
 func inputTime(t time.Time) string {
 	const layout = "2006-01-02 15:04:05 -0700 MST"
 	return t.Format(layout)
@@ -74,6 +79,7 @@ func init() {
 	}
 
 	traffic.TemplateFunc("fmttime", fmtTime)
+	traffic.TemplateFunc("fmtdate", fmtDate)
 	traffic.TemplateFunc("jsontime", jsonTime)
 	traffic.TemplateFunc("inputtime", inputTime)
 	traffic.TemplateFunc("m2i", monthToInt)

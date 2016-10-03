@@ -2,12 +2,9 @@
 //
 // https://github.com/embedly/embedly-jquery
 // https://wordpress.stackexchange.com/questions/15445/is-there-a-built-in-function-to-see-if-a-urlis-oembed-compatible
-var Embedly = function() {
-  var $ = require('jquery');
-  var embedly = require('./jquery.embedly.js');
-  embedly($); // Should extend jquery...
-
-  // Youtube and Vimeo only
+//
+// Youtube and Vimeo only
+$(document).ready(function() {
   var videoUrlRe = /https?:\/\/(www\.)?(youtu|vimeo|soundcloud).+/i;
   var defaults = {
     key: 'be853af8968a408eb7ec368d2019614a',
@@ -43,5 +40,4 @@ var Embedly = function() {
       prent.append(addon);
     });
   });
-};
-module.exports = Embedly;
+});

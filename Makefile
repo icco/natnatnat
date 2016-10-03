@@ -7,13 +7,14 @@ DEVAPPSERVER=../go_appengine/dev_appserver.py
 VERSION := $(shell date +%Y%m%d-%H%M)
 
 local: clean assets build
-	$(DEVAPPSERVER) --log_level=debug --clear_datastore=true app.yaml
+	$(DEVAPPSERVER) --log_level=debug app.yaml
 
 build:
 	$(GOAPP) build
 
 assets:
-	./node_modules/webpack/bin/webpack.js -p
+	cat src/css/*.css | ./node_modules/clean-css/bin/cleancss -o public/css/nat.min.css
+	./node_modules/uglify-js/bin/uglifyjs src/js/*.js -o public/js/nat.min.js --source-map public/js/nat.min.js.map --source-map-url /js/nat.min.js.map --source-map-root https://writing.natwelch.com/src/ -p 5 -c -m
 
 clean:
 	rm -f natnatnat
