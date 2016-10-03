@@ -1,7 +1,7 @@
 {{ template "includes/header" printf "%v" .Date}}
 
 <article class="pv0 ph3 ph4-m ph5-l oh pos-rel mt0-ns mt4">
-  <h1 class="f1 mt0 mb3">All posts from {{.Date}}</h1>
+  <h1 class="f1 mt0 mb3">All posts from <span>{{.Date|fmtdate}}</span></h1>
 </article>
 
 {{ range $entry := .Posts }}
