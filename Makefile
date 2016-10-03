@@ -26,7 +26,11 @@ deploy:
 	git push && git push origin $(VERSION)
 	$(GOAPP) deploy -application=natwelch-writing -version=$(VERSION)
 
-update: npm godeps
+update: npm godeps brew
+
+brew:
+	brew update
+	brew bundle
 
 npm:
 	rm -rf node_modules
@@ -57,4 +61,4 @@ publish:
 drafts:
 	@ls longform/drafts/* | grep '-'
 
-.PHONY: local assets clean deploy update build test drafts publish new
+.PHONY: local assets clean deploy update build test drafts publish new brew npm
