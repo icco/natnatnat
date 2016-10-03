@@ -12,11 +12,11 @@
           {{ range $null, $month := $data.Months }}
             {{ with $days := index $months $month }}
               <div class="mvs">
-                <div class="f4 lh-title dib mhm tr" style="width: 5rem;">{{ $month }}</div>
+                <div class="f4 lh-title dib mh3 tr w4">{{ $month }}</div>
                 {{ range $day, $posts := $days }}
                   {{ if gt $day 0 }}
                     {{ if $posts }}
-                      <a href="/day/{{$year}}/{{m2i $month}}/{{$day}}" class="none">
+                      <a href="/day/{{$year}}/{{m2i $month}}/{{$day}}" class="link">
                         <div class="w1 h1 dib v-mid bg-light-green ba b--lightest-green" title="{{$year}}/{{m2i $month}}/{{$day}} - {{$posts}} posts"></div>
                       </a>
                     {{ else }}
