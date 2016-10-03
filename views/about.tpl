@@ -1,7 +1,7 @@
 {{ template "includes/header" }}
 
 <article class="pv0 ph3 pa4-m pa5-l oh pos-rel mt0-ns mt4">
-  <h1 class="f1 f-headline-ns mt0 mb3">About</h1>
+  <h1 class="f1 mt0 mb3">About</h1>
 
   <div class="lh-copy">
     <div class="markdown">
