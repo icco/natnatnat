@@ -28,7 +28,7 @@ blockquote {
 
 .markdown img {
   max-width: 100%;
-  display: block;
+  display: inline-block;
 }
 
 .markdown p, .markdown li {
