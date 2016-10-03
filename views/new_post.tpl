@@ -30,15 +30,21 @@
   <div id="rendered"></div>
 </div>
 
-<div id="links" class="links">
-  {{ range $pair := .Links}}
-    <h2>{{$pair.Day}}</h2>
-    <ul>
-      {{ range $l := (index $pair.Links)}}
-        <li class="link"><a class="adder" data-tags="{{$l.TagString}}">&plus;</a> &ndash; <a class="actual" href="{{$l.Url}}">{{$l.Title}}</a></li>
-      {{ end }}
-    </ul>
-  {{ end }}
-</div>
+<article class="pv0 ph3 pa4-m pa5-l oh pos-rel mt0-ns mt4">
+  <div class="lh-copy">
+    <div class="markdown">
+      <div id="links" class="links">
+        {{ range $pair := .Links}}
+          <h2>{{$pair.Day}}</h2>
+          <ul>
+            {{ range $l := (index $pair.Links)}}
+              <li class="link"><a class="pointer" data-tags="{{$l.TagString}}">&plus;</a> &ndash; <a class="actual" href="{{$l.Url}}">{{$l.Title}}</a></li>
+            {{ end }}
+          </ul>
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</article>
 
 {{ template "includes/footer" }}
