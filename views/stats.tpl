@@ -1,79 +1,61 @@
 {{ template "includes/header" "Stats" }}
 
-<div class="tc center">
-  <h1>Stats</h1>
-</div>
+<article class="pa3 pa5-ns" data-name="slab-stat-large">
+  <h3 class="f6 ttu tracked">All Time Stats</h3>
+  <div class="cf">
+    <dl class="db dib-l w-auto-l lh-title mr6-l">
+      <dd class="f6 fw4 ml0">Avg. posts made per day</dd>
+      <dd class="f2 f-subheadline-l fw6 ml0">{{printf "%.2f" .PostsPerDay}}</dd>
+    </dl>
 
-<div id="stats" class="lh-title tc dt">
-  <div class="dtr-ns db">
-    <div class="mw5-ns center tc pal dtc-ns">
-      <div class="f1">{{printf "%.2f" .PostsPerDay}}</div>
-      <div class="book">Avg. posts made per day</div>
-    </div>
+    <dl class="db dib-l w-auto-l lh-title mr6-l">
+      <dd class="f6 fw4 ml0">Avg. links read per day</dd>
+      <dd class="f2 f-subheadline-l fw6 ml0">{{printf "%.2f" .LinksPerDay}}</dd>
+    </dl>
 
-    <div class="mw5-ns center tc pal dtc-ns">
-      <div class="f1">{{printf "%.2f" .LinksPerDay}}</div>
-      <div class="book">Avg. links read per day</div>
-    </div>
+    <dl class="db dib-l w-auto-l lh-title mr6-l">
+      <dd class="f6 fw4 ml0">Days since first post</dd>
+      <dd class="f2 f-subheadline-l fw6 ml0">{{printf "%.2f" .DaysSince}}</dd>
+    </dl>
 
-    <!-- TODO
-    <div class="">
-      <div class="f1">{{printf "%.2f" .LinksPerPost}}</div>
-      <div class="book">Avg. links per post</div>
-    </div>
-    -->
+    <dl class="db dib-l w-auto-l lh-title mr6-l">
+      <dd class="f6 fw4 ml0">Total number of posts</dd>
+      <dd class="f2 f-subheadline-l fw6 ml0">{{.Posts}}</dd>
+    </dl>
 
-    <div class="mw5-ns center tc pal dtc-ns">
-      <div class="f1">{{printf "%.2f" .DaysSince}}</div>
-      <div class="book">Days since first post</div>
-    </div>
+    <dl class="db dib-l w-auto-l lh-title mr6-l">
+      <dd class="f6 fw4 ml0">Avg. words per post</dd>
+      <dd class="f2 f-subheadline-l fw6 ml0">{{printf "%.2f" .WordsPerPost}}</dd>
+    </dl>
+
+    <dl class="db dib-l w-auto-l lh-title mr6-l">
+      <dd class="f6 fw4 ml0">Avg. words per day</dd>
+      <dd class="f2 f-subheadline-l fw6 ml0">{{printf "%.2f" .WordsPerDay}}</dd>
+    </dl>
   </div>
-
-  <div class="dtr-ns db">
-    <div class="mw5-ns center tc pal dtc-ns">
-      <div class="f1">{{printf "%.2f" .WordsPerDay}}</div>
-      <div class="book">Avg. words per day</div>
-    </div>
-
-    <div class="mw5-ns center tc pal dtc-ns">
-      <div class="f1">{{printf "%.2f" .WordsPerPost}}</div>
-      <div class="book">Avg. words per post</div>
-    </div>
-
-    <div class="mw5-ns center tc pal dtc-ns">
-      <div class="f1">{{.Posts}}</div>
-      <div class="book">Total number of posts</div>
-    </div>
-  </div>
-</div>
+</article>
 
 <!-- years -->
 {{ range $y := .Years }}
-  <div class="tc center">
-    <h2>{{ $y }}</h2>
-  </div>
-  <div class="lh-title tc dt">
-    <div class="dtr-ns db">
-      <div class="mw5-ns center tc pal dtc-ns">
-        <div class="f1">{{ printf "%.0f" (index $.YearData $y 0) }}</div>
-        <div class="book">Posts this year</div>
-      </div>
+<article class="pa3 pa5-ns" data-name="slab-stat-large">
+  <h3 class="f6 ttu tracked">{{ $y }} Stats</h3>
+  <div class="cf">
+    <dl class="db dib-l w-auto-l lh-title mr6-l">
+      <dd class="f6 fw4 ml0">Posts this year</dd>
+      <dd class="f2 f-subheadline-l fw6 ml0">{{ printf "%.0f" (index $.YearData $y 0) }}</dd>
+    </dl>
 
-      <div class="mw5-ns center tc pal dtc-ns">
-        <div class="f1">{{ printf "%.2f" (index $.YearData $y 1) }}</div>
-        <div class="book">Avg. posts per week</div>
-      </div>
+    <dl class="db dib-l w-auto-l lh-title mr6-l">
+      <dd class="f6 fw4 ml0">Avg. posts per week</dd>
+      <dd class="f2 f-subheadline-l fw6 ml0">{{ printf "%.2f" (index $.YearData $y 1) }}</dd>
+    </dl>
 
-      <div class="mw5-ns center tc pal dtc-ns">
-        <div class="f1">{{ printf "%.0f" (index $.YearData $y 2) }}</div>
-        <div class="book">Links saved</div>
-      </div>
-    </div>
+    <dl class="db dib-l w-auto-l lh-title mr6-l">
+      <dd class="f6 fw4 ml0">Links saved</dd>
+      <dd class="f2 f-subheadline-l fw6 ml0">{{ printf "%.0f" (index $.YearData $y 2) }}</dd>
+    </dl>
   </div>
+</article>
 {{ end }}
-
-<div id="statsgraph">
-  <!-- TODO -->
-</div>
 
 {{ template "includes/footer" }}

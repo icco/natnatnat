@@ -1,6 +1,6 @@
 {
   "name": "natnatnat",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Nat's Blog",
   "homepage": "http://writing.natwelch.com",
   "repository": {
@@ -16,19 +16,9 @@
     "url": "https://github.com/icco/natnatnat/issues",
     "email": "nat@natwelch.com"
   },
-  "dependencies": {
-    "highlight.js": "^8.9.1",
-    "jquery": "^2.1.4",
-    "moment": "^2.10.6"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "css-loader": "^0.23.0",
-    "file-loader": "^0.8.5",
-    "image-webpack-loader": "^1.6.2",
-    "node-sass": "^3.4.2",
-    "sass-loader": "^3.1.2",
-    "style-loader": "^0.13.0",
-    "url-loader": "^0.5.7",
-    "webpack": "^1.12.9"
+    "clean-css": "^3.4.19",
+    "uglify-js": "^2.7.3"
   }
 }

@@ -1,6 +1,5 @@
 // Doesn't let you close forms that have been edited.
-var Forms = function() {
-  var $ = require('jquery');
+$(document).ready(function() {
   var formHasChanged = false;
   var submitted = false;
 
@@ -22,5 +21,4 @@ var Forms = function() {
   $("form").submit(function() {
     submitted = true;
   });
-};
-module.exports = Forms;
+});
