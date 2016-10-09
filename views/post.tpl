@@ -11,7 +11,7 @@
 <article class="pv0 ph3 pa4-m pa5-l oh pos-rel mt0-ns mt4">
   <p class="mb0 mt0 dark-gray">#{{ .Entry.Id }} / <time datetime="{{ .Entry.Datetime|jsontime }}">{{ .Entry.Datetime|fmttime }}</time></p>
 
-  <h1 class="f1 f-subheadline-ns mt0 mb3"><a href="/post/{{.Entry.Id}}">{{ .Entry.Title }}</a></h1>
+  <h1 class="f1 lh-title f-headline-ns lh-solid-ns mt0 mb3"><a href="/post/{{.Entry.Id}}">{{ .Entry.Title }}</a></h1>
 
   <p class="gray f6 mb4 ttu tracked">By Nat Welch</p>
 
