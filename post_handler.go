@@ -15,10 +15,11 @@ import (
 )
 
 type ResponseData struct {
-	Entry   *Entry
-	IsAdmin bool
-	Next    string
-	Prev    string
+	Entry       *Entry
+	IsAdmin     bool
+	ReadingTime float64
+	Next        string
+	Prev        string
 }
 
 func PostHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -41,10 +42,11 @@ func PostHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	} else {
 		responseData := &ResponseData{
-			Entry:   entry,
-			IsAdmin: user.IsAdmin(c),
-			Next:    entry.NextPost(c),
-			Prev:    entry.PrevPost(c)}
+			Entry:       entry,
+			IsAdmin:     user.IsAdmin(c),
+			ReadingTime: entry.ReadingTime(),
+			Next:        entry.NextPost(c),
+			Prev:        entry.PrevPost(c)}
 		w.Render("post", responseData)
 		return
 	}

@@ -233,6 +233,17 @@ func (e *Entry) Save(c context.Context) error {
 	return err
 }
 
+func (e *Entry) Words() int {
+	words := 0
+	words += len(strings.Fields(e.Content))
+	words += len(strings.Fields(e.Title))
+	return words
+}
+
+func (e *Entry) ReadingTime() float64 {
+	return float64(e.Words()) / float64(200)
+}
+
 func (e *Entry) Url() string {
 	return fmt.Sprintf("/post/%d", e.Id)
 }

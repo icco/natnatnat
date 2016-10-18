@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"net/http"
 	"strconv"
-	"strings"
 	"time"
 
 	"github.com/pilu/traffic"
@@ -53,8 +52,7 @@ func StatsWorkHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 	words := 0
 	for _, p := range *entries {
-		words += len(strings.Fields(p.Content))
-		words += len(strings.Fields(p.Title))
+		words += p.Words()
 		yearData[strconv.Itoa(p.Datetime.Year())][0] += 1
 	}
 
