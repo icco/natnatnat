@@ -9,7 +9,7 @@
 {{ end }}
 
 <article class="pv0 ph3 pa4-m pa5-l oh pos-rel mt0-ns mt4">
-  <p class="mb0 mt0 dark-gray">#{{ .Entry.Id }} / <time datetime="{{ .Entry.Datetime|jsontime }}">{{ .Entry.Datetime|fmttime }}</time> / {{ .ReadingTime | printf "%.1f" }} minute read</p>
+  <p class="mb0 mt0 dark-gray">#{{ .Entry.Id }} / <time datetime="{{ .Entry.Datetime|jsontime }}">{{ .Entry.Datetime|fmttime }}</time></p>
 
   <h1 class="f1 lh-title f-headline-ns lh-solid-ns mt0 mb3"><a href="/post/{{.Entry.Id}}">{{ .Entry.Title }}</a></h1>
 
