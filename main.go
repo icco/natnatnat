@@ -160,4 +160,6 @@ func init() {
 }
 
 // Entry point for go server.
-func main() {}
+func main() {
+	appengine.Main()
+}
