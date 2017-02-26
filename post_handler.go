@@ -111,11 +111,12 @@ func PostMarkdownHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	const md = `---
 
 id: {{.Id}}
-datetime: {{.Datetime}}
+datetime: "{{.Datetime}}"
 title: "{{if .Title}}{{.Title}}{{else}}#{{.Id}}{{end}}"
 draft: {{.Draft}}
-{{if .Longform}}longform: {{.Longform}}{{end}}
-
+permalink: "/posts/{{.Id}}"
+{{if .Longform}}longform: {{.Longform}}
+{{end}}
 ---
 
 {{.Content}}
