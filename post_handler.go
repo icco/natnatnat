@@ -3,6 +3,7 @@ package main
 import (
 	"bytes"
 	"errors"
+	htmp "html/template"
 	"net/http"
 	"strconv"
 	"text/template"
@@ -136,6 +137,11 @@ permalink: "/posts/{{.Id}}"
 	return
 }
 
+type EntryJson struct {
+	Entry
+	Html htmp.HTML `json:"html"`
+}
+
 func PostJsonHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
 	id, err := strconv.ParseInt(r.Param("id"), 10, 64)
@@ -155,7 +161,18 @@ func PostJsonHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		return
 	}
 
+	post := &EntryJson{
+		Html: entry.Html(),
+	}
+	post.Id = entry.Id
+	post.Title = entry.Title
+	post.Content = entry.Content
+	post.Datetime = entry.Datetime
+	post.Created = entry.Created
+	post.Modified = entry.Modified
+	post.Tags = entry.Tags
+
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.WriteJSON(entry)
+	w.WriteJSON(post)
 }
