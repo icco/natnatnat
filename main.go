@@ -141,6 +141,7 @@ func init() {
 
 	router.Get("/summary.atom", SummaryAtomHandler)
 	router.Get("/summary.rss", SummaryRssHandler)
+	router.Get("/summary.json", SummaryJsonHandler)
 
 	router.Post("/link/work", LinkWorkHandler)
 	router.Post("/link/long-work", LinkLongWorkHandler)

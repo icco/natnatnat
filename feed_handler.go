@@ -2,15 +2,15 @@ package main
 
 import (
 	"fmt"
+	"html/template"
 	"net/http"
 	"time"
 
-	"google.golang.org/appengine"
-
-	"golang.org/x/net/context"
-
 	"github.com/gorilla/feeds"
 	"github.com/pilu/traffic"
+	"golang.org/x/net/context"
+	"google.golang.org/appengine"
+	"google.golang.org/appengine/log"
 )
 
 var baseUrl = "https://writing.natwelch.com"
@@ -90,4 +90,35 @@ func SummaryAtomHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 func SummaryRssHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	http.Redirect(w, r.Request, "/feed.rss", 301)
+}
+
+type SummaryJson struct {
+	Id       int64         `json:"id"`
+	Title    string        `json:"title"`
+	Html     template.HTML `json:"html"`
+	Datetime time.Time     `json:"date"`
+	Tags     []string      `json:"tags"`
+}
+
+func SummaryJsonHandler(w traffic.ResponseWriter, r *traffic.Request) {
+	c := appengine.NewContext(r.Request)
+	entries, err := AllPosts(c)
+	if err != nil {
+		log.Errorf(c, "Error loading posts: %+v", err)
+		http.Error(w, err.Error(), 500)
+		return
+	}
+	posts := []SummaryJson{}
+	for _, entry := range *entries {
+		post := &SummaryJson{}
+		post.Id = entry.Id
+		post.Title = entry.Title
+		post.Html = Markdown(SummarizeText(entry.Content))
+		post.Datetime = entry.Datetime
+		post.Tags = entry.Tags
+		posts = append(posts, *post)
+	}
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.WriteJSON(posts)
 }
