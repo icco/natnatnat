@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"errors"
-	htmp "html/template"
 	"net/http"
 	"strconv"
 	"text/template"
@@ -135,11 +134,6 @@ permalink: "/posts/{{.Id}}"
 
 	w.WriteText(buf.String())
 	return
-}
-
-type EntryJson struct {
-	Entry
-	Html htmp.HTML `json:"html"`
 }
 
 func PostJsonHandler(w traffic.ResponseWriter, r *traffic.Request) {

@@ -133,7 +133,7 @@ func StatsHandler(w traffic.ResponseWriter, r *traffic.Request) {
 
 func StatsHistoryJsonHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	c := appengine.NewContext(r.Request)
-	entries, err := AllPosts(c)
+	entries, err := AllPostsJson(c)
 	if err != nil {
 		log.Errorf(c, "Error loading posts: %+v", err)
 		http.Error(w, err.Error(), 500)

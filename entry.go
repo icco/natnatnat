@@ -27,6 +27,11 @@ type Entry struct {
 	Draft    bool      `json:"-"`
 }
 
+type EntryJson struct {
+	Entry
+	Html template.HTML `json:"html"`
+}
+
 type EntrySearch struct {
 	Id       float64
 	Title    string
@@ -101,6 +106,28 @@ func MaxId(c context.Context) (int64, error) {
 
 func AllPosts(c context.Context) (*[]Entry, error) {
 	return Posts(c, -1, true)
+}
+
+func AllPostsJson(c context.Context) (*[]EntryJson, error) {
+	posts := []EntryJson{}
+	entries, err := AllPosts(c)
+	if err != nil {
+		return nil, err
+	}
+	for _, entry := range *entries {
+		post := &EntryJson{
+			Html: entry.Html(),
+		}
+		post.Id = entry.Id
+		post.Title = entry.Title
+		post.Content = entry.Content
+		post.Datetime = entry.Datetime
+		post.Created = entry.Created
+		post.Modified = entry.Modified
+		post.Tags = entry.Tags
+		posts = append(posts, *post)
+	}
+	return &posts, nil
 }
 
 func Pagination(c context.Context, posts, offset int) (*[]Entry, error) {
