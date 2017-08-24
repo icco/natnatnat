@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"html/template"
+	"math"
 	"regexp"
 	"strings"
 	"time"
@@ -29,7 +30,8 @@ type Entry struct {
 
 type EntryJson struct {
 	Entry
-	Html template.HTML `json:"html"`
+	Html     template.HTML `json:"html"`
+	ReadTime int           `json:"readtime"`
 }
 
 type EntrySearch struct {
@@ -116,7 +118,8 @@ func AllPostsJson(c context.Context) (*[]EntryJson, error) {
 	}
 	for _, entry := range *entries {
 		post := &EntryJson{
-			Html: entry.Html(),
+			Html:     entry.Html(),
+			ReadTime: entry.ReadTime(),
 		}
 		post.Id = entry.Id
 		post.Title = entry.Title
@@ -270,6 +273,14 @@ func (e *Entry) EditUrl() string {
 
 func (e *Entry) Html() template.HTML {
 	return Markdown(e.Content)
+}
+
+func (e *Entry) ReadTime() int {
+	ReadingSpeed := 265.0
+	words := len(strings.Split(e.Content, " "))
+	seconds := int(math.Ceil(float64(words) / ReadingSpeed * 60.0))
+
+	return seconds
 }
 
 func (e *Entry) Summary() string {

@@ -156,7 +156,8 @@ func PostJsonHandler(w traffic.ResponseWriter, r *traffic.Request) {
 	}
 
 	post := &EntryJson{
-		Html: entry.Html(),
+		Html:     entry.Html(),
+		ReadTime: entry.ReadTime(),
 	}
 	post.Id = entry.Id
 	post.Title = entry.Title
