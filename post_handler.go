@@ -114,7 +114,7 @@ id: {{.Id}}
 datetime: "{{.Datetime}}"
 title: "{{if .Title}}{{.Title}}{{else}}#{{.Id}}{{end}}"
 draft: {{.Draft}}
-permalink: "/posts/{{.Id}}"
+permalink: "/post/{{.Id}}"
 {{if .Longform}}longform: {{.Longform}}
 {{end}}
 ---
