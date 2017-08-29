@@ -98,6 +98,7 @@ type SummaryJson struct {
 	Html     template.HTML `json:"html"`
 	Datetime time.Time     `json:"date"`
 	Tags     []string      `json:"tags"`
+	ReadTime int           `json:"readtime"`
 }
 
 func SummaryJsonHandler(w traffic.ResponseWriter, r *traffic.Request) {
@@ -116,6 +117,7 @@ func SummaryJsonHandler(w traffic.ResponseWriter, r *traffic.Request) {
 		post.Html = Markdown(SummarizeText(entry.Content))
 		post.Datetime = entry.Datetime
 		post.Tags = entry.Tags
+		post.ReadTime = entry.ReadTime()
 		posts = append(posts, *post)
 	}
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
