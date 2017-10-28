@@ -23,7 +23,7 @@
   </form>
 </article>
 
-<div class="preview">
+<div class="preview mh3">
   <div class="mv1">
     <small><a class="show_hide">Preview...</a></small>
   </div>
