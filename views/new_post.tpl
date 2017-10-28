@@ -23,7 +23,7 @@
 </article>
 
 <div class="preview mh3">
-  <div class="mvs">
+  <div class="mv1">
     <small><a class="show_hide">Preview...</a></small>
   </div>
   <h1 id="rendered_title"></h1>
@@ -35,12 +35,14 @@
     <div class="markdown">
       <div id="links" class="links">
         {{ range $pair := .Links}}
-          <h2>{{$pair.Day}}</h2>
-          <ul>
-            {{ range $l := (index $pair.Links)}}
-              <li class="link"><a class="adder pointer" data-tags="{{$l.TagString}}">&plus;</a> &ndash; <a class="actual" href="{{$l.Url}}">{{$l.Title}}</a></li>
-            {{ end }}
-          </ul>
+        <h2>{{$pair.Day}}</h2>
+        <ul>
+          {{ range $l := (index $pair.Links)}}
+          <li class="link">
+            <a class="adder" data-tags="">&plus;</a> &ndash; <a class="actual" href="{{$l.Url}}">{{$l.Title}}</a> - {{$l.TagString}}
+          </li>
+          {{ end }}
+        </ul>
         {{ end }}
       </div>
     </div>
