@@ -1,13 +1,11 @@
 # natnatnat
 
-[![Build Status](https://travis-ci.org/icco/natnatnat.svg?branch=master)](https://travis-ci.org/icco/natnatnat)
+[![Build Status](https://travis-ci.org/icco/natnatnat.svg?branch=master)](https://travis-ci.org/icco/natnatnat) [![GoDoc](https://godoc.org/github.com/icco/natnatnat?status.svg)](https://godoc.org/github.com/icco/natnatnat)
 
 The next iteration in Nat's content management system. Previous versions include:
 
  * [tumble.io](http://github.com/icco/tumble)
  * [pseudoweb.net](http://github.com/icco/pseudoweb)
-
-Docs: [godoc.org/github.com/icco/natnatnat](https://godoc.org/github.com/icco/natnatnat)
 
 ## Install
 
