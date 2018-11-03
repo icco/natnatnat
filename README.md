@@ -1,5 +1,7 @@
 # natnatnat
 
+NOTE: This is now at https://github.com/icco/writing
+
 [![Build Status](https://travis-ci.org/icco/natnatnat.svg?branch=master)](https://travis-ci.org/icco/natnatnat) [![GoDoc](https://godoc.org/github.com/icco/natnatnat?status.svg)](https://godoc.org/github.com/icco/natnatnat)
 
 The next iteration in Nat's content management system. Previous versions include:
